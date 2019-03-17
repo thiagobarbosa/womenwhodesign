@@ -1,4 +1,5 @@
 # Women Who Design
+
 Women Who Design is a Twitter directory of accomplished women in the design industry. It aims to help people find notable and relevant voices to follow on Twitter by parsing Twitter bios for popular keywords.
 
 Here are some things Women Who Design can help you with:
@@ -10,4 +11,19 @@ Here are some things Women Who Design can help you with:
 
 ## Forking this project
 
-Women Who Design is happy to support new directories highlighting underrepresented or marginalized groups by providing its source code. 
+Women Who Design is happy to support new directories highlighting underrepresented or marginalized groups by providing its source code.
+
+### Prerequisites
+
+This project requires API keys from [Twitter](https://twitter.com) to populate the profile data and [Seeker](https://seeker.company) to populate the job posts.
+
+Seeker is optional. To run this project without Seeker:
+
+1. Delete the `gatsby-source-seeker plugin` (lines 14-19) from the `gatsby-config.js` file
+2. Delete the entire `gatsby-node.js` file
+3. Delete the `src/pages/jobs.js` file
+4. Remove the link to the jobs page from the `src/components/nav` file
+
+Twitter is required. To register your new project with Twitter:
+
+Create an app on the [Twitter developer dashboard](https://developer.twitter.com/en/apps). Select the "Read only" access option.
