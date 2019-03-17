@@ -7,3 +7,7 @@ Here are some things Women Who Design can help you with:
 - **If you're a hiring manager, use this project to find candidates.** Examine the ratio of senior men to senior women in your organization. Are women of color equally represented? Consider hiring women into promotions above their current role.
 - **If you're organizing a conference, use this project to find speakers.** Ensure that the women's speaking slots are as prominent as the men's. Are women of color equally represented? Consider reaching out to women who have never given a talk before.
 - **If you have a podcast, use this project to find new guests.** Be mindful of interruptions and ensure that your women guests get equal speaking time. Are women of color equally represented? Consider inviting women who don't already have an audience.
+
+## Forking this project
+
+Women Who Design is happy to support new directories highlighting underrepresented or marginalized groups by providing its source code. 
