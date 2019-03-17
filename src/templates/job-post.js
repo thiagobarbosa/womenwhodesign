@@ -17,7 +17,6 @@ export default ({ data, location }) => {
   } in ${job.job.job_location} on the Women Who Design job board.`;
   const helmetTitle = `${job.job.company.name} is hiring!`;
   const helmetLink = `https://womenwho.design${location.pathname}`;
-  console.log(helmetLink);
   return (
     <Layout>
       <Helmet

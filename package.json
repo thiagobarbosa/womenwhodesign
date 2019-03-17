@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-starter-hello-world",
-  "description": "Gatsby hello world starter",
+  "name": "women-who-design",
+  "description": "A Twitter directory of accomplished women in the design industry.",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
