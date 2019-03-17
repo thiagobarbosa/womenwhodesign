@@ -1,0 +1,18 @@
+{
+  "name": "gatsby-source-twitter-profiles",
+  "version": "0.0.0",
+  "description": "Pull in list of Twitter profiles",
+  "author": "Jules Forrest <julesforrest@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "autolinker": "^1.6.2",
+    "crypto": "^1.0.1",
+    "gatsby-source-filesystem": "^2.0.11",
+    "lodash": "^4.17.10",
+    "node-fetch": "^2.1.1",
+    "query-string": "^5.1.0",
+    "text-autolinker": "^0.1.0",
+    "twitter": "^1.7.1"
+  }
+}

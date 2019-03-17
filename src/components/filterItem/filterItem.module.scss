@@ -1,0 +1,61 @@
+@import "../../styles/variables.scss";
+
+.item {
+  font-size: 15px;
+  font-family: $pitch;
+  margin: 12px 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.span {
+  margin-left: 26px;
+  display: inline-block;
+  position: relative;
+}
+
+.counter {
+  float: right;
+  opacity: 0.5;
+  margin-left: 16px;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+  width: 1px;
+  height: 1px;
+}
+
+.item label:before {
+  position: absolute;
+  background-color: transparent;
+  margin-top: 4px;
+  content: "";
+  display: block;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--text);
+  border-radius: 30px;
+  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  left: 1px;
+}
+
+.input:focus ~ label:before {
+  box-shadow: 0 0 0 3px var(--background), 0 0 0 4px var(--text);
+}
+
+.item input[type="checkbox"]:checked ~ label:before {
+  background-color: var(--text);
+  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.item:hover .span {
+  text-decoration: underline;
+}

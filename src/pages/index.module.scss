@@ -1,0 +1,187 @@
+@import "../styles/variables.scss";
+
+.container {
+  overflow-x: hidden;
+  @media (min-width: $desktop) {
+    display: flex;
+  }
+}
+
+.main {
+  position: static;
+  overflow-y: scroll;
+  padding: var(--page-shell-padding);
+  transition: all 0.5s ease;
+  width: 100%;
+  @media (min-width: $desktop) {
+    height: 100vh;
+  }
+}
+
+.sidebar {
+  overflow-y: scroll;
+  background-color: var(--gray);
+  @media (min-width: $desktop) {
+    min-width: $sidebar;
+    width: $sidebar;
+    max-width: $sidebar;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.slide {
+  transform: translateX(275px);
+  transition: all 0.5s ease;
+  opacity: 0.5;
+  @media (min-width: $desktop) {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.filterContainer {
+  padding: var(--page-shell-padding);
+  color: var(--text);
+  background-color: var(--background);
+  position: absolute;
+  transform: translateX(-275px);
+  z-index: 100;
+  transition: all 0.5s ease;
+  margin-top: auto;
+  margin-bottom: auto;
+  @media (min-width: $desktop) {
+    display: block;
+    --background: var(--gray);
+    --text: white;
+    position: static;
+    transform: translateX(0);
+  }
+}
+
+.filterHeadline {
+  font-family: $graphik;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.filterHeadline {
+  font-family: $graphik;
+  margin: 0;
+  font-size: 16px;
+}
+
+.filterUl {
+  margin: 24px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.showMoreFilters {
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  border: none;
+  color: var(--text);
+  @media (min-width: $desktop) {
+    --background: var(--gray);
+    --text: white;
+  }
+
+  &:hover .showMoreFiltersText {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: none;
+    border-radius: 1px;
+    box-shadow: var(--background) 0px 0px 0px 2px, var(--text) 0px 0px 0px 3px;
+    text-decoration: none;
+  }
+}
+
+.profiles {
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: calc(var(--page-shell-padding) * 2);
+
+  @media (min-width: $non-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2.5rem 2rem;
+    @supports not (display: grid) {
+      display: block;
+    }
+  }
+  @media (min-width: $desktop) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 2.5rem 2rem;
+    @supports not (display: grid) {
+      display: block;
+    }
+  }
+}
+
+.filterListVisible {
+  transform: translateX(0);
+  transition: all 0.5s ease;
+}
+
+.filterBannerBump {
+  @media (min-width: $desktop) {
+    padding-top: 48px;
+  }
+}
+
+.filterBanner {
+  display: none;
+  @media (min-width: $desktop) {
+    border-bottom: 2px solid var(--gray);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    width: calc(100% - 310px);
+    position: fixed;
+    top: 0;
+    padding: 13px var(--page-shell-padding);
+    z-index: 5;
+    margin: 0 calc(-1 * var(--page-shell-padding));
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.filterPillContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 8px;
+}
+
+.filterClear {
+  margin-left: auto;
+  font-size: 13px;
+  font-family: "pitch sans web", monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0 6px;
+  border: 0;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: none;
+    border-radius: 1px;
+    box-shadow: var(--background) 0px 0px 0px 2px, var(--text) 0px 0px 0px 3px;
+    text-decoration: none;
+  }
+}
+
+.arrow {
+  font-family: $sans-serif;
+  margin-right: 8px;
+}
