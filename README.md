@@ -57,7 +57,7 @@ Make sure that the account provided is following at least one account and that T
 
 ### Install dependencies
 
-If you're new to development, start by installing Homebrew, a macOS package manager.
+If you're new to development, start by installing Homebrew, a macOS package manager. Paste the following command in your terminal.
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -77,6 +77,10 @@ yarn
 
 ### Run the project locally
 
+Making sure you're in the correct project folder, start the local development server.
+
 ```
 yarn start
 ```
+
+In your browser, open `localhost:8000`.
