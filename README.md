@@ -2,7 +2,7 @@
 
 Women Who Design is a Twitter directory of accomplished women in the design industry. It aims to help people find notable and relevant voices to follow on Twitter by parsing Twitter bios for popular keywords.
 
-### Things Women Who Design can help you with:
+Here are some things Women Who Design can help you with:
 
 - **If you're a Twitter user, use this project to diversify the voices in your feed** Run [proporti.onl](https://www.proporti.onl/) to check the ratio of the people you follow on Twitter. If you're following more men than women, follow women who are work on your areas of interest. Be aware that a feed of white women is not diverse.
 - **If you're a hiring manager, use this project to find candidates.** Examine the ratio of senior men to senior women in your organization. Are women of color equally represented? Consider hiring women into promotions above their current role.
@@ -21,7 +21,7 @@ This project requires API keys from [Twitter](https://twitter.com) to populate t
 
 Seeker is optional. To run this project without Seeker:
 
-1. Delete the `gatsby-source-seeker plugin` (lines 11-16) from the `gatsby-config.js` file
+1. Delete the `gatsby-source-seeker plugin` (lines 12-17) from the `gatsby-config.js` file
 2. Delete the entire `gatsby-node.js` file
 3. Delete the `src/pages/jobs.js` file
 4. Remove the link to the jobs page from the `src/components/nav` file
@@ -43,3 +43,11 @@ curl -u "$CONSUMER_KEY:$CONSUMER_SECRET" \
 ```
 
 Copy the bearer token and on line 8, replace `process.env.WWD_TWITTER_BEARER TOKEN` with it.
+
+##### Generating directory profiles
+
+The directory's profiles are generated from the list of users that the Women Who Design account follows.
+
+To provide your own user list, replace the number on line 9 of the `gatsby-config.js` file with the Twitter ID of your project's account. The account provided must be following at least one account.
+
+To get the Twitter ID of your account, provide your handle to a service like [Tweeter ID](https://tweeterid.com/).

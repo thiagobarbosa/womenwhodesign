@@ -5,7 +5,7 @@ const marked = require("marked");
 exports.sourceNodes = async ({ actions }, configOptions) => {
   if (!configOptions.key) {
     throw new Error(
-      "You must provide an API key to `gatsby-source-seeker`. \n If you don't have a Seeker API key, follow these steps: \n 1. Delete the gatsby-source-seeker plugin (lines 11-16) from the gatsby-config.js file \n 2. Delete the entire gatsby-node.js file \n 3. Delete the src/pages/jobs.js file \n 4. Remove the link to the jobs page from the src/components/nav file"
+      "You must provide an API key to `gatsby-source-seeker`. \n If you don't have a Seeker API key, follow these steps: \n 1. Delete the gatsby-source-seeker plugin (lines 12-17) from the gatsby-config.js file \n 2. Delete the entire gatsby-node.js file \n 3. Delete the src/pages/jobs.js file \n 4. Remove the link to the jobs page from the src/components/nav file"
     );
   }
 
