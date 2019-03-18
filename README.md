@@ -44,10 +44,10 @@ curl -u "$CONSUMER_KEY:$CONSUMER_SECRET" \
 
 Copy the bearer token and on line 8, replace `process.env.WWD_TWITTER_BEARER TOKEN` with it.
 
-##### Generating directory profiles
+### Generating directory profiles
 
-The directory's profiles are generated from the list of users that the Women Who Design account follows.
+The directory's profiles are generated from the list of users that the Women Who Design Twitter account follows.
 
-To provide your own user list, replace the number on line 9 of the `gatsby-config.js` file with the Twitter ID of your project's account. The account provided must be following at least one account.
+To provide your own user list, replace the number on line 9 of the `gatsby-config.js` file with the Twitter ID of your chosen Twitter account. To get the Twitter ID of your account, provide your handle to a service like [Tweeter ID](https://tweeterid.com/).
 
-To get the Twitter ID of your account, provide your handle to a service like [Tweeter ID](https://tweeterid.com/).
+Make sure that the account provided is following at least one account and that Twitter ID on line 9 is in quotes.
