@@ -9,7 +9,7 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
 
 exports.sourceNodes = async (
   { actions, createNodeId, store, cache },
-  { bearerToken, consumerKey, consumerSecret }
+  { bearerToken, consumerKey, consumerSecret, twitterIdForFollowingList }
 ) => {
   if (!bearerToken) {
     throw new Error(
@@ -26,14 +26,13 @@ exports.sourceNodes = async (
   });
 
   let counter = 0;
-  const womenWhoDesignId = "855501234924429312";
-  const womenWhoDesignFollowList = await client.get("friends/ids", {
-    user_id: womenWhoDesignId,
+  const followingList = await client.get("friends/ids", {
+    user_id: twitterIdForFollowingList,
     stringify_ids: true
   });
 
   const chunkedDesigners = await Promise.all(
-    _.chunk(womenWhoDesignFollowList.ids, 100).map(async chunk => {
+    _.chunk(followingList.ids, 100).map(async chunk => {
       const results = await client.get("users/lookup", {
         user_id: chunk.join(",")
       });

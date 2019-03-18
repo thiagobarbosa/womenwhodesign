@@ -40,7 +40,6 @@ Generate a bearer token by running this command in your terminal, replacing the 
 curl -u "$CONSUMER_KEY:$CONSUMER_SECRET" \
     --data 'grant_type=client_credentials' \
     'https://api.twitter.com/oauth2/token'
-
 ```
 
 Copy the bearer token and on line 8, replace `process.env.WWD_TWITTER_BEARER TOKEN` with it.
