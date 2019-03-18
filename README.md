@@ -1,6 +1,6 @@
 # Women Who Design
 
-Women Who Design is a Gatsby-powered Twitter directory of accomplished women in the design industry. It aims to help people find notable and relevant voices to follow on Twitter by parsing Twitter bios for popular keywords.
+Women Who Design is a [Gatsby](https://gatsbyjs.org)-powered Twitter directory of accomplished women in the design industry. It aims to help people find notable and relevant voices to follow on Twitter by parsing Twitter bios for popular keywords.
 
 Here are some things Women Who Design can help you with:
 
@@ -22,10 +22,10 @@ This project requires API keys from [Twitter](https://twitter.com) to populate t
 Seeker is optional. To run this project without Seeker:
 
 1. Clone the repo and open it in your code editor
-2. Delete the `gatsby-source-seeker plugin` (lines 12-17) from the `gatsby-config.js` file
+2. Remove the `gatsby-source-seeker` plugin by deleting lines 12-17 from the `gatsby-config.js` file
 3. Delete the entire `gatsby-node.js` file
-4. Delete the `src/pages/jobs.js` file
-5. Remove the link to the jobs page from the `src/components/nav` file
+4. Delete the entire `src/pages/jobs.js` file
+5. At some point, remove the link to the jobs page from the `src/components/nav` file
 
 #### Twitter
 
@@ -57,13 +57,13 @@ Make sure that the account provided is following at least one account and that T
 
 ### Install dependencies
 
-If you're new to development, start by installing Homebrew, a macOS package manager. Paste the following command in your terminal.
+If you're new to development, start by installing [Homebrew](https://brew.sh/), a macOS package manager. Paste the following command in your terminal.
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-When Homebrew installed, use it to install Yarn, a JS dependency manager.
+When Homebrew installed, use it to install [Yarn](https://yarnpkg.com/en/), a JS dependency manager.
 
 ```
 brew install yarn
