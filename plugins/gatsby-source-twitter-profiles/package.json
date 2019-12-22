@@ -7,26 +7,7 @@
   "private": true,
   "dependencies": {
     "autolinker": "^1.6.2",
-    "clickable-box": "^0.1.7",
-    "crypto": "^1.0.1",
-    "gatsby": "^2.0.63",
-    "gatsby-cli": "^2.4.7",
-    "gatsby-image": "^2.0.22",
-    "gatsby-plugin-favicon": "^3.1.4",
-    "gatsby-plugin-google-analytics": "^2.0.8",
-    "gatsby-plugin-react-helmet": "^3.0.4",
-    "gatsby-plugin-sass": "^2.0.7",
-    "gatsby-plugin-sharp": "^2.0.14",
-    "gatsby-remark-smartypants": "^2.0.7",
-    "gatsby-source-filesystem": "^2.0.11",
-    "gatsby-transformer-sharp": "^2.1.9",
     "lodash": "^4.17.10",
-    "node-fetch": "^2.1.1",
-    "node-sass": "^4.10.0",
-    "query-string": "^5.1.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "text-autolinker": "^0.1.0",
     "twitter": "^1.7.1"
   }
 }

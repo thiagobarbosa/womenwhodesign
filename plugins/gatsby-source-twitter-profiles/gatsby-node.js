@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const _ = require("lodash");
-const queryString = require("query-string");
 const Twitter = require("twitter");
 const getProfileTags = require("./get-profile-tags");
 const addDescriptionLinks = require("./add-description-links");
