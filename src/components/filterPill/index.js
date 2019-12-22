@@ -12,7 +12,11 @@ const FilterPill = props => {
         aria-label="Remove filter"
         className={styles.close}
       >
-        <img src={close} style={{ height: "13px", margin: "0 4px -3px" }} />
+        <img
+          src={close}
+          style={{ height: "13px", margin: "0 4px -3px" }}
+          alt="Close icon"
+        />
       </ClickableBox>
     </span>
   );

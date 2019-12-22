@@ -180,6 +180,8 @@ class App extends React.Component {
                         />
                       );
                     }
+
+                    return null;
                   })}
                 </ul>
                 <button

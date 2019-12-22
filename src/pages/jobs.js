@@ -7,7 +7,6 @@ import Layout from "../components/layout";
 import ta from "time-ago";
 import { graphql } from "gatsby";
 import LocationIcon from "../components/location";
-import BriefcaseIcon from "../components/briefcase";
 
 const Jobs = props => {
   const emptyState =
