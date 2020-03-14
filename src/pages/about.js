@@ -1,14 +1,14 @@
 import React from "react";
 import Link from "gatsby-link";
+import { Helmet } from "react-helmet";
 import Nav from "../components/nav";
 import styles from "./about.module.scss";
-import { Helmet } from "react-helmet";
 import Layout from "../components/layout";
 
 const App = () => (
   <Layout>
     <Helmet title="About | Women Who Design" />
-    <Nav theme={"light"} />
+    <Nav theme="light" />
     <div className={styles.container}>
       <h1 className={styles.h1}>About this project</h1>
       <p>

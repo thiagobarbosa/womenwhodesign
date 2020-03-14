@@ -12,6 +12,6 @@
   "dependencies": {
     "marked": "^0.8.0",
     "node-fetch": "^2.3.0",
-    "query-string": "^6.2.0"
+    "query-string": "^6.11.1"
   }
 }

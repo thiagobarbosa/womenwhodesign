@@ -18,10 +18,10 @@ const Nav = props => {
       <nav className={styles.links}>
         {props.filter && (
           <button
-            ref={props.filterButtonRef}
             className={`${styles.link} ${styles.filterButton}`}
             onClick={props.toggleFilterList}
             disabled={props.isLoading}
+            type="button"
           >
             Filter
           </button>

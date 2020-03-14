@@ -1,11 +1,12 @@
 const Autolinker = require("autolinker");
+
 module.exports = profile => {
   // change t.co strings in  to descriptive urls in descriptions
-  let description = profile.description;
-  let descriptionUrls = profile.entities.description.urls;
+  let {description} = profile;
+  const descriptionUrls = profile.entities.description.urls;
   if (descriptionUrls.length === undefined) {
   } else {
-    for (var i = 0; i < descriptionUrls.length; ++i) {
+    for (let i = 0; i < descriptionUrls.length; ++i) {
       description = description.replace(
         descriptionUrls[i].url,
         `<a href="${descriptionUrls[i].url}" target="blank" >${
@@ -19,7 +20,7 @@ module.exports = profile => {
   description = Autolinker.link(description, {
     mention: "twitter",
     hashtag: "twitter",
-    replaceFn: function(match) {
+    replaceFn(match) {
       switch (match.getType()) {
         case "url":
           var tag = match.buildTag();

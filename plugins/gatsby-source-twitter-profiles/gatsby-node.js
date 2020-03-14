@@ -24,7 +24,7 @@ exports.sourceNodes = async (
     bearer_token: bearerToken
   });
 
-  let counter = 0;
+  const counter = 0;
   const followingList = await client.get("friends/ids", {
     user_id: twitterIdForFollowingList,
     stringify_ids: true

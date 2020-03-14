@@ -1,6 +1,6 @@
 module.exports = profile => {
-  let designerTagsObject = {};
-  let description = profile.description;
+  const designerTagsObject = {};
+  const {description} = profile;
   function addDesignerTags(searchTerm, objectTag) {
     if (description.toUpperCase().includes(searchTerm) === true) {
       designerTagsObject[objectTag] = true;
@@ -31,7 +31,7 @@ module.exports = profile => {
       description.toUpperCase().includes("CREATIVE DIRECTOR") === true
     ) {
     } else {
-      designerTagsObject["director"] = true;
+      designerTagsObject.director = true;
     }
   }
   if (
@@ -43,21 +43,21 @@ module.exports = profile => {
     description.includes("UX/") === true ||
     description.includes("ux design") === true
   ) {
-    designerTagsObject["ux"] = true;
+    designerTagsObject.ux = true;
   }
 
   if (
     description.toUpperCase().includes("LETTERER") === true ||
     description.toUpperCase().includes("LETTERING") === true
   ) {
-    designerTagsObject["letter"] = true;
+    designerTagsObject.letter = true;
   }
 
   if (description.includes("VP") === true) {
-    designerTagsObject["vp"] = true;
+    designerTagsObject.vp = true;
   }
   if (description.includes("CEO") === true) {
-    designerTagsObject["ceo"] = true;
+    designerTagsObject.ceo = true;
   }
 
   return designerTagsObject;
