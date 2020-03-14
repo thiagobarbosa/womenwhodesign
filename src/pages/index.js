@@ -34,6 +34,7 @@ const App = ({ data }) => {
   }, [data.allTwitterProfile.edges]);
 
   const numDesignersPerPage = 50;
+  const numPagesToShowInPagination = 5;
 
   const filteredDesigners = visibleDesigners.filter(designer => {
     if (selectedFilters.length === 0) {
@@ -47,7 +48,7 @@ const App = ({ data }) => {
     filteredDesigners.length,
     currentPage,
     numDesignersPerPage,
-    10
+    numPagesToShowInPagination
   );
 
   return (
@@ -228,22 +229,58 @@ const App = ({ data }) => {
                 >
                   ←
                 </button>
+                <button
+                  className={styles.pageNumberButton}
+                  onClick={() => {
+                    setCurrentPage(1);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  type="button"
+                  disabled={pagination.currentPage === 1}
+                >
+                  1
+                </button>
+                {currentPage >= numPagesToShowInPagination && <>&hellip;</>}
+                {pagination.pages.map(pageNumber => {
+                  // Skip over these page numbers because they'll always appear
+                  // in the pagination.
+                  if (
+                    pageNumber === 1 ||
+                    pageNumber === pagination.totalPages
+                  ) {
+                    return null;
+                  }
 
-                {pagination.pages.map(pageNumber => (
-                  <button
-                    key={pageNumber}
-                    className={styles.pageNumberButton}
-                    onClick={() => {
-                      setCurrentPage(pageNumber);
-                      profileContainerRef.current.scrollTo(0, 0);
-                    }}
-                    disabled={pagination.currentPage === pageNumber}
-                    type="button"
-                  >
-                    {pageNumber}
-                  </button>
-                ))}
-
+                  return (
+                    <button
+                      key={pageNumber}
+                      className={styles.pageNumberButton}
+                      onClick={() => {
+                        setCurrentPage(pageNumber);
+                        profileContainerRef.current.scrollTo(0, 0);
+                      }}
+                      disabled={pagination.currentPage === pageNumber}
+                      type="button"
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })}
+                {currentPage <=
+                  pagination.totalPages - (numPagesToShowInPagination + 1) && (
+                  <>&hellip;</>
+                )}
+                <button
+                  className={styles.pageNumberButton}
+                  onClick={() => {
+                    setCurrentPage(pagination.totalPages);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  type="button"
+                  disabled={pagination.currentPage === pagination.totalPages}
+                >
+                  {pagination.totalPages}
+                </button>
                 <button
                   onClick={() => {
                     setCurrentPage(currentPage + 1);
