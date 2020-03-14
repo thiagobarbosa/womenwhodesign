@@ -18,12 +18,12 @@ const Nav = props => {
       <nav className={styles.links}>
         {props.filter && (
           <button
-            className={`${styles.link} ${styles.filterButton}`}
+            className={` ${styles.filterButton}`}
             onClick={props.toggleFilterList}
             disabled={props.isLoading}
             type="button"
           >
-            Filter
+            Filter {props.numberOfFilters > 0 && ` · ${props.numberOfFilters}`}
           </button>
         )}
         <Link to="/about" className={styles.link}>

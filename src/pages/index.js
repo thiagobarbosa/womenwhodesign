@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { shuffle } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";
+import ScrollLock, { TouchScrollable } from "react-scrolllock";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
@@ -53,93 +54,98 @@ const App = ({ data }) => {
 
   return (
     <Layout>
+      <ScrollLock isActive={isFilterListVisible} />
       <div className={styles.container}>
         <div className={styles.sidebar}>
           <Nav
             filter
             theme="dark"
+            numberOfFilters={selectedFilters.length}
             toggleFilterList={() => {
               setIsFilterListVisible(!isFilterListVisible);
             }}
             isLoading={isLoading}
           />
-
-          <div
-            className={classnames({
-              [styles.filterContainer]: true,
-              [styles.filterListVisible]: isFilterListVisible
-            })}
-          >
-            <h2 className={styles.filterHeadline}>Filter by</h2>
-            <ul className={styles.filterUl}>
-              {categories
-                .filter(category => {
-                  if (isFiltersExpanded) {
-                    return true;
-                  }
-
-                  return category.primaryFilter;
-                })
-                .map(category => {
-                  return (
-                    <li className={styles.filterItem} key={category.id}>
-                      <input
-                        id={category.id}
-                        type="checkbox"
-                        value={category.id}
-                        onChange={e => {
-                          const categoryId = e.target.value;
-                          const isChecked = e.target.checked;
-
-                          const newSelectedFilters = [...selectedFilters];
-
-                          if (isChecked) {
-                            newSelectedFilters.push(categoryId);
-                          } else {
-                            const i = newSelectedFilters.indexOf(categoryId);
-                            newSelectedFilters.splice(i, 1);
-                          }
-
-                          setSelectedFilters(newSelectedFilters);
-                          setCurrentPage(1);
-                        }}
-                        checked={selectedFilters.includes(category.id)}
-                        className={styles.filterItemInput}
-                      />
-                      <label
-                        htmlFor={category.id}
-                        className={styles.filterItemLabel}
-                      >
-                        <span className={styles.filterItemLabelSpan}>
-                          {category.title}
-                        </span>
-                      </label>
-                      <span className={styles.filterItemCounter}>
-                        {data[`tagCount${capitalize(category.id)}`].totalCount}
-                      </span>
-                    </li>
-                  );
-                })}
-            </ul>
-            <button
-              onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
-              className={styles.showMoreFilters}
-              type="button"
+          <TouchScrollable>
+            <div
+              className={classnames({
+                [styles.filterContainer]: true,
+                [styles.filterListVisible]: isFilterListVisible
+              })}
             >
-              <span className={styles.arrow}>
-                {isFiltersExpanded ? "↑" : "↓"}
-              </span>
+              <h2 className={styles.filterHeadline}>Filter by</h2>
+              <ul className={styles.filterUl}>
+                {categories
+                  .filter(category => {
+                    if (isFiltersExpanded) {
+                      return true;
+                    }
 
-              <span className={styles.showMoreFiltersText}>
-                Show {isFiltersExpanded ? "fewer" : "more"} filters
-              </span>
-            </button>
-          </div>
+                    return category.primaryFilter;
+                  })
+                  .map(category => {
+                    return (
+                      <li className={styles.filterItem} key={category.id}>
+                        <input
+                          id={category.id}
+                          type="checkbox"
+                          value={category.id}
+                          onChange={e => {
+                            const categoryId = e.target.value;
+                            const isChecked = e.target.checked;
+
+                            const newSelectedFilters = [...selectedFilters];
+
+                            if (isChecked) {
+                              newSelectedFilters.push(categoryId);
+                            } else {
+                              const i = newSelectedFilters.indexOf(categoryId);
+                              newSelectedFilters.splice(i, 1);
+                            }
+
+                            setSelectedFilters(newSelectedFilters);
+                            setCurrentPage(1);
+                          }}
+                          checked={selectedFilters.includes(category.id)}
+                          className={styles.filterItemInput}
+                        />
+                        <label
+                          htmlFor={category.id}
+                          className={styles.filterItemLabel}
+                        >
+                          <span className={styles.filterItemLabelSpan}>
+                            {category.title}
+                          </span>{" "}
+                          <span className={styles.filterItemCounter}>
+                            {
+                              data[`tagCount${capitalize(category.id)}`]
+                                .totalCount
+                            }
+                          </span>
+                        </label>
+                      </li>
+                    );
+                  })}
+              </ul>
+              <button
+                onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
+                className={styles.showMoreFilters}
+                type="button"
+              >
+                <span className={styles.arrow}>
+                  {isFiltersExpanded ? "↑" : "↓"}
+                </span>
+
+                <span className={styles.showMoreFiltersText}>
+                  Show {isFiltersExpanded ? "fewer" : "more"} filters
+                </span>
+              </button>
+            </div>
+          </TouchScrollable>
         </div>
         <div
           className={classnames({
-            [styles.main]: true,
-            [styles.slide]: isFilterListVisible
+            [styles.main]: true
           })}
           ref={profileContainerRef}
         >

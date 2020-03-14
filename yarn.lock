@@ -5038,6 +5038,11 @@ executable@^4.1.0:
   dependencies:
     pify "^2.2.0"
 
+exenv@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
+
 exif-parser@^0.1.12, exif-parser@^0.1.9:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/exif-parser/-/exif-parser-0.1.12.tgz#58a9d2d72c02c1f6f02a0ef4a9166272b7760922"
@@ -10551,6 +10556,13 @@ react-refresh@^0.7.0:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.7.2.tgz#f30978d21eb8cac6e2f2fde056a7d04f6844dd50"
   integrity sha512-u5l7fhAJXecWUJzVxzMRU2Zvw8m4QmDNHlTrT5uo3KBlYBhmChd7syAakBoay1yIiVhx/8Fi7a6v6kQZfsw81Q==
+
+react-scrolllock@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-scrolllock/-/react-scrolllock-5.0.1.tgz#da1cfb7b6d55c86ae41dbad5274b778c307752b7"
+  integrity sha512-poeEsjnZAlpA6fJlaNo4rZtcip2j6l5mUGU/SJe1FFlicEudS943++u7ZSdA7lk10hoyYK3grOD02/qqt5Lxhw==
+  dependencies:
+    exenv "^1.2.2"
 
 react-side-effect@^1.1.0:
   version "1.2.0"

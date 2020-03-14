@@ -46,11 +46,13 @@
   color: var(--text);
   background-color: var(--background);
   position: absolute;
-  transform: translateX(-275px);
-  z-index: 100;
+  transform: translateX(-100vw);
+  z-index: 8;
   transition: all 0.5s ease;
-  margin-top: auto;
-  margin-bottom: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   @media (min-width: $desktop) {
     display: block;
     --background: var(--gray);
@@ -189,26 +191,49 @@
 .filterItem {
   font-size: 15px;
   font-family: $pitch;
-  margin: 12px 0;
   font-weight: 500;
   text-transform: uppercase;
   position: relative;
+  margin: 0 4px 8px 0;
+  display: inline-block;
+
+  @media (min-width: $desktop) {
+    display: block;
+    margin: 12px 0;
+    padding: 0;
+    background-color: unset;
+  }
 }
 
 .filterItemLabel {
+  --background: var(--border-gray);
+  background-color: var(--background);
+  color: var(--text);
   cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 32px;
+  display: inline-block;
+  @media (min-width: $desktop) {
+    padding: 0;
+    background-color: unset;
+    display: block;
+  }
 }
 
 .filterItemLabelSpan {
-  margin-left: 26px;
-  display: inline-block;
-  position: relative;
+  @media (min-width: $desktop) {
+    margin-left: 26px;
+    display: inline-block;
+    position: relative;
+  }
 }
 
 .filterItemCounter {
-  float: right;
-  opacity: 0.5;
-  margin-left: 16px;
+  @media (min-width: $desktop) {
+    float: right;
+    opacity: 0.5;
+    margin-left: 16px;
+  }
 }
 
 .filterItemInput {
@@ -220,17 +245,19 @@
 }
 
 .filterItem label:before {
-  position: absolute;
-  background-color: transparent;
-  margin-top: 4px;
-  content: "";
-  display: block;
-  width: 9px;
-  height: 9px;
-  border: 1px solid var(--text);
-  border-radius: 30px;
-  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
-  left: 1px;
+  @media (min-width: $desktop) {
+    position: absolute;
+    background-color: transparent;
+    margin-top: 4px;
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--text);
+    border-radius: 30px;
+    transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+    left: 1px;
+  }
 }
 
 .filterItemInput:focus ~ label:before {
@@ -240,6 +267,10 @@
 .filterItem input[type="checkbox"]:checked ~ label:before {
   background-color: var(--text);
   transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.filterItem input[type="checkbox"]:checked ~ label {
+  --background: var(--gray);
+  --text: white;
 }
 
 .filterItem:hover .span {
