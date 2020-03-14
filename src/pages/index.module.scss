@@ -31,28 +31,11 @@
   }
 }
 
-.slide {
-  transform: translateX(275px);
-  transition: all 0.5s ease;
-  opacity: 0.5;
-  @media (min-width: $desktop) {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 .filterContainer {
   padding: var(--page-shell-padding);
   color: var(--text);
+  display: none;
   background-color: var(--background);
-  position: absolute;
-  transform: translateX(-100vw);
-  z-index: 8;
-  transition: all 0.5s ease;
-  top: 0;
-  height: 100vh;
-  left: 0;
-  right: 0;
   overflow-y: scroll;
   @media (min-width: $desktop) {
     display: block;
@@ -61,6 +44,18 @@
     position: static;
     transform: translateX(0);
   }
+}
+
+.filterContainerMobile {
+  position: fixed;
+  display: block;
+  z-index: 8;
+  transition: all 0.5s ease;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
 }
 
 .filterHeadline {
@@ -127,11 +122,6 @@
       display: block;
     }
   }
-}
-
-.filterListVisible {
-  transform: translateX(0);
-  transition: all 0.5s ease;
 }
 
 .filterBannerBump {

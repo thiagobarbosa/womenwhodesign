@@ -70,7 +70,7 @@ const App = ({ data }) => {
             <div
               className={classnames({
                 [styles.filterContainer]: true,
-                [styles.filterListVisible]: isFilterListVisible
+                [styles.filterContainerMobile]: isFilterListVisible
               })}
             >
               <h2 className={styles.filterHeadline}>Filter by</h2>
