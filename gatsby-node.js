@@ -1,14 +1,12 @@
 const path = require(`path`);
-const { createFilePath } = require(`gatsby-source-filesystem`);
 const _ = require("lodash");
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
   if (node.internal.type === `Seeker`) {
     const slug = `jobs/${node.job.id.slice(0, 5)}-${_.kebabCase(
       node.job.company.name
     )}-${_.kebabCase(node.job.job_title)}`;
-    // const slug = createFilePath({ node, getNode, basePath: `pages` });
 
     createNodeField({
       node,
@@ -20,7 +18,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     graphql(`
       {
         allSeeker {

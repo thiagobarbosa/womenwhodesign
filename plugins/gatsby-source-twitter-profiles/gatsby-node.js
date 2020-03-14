@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const _ = require("lodash");
-const queryString = require("query-string");
 const Twitter = require("twitter");
 const getProfileTags = require("./get-profile-tags");
 const addDescriptionLinks = require("./add-description-links");
@@ -25,7 +24,7 @@ exports.sourceNodes = async (
     bearer_token: bearerToken
   });
 
-  let counter = 0;
+  const counter = 0;
   const followingList = await client.get("friends/ids", {
     user_id: twitterIdForFollowingList,
     stringify_ids: true

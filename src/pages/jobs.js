@@ -1,13 +1,12 @@
 import React from "react";
 import Link from "gatsby-link";
-import Nav from "../components/nav";
-import styles from "./about.module.scss";
 import { Helmet } from "react-helmet";
-import Layout from "../components/layout";
 import ta from "time-ago";
 import { graphql } from "gatsby";
+import Nav from "../components/nav";
+import styles from "./about.module.scss";
+import Layout from "../components/layout";
 import LocationIcon from "../components/location";
-import BriefcaseIcon from "../components/briefcase";
 
 const Jobs = props => {
   const emptyState =
@@ -42,7 +41,7 @@ const Jobs = props => {
           }
         ]}
       />
-      <Nav theme={"light"} />
+      <Nav theme="light" />
       <div className={styles.container}>
         <h1 className={styles.h1}>Find a job</h1>
 

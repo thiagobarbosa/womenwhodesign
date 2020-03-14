@@ -15,15 +15,15 @@ const Profile = props => {
     >
       {props.sizes ? (
         <Img
-          alt={`${props.name}'s profile picture on Twitter.'`}
+          alt={`${props.name}'s avatar on Twitter.'`}
           sizes={props.sizes}
-          backgroundColor={true}
+          backgroundColor
           className={styles.image}
         />
       ) : (
         <img
           className={styles.grayImage}
-          alt={`${props.name}'s profile picture on Twitter.'`}
+          alt={`${props.name}'s avatar on Twitter.'`}
           src={props.image.replace("_normal", "_400x400")}
         />
       )}
@@ -37,32 +37,37 @@ const Profile = props => {
         {props.location}
       </p>
       <div className={styles.url}>
-        {props.expandedUrl != "" ? (
-          <span>
-            <LinkIcon style={{ marginBottom: "-2px", marginRight: "4px" }} />
-            <a href={props.expandedUrl} className={styles.url} target="_blank">
-              {props.displayUrl}
-            </a>
-          </span>
+        <LinkIcon style={{ marginBottom: "-2px", marginRight: "4px" }} />
+
+        {props.expandedUrl ? (
+          <a
+            href={props.expandedUrl}
+            className={styles.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {props.displayUrl}
+          </a>
         ) : (
-          <span>
-            <LinkIcon style={{ marginBottom: "-4px" }} /> N/A
-          </span>
+          "N/A"
         )}
       </div>
 
       <p
         className={styles.description}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: props.description }}
       />
       <a
         href={`https://twitter.com/${props.handle}`}
         target="_blank"
+        rel="noopener noreferrer"
         className={styles.linkContainer}
       >
         <span className={styles.linkText}>
           <img
             src={twitter}
+            alt=""
             style={{
               height: "12px",
               paddingRight: "8px",

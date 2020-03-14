@@ -1,11 +1,11 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout";
 import Link from "gatsby-link";
-import Nav from "../components/nav";
-import styles from "../pages/about.module.scss";
 import { Helmet } from "react-helmet";
 import ta from "time-ago";
+import Layout from "../components/layout";
+import Nav from "../components/nav";
+import styles from "../pages/about.module.scss";
 import LocationIcon from "../components/location";
 import BriefcaseIcon from "../components/briefcase";
 
@@ -47,7 +47,7 @@ export default ({ data, location }) => {
           }
         ]}
       />
-      <Nav theme={"light"} />
+      <Nav theme="light" />
       <div className={styles.container}>
         <h1 className={styles.h1}>{job.job.job_title}</h1>
         <div className={styles.jobMetadata}>

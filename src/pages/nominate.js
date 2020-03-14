@@ -139,7 +139,12 @@ class App extends React.Component {
           )}
           {this.state.formSubmitted && (
             <div>
-              <p className={styles.formSubmit}>🎉 Thanks for nominating!</p>
+              <p className={styles.formSubmit}>
+                <span role="img" aria-label="Confetti emoji">
+                  🎉
+                </span>{" "}
+                Thanks for nominating!
+              </p>
             </div>
           )}
           <div className={styles.backContainer}>

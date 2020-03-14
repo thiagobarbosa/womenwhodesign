@@ -1,310 +1,305 @@
-import React from "react";
-import _ from "lodash";
+import React, { useState, useEffect, useRef } from "react";
+import { shuffle } from "lodash";
+import { graphql } from "gatsby";
+import classnames from "classnames";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
 import FilterPill from "../components/filterPill";
-import FilterItem from "../components/filterItem";
 import Nav from "../components/nav";
 import Loader from "../components/loader";
+import paginate from "../paginate";
 import styles from "./index.module.scss";
-import { graphql } from "gatsby";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.designerArray = props.data.allTwitterProfile.edges;
-    this.toggleFilterList = this.toggleFilterList.bind(this);
-    let tagCount = {};
-    categories.forEach(function(category) {
-      tagCount[category.id] = 0;
-    });
-    this.designerArray.forEach(function(profile) {
-      _.forOwn(profile.node.profile.tags, function(value, key) {
-        if (value === true) {
-          tagCount[key] = tagCount[key] + 1;
-        }
-      });
-    });
-    this.state = {
-      designers: this.designerArray,
-      filtersArray: [],
-      tagCount: tagCount,
-      filterListVisible: false,
-      secondaryFiltersVisible: false,
-      isLoading: true
-    };
-    this.onFilterClick = this.onFilterClick.bind(this);
-    this.addFilter = this.addFilter.bind(this);
-    this.removeFilter = this.removeFilter.bind(this);
-    this.filterDesigners = this.filterDesigners.bind(this);
-    this.toggleHiddenFilters = this.toggleHiddenFilters.bind(this);
-    this.clearFilters = this.clearFilters.bind(this);
-  }
+const capitalize = s => {
+  if (typeof s !== "string") return "";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleFilterListClick, false);
-    setTimeout(() => {
-      this.setState((prevState, props) => {
-        return {
-          designers: _.shuffle(prevState.designers),
-          isLoading: false
-        };
-      });
-    }, 200);
-  }
+const App = ({ data }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [visibleDesigners, setVisibleDesigners] = useState([]);
+  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [isFilterListVisible, setIsFilterListVisible] = useState(false);
 
-  componentWillUnmount() {
-    document.removeEventListener(
-      "mousedown",
-      this.handleFilterListClick,
-      false
-    );
-  }
+  const [currentPage, setCurrentPage] = useState(1);
 
-  hasOneSelectedFilter() {
-    let hasOneSelectedFilter = false;
-    if (this.state.filtersArray.length > 0) {
-      hasOneSelectedFilter = true;
+  const profileContainerRef = useRef();
+
+  useEffect(() => {
+    const shuffledDesigners = shuffle(data.allTwitterProfile.edges);
+    setVisibleDesigners(shuffledDesigners);
+    setIsLoading(false);
+  }, [data.allTwitterProfile.edges]);
+
+  const numDesignersPerPage = 50;
+  const numPagesToShowInPagination = 5;
+
+  const filteredDesigners = visibleDesigners.filter(designer => {
+    if (selectedFilters.length === 0) {
+      return true;
     }
-    return hasOneSelectedFilter;
-  }
 
-  toggleFilterList() {
-    const newValue = this.state.filterListVisible;
-    this.setState({
-      filterListVisible: !newValue
-    });
-  }
+    return selectedFilters.some(filter => designer.node.profile.tags[filter]);
+  });
 
-  filterDesigners(filtersArray) {}
+  const pagination = paginate(
+    filteredDesigners.length,
+    currentPage,
+    numDesignersPerPage,
+    numPagesToShowInPagination
+  );
 
-  addFilter(categoryId) {
-    const filtersArray = this.state.filtersArray;
-    filtersArray.push(categoryId);
-    this.setState({
-      filtersArray: filtersArray
-    });
-    this.filterDesigners(filtersArray);
-  }
+  return (
+    <Layout>
+      <div className={styles.container}>
+        <div className={styles.sidebar}>
+          <Nav
+            filter
+            theme="dark"
+            toggleFilterList={() => {
+              setIsFilterListVisible(!isFilterListVisible);
+            }}
+            isLoading={isLoading}
+          />
 
-  removeFilter(categoryId) {
-    const filtersArray = this.state.filtersArray;
-    const index = filtersArray.indexOf(categoryId);
-    if (index !== -1) {
-      filtersArray.splice(index, 1);
-    }
-    this.setState({
-      filtersArray: filtersArray
-    });
-    this.filterDesigners(filtersArray);
-  }
+          <div
+            className={classnames({
+              [styles.filterContainer]: true,
+              [styles.filterListVisible]: isFilterListVisible
+            })}
+          >
+            <h2 className={styles.filterHeadline}>Filter by</h2>
+            <ul className={styles.filterUl}>
+              {categories
+                .filter(category => {
+                  if (isFiltersExpanded) {
+                    return true;
+                  }
 
-  toggleHiddenFilters() {
-    this.setState(prevState => ({
-      secondaryFiltersVisible: !prevState.secondaryFiltersVisible
-    }));
-  }
+                  return category.primaryFilter;
+                })
+                .map(category => {
+                  return (
+                    <li className={styles.filterItem} key={category.id}>
+                      <input
+                        id={category.id}
+                        type="checkbox"
+                        value={category.id}
+                        onChange={e => {
+                          const categoryId = e.target.value;
+                          const isChecked = e.target.checked;
 
-  clearFilters() {
-    this.setState({
-      filtersArray: []
-    });
-  }
+                          const newSelectedFilters = [...selectedFilters];
 
-  onFilterClick(event) {
-    const categoryId = event.target.value;
-    const isChecked = event.target.checked;
+                          if (isChecked) {
+                            newSelectedFilters.push(categoryId);
+                          } else {
+                            const i = newSelectedFilters.indexOf(categoryId);
+                            newSelectedFilters.splice(i, 1);
+                          }
 
-    if (isChecked) {
-      this.addFilter(categoryId);
-    } else {
-      this.removeFilter(categoryId);
-    }
-  }
-
-  handleFilterListClick = e => {
-    if (!this.state.filterListVisible) {
-      return;
-    }
-    if (this.filterContainer.contains(e.target)) {
-      return;
-    }
-    if (this.filterButtonRef.contains(e.target)) {
-      return;
-    }
-    this.toggleFilterList();
-  };
-
-  render() {
-    return (
-      <Layout>
-        <div className={styles.container}>
-          <div className={styles.sidebar}>
-            <Nav
-              filter={true}
-              theme="dark"
-              toggleFilterList={this.toggleFilterList}
-              isLoading={this.state.isLoading}
-              filterButtonRef={filterButtonRef =>
-                (this.filterButtonRef = filterButtonRef)
-              }
-            />
-            {!this.state.isLoading && (
-              <div
-                ref={filterContainer =>
-                  (this.filterContainer = filterContainer)
-                }
-                className={`${styles.filterContainer} ${this.state
-                  .filterListVisible && styles.filterListVisible}`}
-              >
-                <h2 className={styles.filterHeadline}>Filter by</h2>
-                <ul className={styles.filterUl}>
-                  {categories.map((category, index) => {
-                    if (
-                      this.state.secondaryFiltersVisible ||
-                      category.primaryFilter
-                    ) {
-                      return (
-                        <FilterItem
-                          id={category.id}
-                          title={category.title}
-                          value={category.id}
-                          htmlFor={category.id}
-                          key={index}
-                          onFilterClick={this.onFilterClick}
-                          counter={this.state.tagCount[category.id]}
-                          isChecked={this.state.filtersArray.includes(
-                            category.id
-                          )}
-                        />
-                      );
-                    }
-                  })}
-                </ul>
-                <button
-                  onClick={this.toggleHiddenFilters.bind(this)}
-                  className={styles.showMoreFilters}
-                >
-                  {this.state.secondaryFiltersVisible ? (
-                    <>
-                      <span className={styles.arrow}>↑</span>
-                      <span className={styles.showMoreFiltersText}>
-                        Show fewer filters
+                          setSelectedFilters(newSelectedFilters);
+                          setCurrentPage(1);
+                        }}
+                        checked={selectedFilters.includes(category.id)}
+                        className={styles.filterItemInput}
+                      />
+                      <label
+                        htmlFor={category.id}
+                        className={styles.filterItemLabel}
+                      >
+                        <span className={styles.filterItemLabelSpan}>
+                          {category.title}
+                        </span>
+                      </label>
+                      <span className={styles.filterItemCounter}>
+                        {data[`tagCount${capitalize(category.id)}`].totalCount}
                       </span>
-                    </>
-                  ) : (
-                    <>
-                      <span className={styles.arrow}>↓</span>
-                      <span className={styles.showMoreFiltersText}>
-                        Show more filters
-                      </span>
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-          {this.state.isLoading && <Loader />}
-          {!this.state.isLoading && (
-            <div
-              className={`${styles.main} ${this.state.filterListVisible &&
-                styles.slide}`}
+                    </li>
+                  );
+                })}
+            </ul>
+            <button
+              onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
+              className={styles.showMoreFilters}
+              type="button"
             >
-              {this.hasOneSelectedFilter() && (
+              <span className={styles.arrow}>
+                {isFiltersExpanded ? "↑" : "↓"}
+              </span>
+
+              <span className={styles.showMoreFiltersText}>
+                Show {isFiltersExpanded ? "fewer" : "more"} filters
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          className={classnames({
+            [styles.main]: true,
+            [styles.slide]: isFilterListVisible
+          })}
+          ref={profileContainerRef}
+        >
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {selectedFilters.length > 0 && (
                 <div className={styles.filterBanner}>
                   <h2 className={styles.filterHeadline}>→ </h2>
                   <div className={styles.filterPillContainer}>
-                    {_.map(this.state.filtersArray, value => {
-                      // find category object
-                      const category = _.find(categories, function(cat) {
-                        return cat.id === value;
-                      });
-                      return (
-                        <FilterPill
-                          title={category.title}
-                          key={category.title}
-                          onCloseClick={() => {
-                            this.removeFilter(category.id);
-                          }}
-                        />
-                      );
-                    })}
+                    {selectedFilters.map(filterId => (
+                      <FilterPill
+                        title={categories.find(c => c.id === filterId).title}
+                        key={filterId}
+                        onCloseClick={() => {
+                          const newSelectedFilters = [...selectedFilters];
+                          const i = newSelectedFilters.indexOf(filterId);
+                          newSelectedFilters.splice(i, 1);
+
+                          setSelectedFilters(newSelectedFilters);
+                          setCurrentPage(1);
+                        }}
+                      />
+                    ))}
                   </div>
-                  {this.state.filtersArray.length > 0 && (
-                    <button
-                      onClick={this.clearFilters.bind(this)}
-                      className={styles.filterClear}
-                    >
-                      Clear
-                    </button>
-                  )}
+                  <button
+                    onClick={() => {
+                      setSelectedFilters([]);
+                      setCurrentPage(1);
+                    }}
+                    className={styles.filterClear}
+                    type="button"
+                  >
+                    Clear
+                  </button>
                 </div>
               )}
-
               <div
-                className={`${styles.profiles} ${this.state.filtersArray
-                  .length > 0 && styles.filterBannerBump}`}
+                className={classnames({
+                  [styles.profiles]: true,
+                  [styles.filterBannerBump]: selectedFilters.length > 0
+                })}
               >
-                {/* filter through the designers using lodash */}
-                {!this.state.isLoading &&
-                  _.filter(this.state.designers, currentDesigner => {
-                    // if no filters are checked, return all designers
+                {filteredDesigners.map(({ node: designer }, i) => {
+                  if (i < pagination.startIndex || i > pagination.endIndex) {
+                    return null;
+                  }
 
-                    if (this.state.filtersArray.length === 0) {
-                      return true;
-                    }
-
-                    // variable to see if designer contains at least one of the active filters
-                    let containsActiveFilter = false;
-
-                    // loop through all the checked filters
-                    this.state.filtersArray.forEach(filter => {
-                      // if the designer's object tag contains one of the filters, set the containsActiveFilter variable to true
-                      if (currentDesigner.node.profile.tags[filter] === true) {
-                        containsActiveFilter = true;
-                      }
-                    });
-
-                    // if containsActiveFilter is true, then the designer should be included
-                    return containsActiveFilter;
-                  }).map((profile, index) => (
+                  return (
                     <Profile
-                      image={profile.node.profile.profile_image_url_https}
+                      image={designer.profile.profile_image_url_https}
                       sizes={
-                        profile.node.localFile &&
-                        profile.node.localFile.childImageSharp &&
-                        profile.node.localFile.childImageSharp.sizes
+                        designer.localFile &&
+                        designer.localFile.childImageSharp &&
+                        designer.localFile.childImageSharp.sizes
                       }
-                      name={profile.node.profile.name}
-                      description={profile.node.profile.description}
-                      location={profile.node.profile.location || "N/A"}
-                      hex={`#${profile.node.profile.profile_link_color}`}
-                      handle={profile.node.profile.screen_name}
-                      key={profile.node.profile.id_str}
-                      contrast={profile.node.profile.contrast}
+                      name={designer.profile.name}
+                      description={designer.profile.description}
+                      location={designer.profile.location || "N/A"}
+                      hex={`#${designer.profile.profile_link_color}`}
+                      handle={designer.profile.screen_name}
+                      key={designer.profile.screen_name}
+                      contrast={designer.profile.contrast}
                       displayUrl={
-                        profile.node.profile.entities.url
-                          ? profile.node.profile.entities.url.urls[0]
-                              .display_url
-                          : ""
+                        designer.profile.entities.url &&
+                        designer.profile.entities.url.urls[0].display_url
                       }
                       expandedUrl={
-                        profile.node.profile.entities.url
-                          ? profile.node.profile.entities.url.urls[0]
-                              .expanded_url
-                          : ""
+                        designer.profile.entities.url &&
+                        designer.profile.entities.url.urls[0].expanded_url
                       }
                     />
-                  ))}
+                  );
+                })}
               </div>
-            </div>
+
+              <div className={styles.paginationContainer}>
+                <button
+                  onClick={() => {
+                    setCurrentPage(currentPage - 1);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  disabled={pagination.currentPage === pagination.startPage}
+                  type="button"
+                  className={styles.paginationArrow}
+                >
+                  ←
+                </button>
+                <button
+                  className={styles.pageNumberButton}
+                  onClick={() => {
+                    setCurrentPage(1);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  type="button"
+                  disabled={pagination.currentPage === 1}
+                >
+                  1
+                </button>
+                {currentPage >= numPagesToShowInPagination && <>&hellip;</>}
+                {pagination.pages.map(pageNumber => {
+                  // Skip over these page numbers because they'll always appear
+                  // in the pagination.
+                  if (
+                    pageNumber === 1 ||
+                    pageNumber === pagination.totalPages
+                  ) {
+                    return null;
+                  }
+
+                  return (
+                    <button
+                      key={pageNumber}
+                      className={styles.pageNumberButton}
+                      onClick={() => {
+                        setCurrentPage(pageNumber);
+                        profileContainerRef.current.scrollTo(0, 0);
+                      }}
+                      disabled={pagination.currentPage === pageNumber}
+                      type="button"
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })}
+                {currentPage <=
+                  pagination.totalPages - (numPagesToShowInPagination + 1) && (
+                  <>&hellip;</>
+                )}
+                <button
+                  className={styles.pageNumberButton}
+                  onClick={() => {
+                    setCurrentPage(pagination.totalPages);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  type="button"
+                  disabled={pagination.currentPage === pagination.totalPages}
+                >
+                  {pagination.totalPages}
+                </button>
+                <button
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1);
+                    profileContainerRef.current.scrollTo(0, 0);
+                  }}
+                  disabled={pagination.currentPage === pagination.endPage}
+                  type="button"
+                  className={styles.paginationArrow}
+                >
+                  →
+                </button>
+              </div>
+            </>
           )}
         </div>
-      </Layout>
-    );
-  }
-}
+      </div>
+    </Layout>
+  );
+};
 
 export default App;
 
@@ -313,7 +308,6 @@ export const pageQuery = graphql`
     allTwitterProfile {
       edges {
         node {
-          id
           localFile {
             childImageSharp {
               sizes(grayscale: true, maxWidth: 200) {
@@ -325,7 +319,6 @@ export const pageQuery = graphql`
             }
           }
           profile {
-            id_str
             description
             name
             screen_name
@@ -333,30 +326,30 @@ export const pageQuery = graphql`
             profile_image_url_https
             profile_link_color
             tags {
-              graphic
-              product
-              manager
-              lead
-              letter
-              creative
-              head
-              illustrator
-              ux
-              founder
-              director
-              research
+              art
               author
               ceo
-              freelance
-              speaker
-              engineer
               content
+              creative
               developer
-              art
+              director
+              engineer
+              founder
+              freelance
+              graphic
+              head
+              illustrator
+              lead
+              letter
+              manager
+              product
+              research
+              speaker
+              systems
+              ux
+              vp
               web
               writer
-              systems
-              vp
             }
             entities {
               url {
@@ -369,6 +362,150 @@ export const pageQuery = graphql`
           }
         }
       }
+    }
+
+    tagCountArt: allTwitterProfile(
+      filter: { profile: { tags: { art: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountAuthor: allTwitterProfile(
+      filter: { profile: { tags: { author: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountCeo: allTwitterProfile(
+      filter: { profile: { tags: { ceo: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountContent: allTwitterProfile(
+      filter: { profile: { tags: { content: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountCreative: allTwitterProfile(
+      filter: { profile: { tags: { creative: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountDeveloper: allTwitterProfile(
+      filter: { profile: { tags: { developer: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountDirector: allTwitterProfile(
+      filter: { profile: { tags: { director: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountEngineer: allTwitterProfile(
+      filter: { profile: { tags: { engineer: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountFounder: allTwitterProfile(
+      filter: { profile: { tags: { founder: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountFreelance: allTwitterProfile(
+      filter: { profile: { tags: { freelance: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountGraphic: allTwitterProfile(
+      filter: { profile: { tags: { graphic: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountHead: allTwitterProfile(
+      filter: { profile: { tags: { head: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountIllustrator: allTwitterProfile(
+      filter: { profile: { tags: { illustrator: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountLead: allTwitterProfile(
+      filter: { profile: { tags: { lead: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountLetter: allTwitterProfile(
+      filter: { profile: { tags: { letter: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountManager: allTwitterProfile(
+      filter: { profile: { tags: { manager: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountProduct: allTwitterProfile(
+      filter: { profile: { tags: { product: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountResearch: allTwitterProfile(
+      filter: { profile: { tags: { research: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountSpeaker: allTwitterProfile(
+      filter: { profile: { tags: { speaker: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountSystems: allTwitterProfile(
+      filter: { profile: { tags: { systems: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountUx: allTwitterProfile(
+      filter: { profile: { tags: { ux: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountVp: allTwitterProfile(
+      filter: { profile: { tags: { vp: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountWeb: allTwitterProfile(
+      filter: { profile: { tags: { web: { eq: true } } } }
+    ) {
+      totalCount
+    }
+
+    tagCountWriter: allTwitterProfile(
+      filter: { profile: { tags: { writer: { eq: true } } } }
+    ) {
+      totalCount
     }
   }
 `;

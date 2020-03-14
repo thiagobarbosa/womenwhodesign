@@ -49,7 +49,7 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
     const jsonString = JSON.stringify(job);
 
     const gatsbyNode = {
-      job: Object.assign({}, job),
+      job: { ...job},
       id: `Seeker: ${job.id}`,
       parent: "__SOURCE__",
       children: [],

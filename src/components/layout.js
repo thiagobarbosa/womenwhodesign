@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import "../styles/index.scss";
 
 const Layout = ({ children }) => (
-  <div>
+  <>
     <Helmet
       title="Women Who Design"
       meta={[
@@ -39,7 +39,7 @@ const Layout = ({ children }) => (
       ]}
     />
     {children}
-  </div>
+  </>
 );
 
 export default Layout;
