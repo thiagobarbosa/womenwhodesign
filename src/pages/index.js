@@ -33,7 +33,7 @@ const App = ({ data }) => {
     setIsLoading(false);
   }, [data.allTwitterProfile.edges]);
 
-  const numDesignersPerPage = 50;
+  const numDesignersPerPage = 52;
   const numPagesToShowInPagination = 5;
 
   const filteredDesigners = visibleDesigners.filter(designer => {

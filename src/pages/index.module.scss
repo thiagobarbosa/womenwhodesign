@@ -258,9 +258,9 @@
   font-size: 1rem;
   background-color: var(--background);
   border: none;
-  padding: calc(var(--page-shell-padding) / 6);
-  margin: calc(var(--page-shell-padding) / 6);
-  cursor: pointer;
+  padding: calc(var(--page-shell-padding) / 4);
+  margin: calc(var(--page-shell-padding) / 8);
+
   color: var(--text);
   line-height: 1;
   border-radius: 2px;
@@ -271,8 +271,17 @@
   --text: white;
   --background: var(--gray);
 }
-.pageNumberButton:hover {
-  text-decoration: underline;
+
+.pageNumberButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.pageNumberButton:hover:not(:disabled) {
+  --background: var(--border-gray);
+}
+.pageNumberButton:focus:not(:disabled) {
+  box-shadow: 0 0 0 1px var(--text);
+  outline: none;
 }
 
 .paginationArrow {
