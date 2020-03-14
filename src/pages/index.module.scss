@@ -22,9 +22,9 @@
   overflow-y: scroll;
   background-color: var(--gray);
   @media (min-width: $desktop) {
-    min-width: $sidebar;
-    width: $sidebar;
-    max-width: $sidebar;
+    min-width: var(--sidebar);
+    width: var(--sidebar);
+    max-width: var(--sidebar);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -144,9 +144,9 @@
     background-color: white;
     display: flex;
     align-items: center;
-    width: 100%;
     position: fixed;
     top: 0;
+    width: calc(100% - var(--sidebar));
     padding: 13px var(--page-shell-padding);
     z-index: 5;
     margin: 0 calc(-1 * var(--page-shell-padding));
@@ -233,7 +233,7 @@
   left: 1px;
 }
 
-.filterInput:focus ~ label:before {
+.filterItemInput:focus ~ label:before {
   box-shadow: 0 0 0 3px var(--background), 0 0 0 4px var(--text);
 }
 
@@ -244,4 +244,39 @@
 
 .filterItem:hover .span {
   text-decoration: underline;
+}
+
+.paginationContainer {
+  margin-top: var(--page-shell-padding);
+  padding: calc(var(--page-shell-padding) / 2);
+  display: flex;
+  justify-content: center;
+}
+
+.pageNumberButton {
+  font-size: 1rem;
+  background-color: var(--background);
+  border: none;
+  padding: calc(var(--page-shell-padding) / 6);
+  margin: calc(var(--page-shell-padding) / 6);
+  cursor: pointer;
+  color: var(--text);
+  line-height: 1;
+  border-radius: 2px;
+}
+
+.pageNumberButton:disabled {
+  font-weight: 500;
+  --text: white;
+  --background: var(--gray);
+}
+.pageNumberButton:hover {
+  text-decoration: underline;
+}
+
+.paginationArrow {
+  composes: arrow pageNumberButton;
+}
+.paginationArrow:disabled {
+  display: none;
 }

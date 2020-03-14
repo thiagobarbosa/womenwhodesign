@@ -216,7 +216,7 @@ const App = ({ data }) => {
                 })}
               </div>
 
-              <div style={{ padding: "2rem 0", display: "flex" }}>
+              <div className={styles.paginationContainer}>
                 <button
                   onClick={() => {
                     setCurrentPage(currentPage - 1);
@@ -224,13 +224,15 @@ const App = ({ data }) => {
                   }}
                   disabled={pagination.currentPage === pagination.startPage}
                   type="button"
+                  className={styles.paginationArrow}
                 >
-                  ← Prev
+                  ←
                 </button>
 
                 {pagination.pages.map(pageNumber => (
                   <button
                     key={pageNumber}
+                    className={styles.pageNumberButton}
                     onClick={() => {
                       setCurrentPage(pageNumber);
                       profileContainerRef.current.scrollTo(0, 0);
@@ -249,8 +251,9 @@ const App = ({ data }) => {
                   }}
                   disabled={pagination.currentPage === pagination.endPage}
                   type="button"
+                  className={styles.paginationArrow}
                 >
-                  Next →
+                  →
                 </button>
               </div>
             </>
