@@ -73,7 +73,19 @@ const App = ({ data }) => {
                 [styles.filterContainerMobile]: isFilterListVisible
               })}
             >
-              <h2 className={styles.filterHeadline}>Filter by</h2>
+              <div className={styles.filterHeadlineContainer}>
+                <h2 className={styles.filterHeadline}>Filter by</h2>
+                <button
+                  onClick={() => {
+                    setSelectedFilters([]);
+                    setCurrentPage(1);
+                  }}
+                  className={styles.filterClear}
+                  type="button"
+                >
+                  Clear
+                </button>
+              </div>
               <ul className={styles.filterUl}>
                 {categories
                   .filter(category => {
@@ -140,6 +152,15 @@ const App = ({ data }) => {
                   Show {isFiltersExpanded ? "fewer" : "more"} filters
                 </span>
               </button>
+              <div className={styles.filterContainerButtonContainer}>
+                <button
+                  type="button"
+                  onClick={() => setIsFilterListVisible(!isFilterListVisible)}
+                  className={styles.filterContainerApplyButton}
+                >
+                  View {filteredDesigners.length} designers
+                </button>
+              </div>
             </div>
           </TouchScrollable>
         </div>

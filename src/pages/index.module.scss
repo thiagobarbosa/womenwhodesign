@@ -32,12 +32,12 @@
 }
 
 .filterContainer {
-  padding: var(--page-shell-padding);
   color: var(--text);
   display: none;
   background-color: var(--background);
   overflow-y: scroll;
   @media (min-width: $desktop) {
+    padding: var(--page-shell-padding);
     display: block;
     --background: var(--gray);
     --text: white;
@@ -48,14 +48,16 @@
 
 .filterContainerMobile {
   position: fixed;
-  display: block;
-  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
   transition: all 0.5s ease;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  overflow-y: scroll;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .filterHeadline {
@@ -72,9 +74,10 @@
 }
 
 .filterUl {
-  margin: 24px 0;
+  padding: 24px 16px;
   list-style: none;
-  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
 }
 
 .showMoreFilters {
@@ -86,9 +89,11 @@
   background-color: var(--background);
   border: none;
   color: var(--text);
+  display: none;
   @media (min-width: $desktop) {
     --background: var(--gray);
     --text: white;
+    display: block;
   }
 
   &:hover .showMoreFiltersText {
@@ -312,4 +317,33 @@
 }
 .paginationArrow:disabled {
   display: none;
+}
+
+.filterContainerButtonContainer {
+  width: 100%;
+  padding: 16px;
+  background: var(--background);
+  border-top: 1px solid var(--border-gray);
+  margin-top: auto;
+  @media (min-width: $desktop) {
+    display: none;
+  }
+}
+
+.filterHeadlineContainer {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.filterContainerApplyButton {
+  width: 100%;
+  height: 48px;
+  background: var(--background);
+  --background: var(--gray);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  margin: 0;
 }
