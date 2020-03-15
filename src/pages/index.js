@@ -63,6 +63,7 @@ const App = ({ data }) => {
             numberOfFilters={selectedFilters.length}
             toggleFilterList={() => {
               setIsFilterListVisible(!isFilterListVisible);
+              setIsFiltersExpanded(true);
             }}
             isLoading={isLoading}
           />
@@ -74,6 +75,12 @@ const App = ({ data }) => {
               })}
             >
               <div className={styles.filterHeadlineContainer}>
+                <button
+                  type="button"
+                  onClick={() => setIsFilterListVisible(false)}
+                >
+                  x
+                </button>
                 <h2 className={styles.filterHeadline}>Filter by</h2>
                 <button
                   onClick={() => {
@@ -155,7 +162,7 @@ const App = ({ data }) => {
               <div className={styles.filterContainerButtonContainer}>
                 <button
                   type="button"
-                  onClick={() => setIsFilterListVisible(!isFilterListVisible)}
+                  onClick={() => setIsFilterListVisible(false)}
                   className={styles.filterContainerApplyButton}
                 >
                   View {filteredDesigners.length} designers
