@@ -343,15 +343,16 @@
   height: 48px;
   background: var(--background);
   --background: var(--gray);
-  border: none;
   color: white;
   font-size: 1rem;
-  margin: 0;
-  padding: 0;
   margin: 0;
 }
 
 .filterCloseIcon {
   display: inline-flex;
   align-self: start;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
