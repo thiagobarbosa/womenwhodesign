@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { shuffle } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";
-import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
+import { DialogOverlay, DialogContent } from "@reach/dialog";
+import ClickableBox from "clickable-box";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
@@ -314,15 +315,11 @@ const App = ({ data }) => {
             <DialogOverlay isOpen={showDialog} onDismiss={close}>
               <DialogContent>
                 <div className={styles.dialogHeader}>
-                  <button
-                    className={styles.closeButton}
-                    onClick={close}
-                    type="button"
-                  >
+                  <ClickableBox className={styles.closeButton} onClick={close}>
                     <span aria-hidden>
                       <CloseIcon />
                     </span>
-                  </button>
+                  </ClickableBox>
                   <h2>Filters</h2>
                   <button type="button">Clear</button>
                 </div>
