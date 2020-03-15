@@ -57,6 +57,7 @@
   left: 0;
   right: 0;
   height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
 }
 
@@ -65,12 +66,10 @@
   margin: 0;
   font-size: 16px;
   font-weight: 500;
-}
-
-.filterHeadline {
-  font-family: $graphik;
-  margin: 0;
-  font-size: 16px;
+  text-align: center;
+  @media (min-width: $desktop) {
+    text-align: left;
+  }
 }
 
 .filterUl {
@@ -226,6 +225,7 @@
 }
 
 .filterItemCounter {
+  display: none;
   @media (min-width: $desktop) {
     float: right;
     opacity: 0.5;
@@ -346,4 +346,9 @@
   color: white;
   font-size: 1rem;
   margin: 0;
+}
+
+.filterCloseIcon {
+  display: inline-flex;
+  align-self: start;
 }

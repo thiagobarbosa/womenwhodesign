@@ -11,6 +11,7 @@ import Nav from "../components/nav";
 import Loader from "../components/loader";
 import paginate from "../paginate";
 import styles from "./index.module.scss";
+import CloseIcon from "../components/close";
 
 const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -78,8 +79,9 @@ const App = ({ data }) => {
                 <button
                   type="button"
                   onClick={() => setIsFilterListVisible(false)}
+                  className={styles.filterCloseIcon}
                 >
-                  x
+                  <CloseIcon />
                 </button>
                 <h2 className={styles.filterHeadline}>Filter by</h2>
                 <button
