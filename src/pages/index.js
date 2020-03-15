@@ -14,6 +14,8 @@ import paginate from "../paginate";
 import "@reach/dialog/styles.css";
 import styles from "./index.module.scss";
 import CloseIcon from "../components/icons/close";
+import FilterIcon from "../components/icons/close/filter";
+import Button from "../components/button";
 
 const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -304,14 +306,12 @@ const App = ({ data }) => {
             </>
           )}
           <div>
-            <button
-              type="button"
-              onClick={open}
-              className={styles.filterButton}
-            >
-              Filters{" "}
-              {selectedFilters.length > 0 && `· ${selectedFilters.length}`}
-            </button>
+            <div className={styles.filterButtonContainer}>
+              <Button type="button" onClick={open} fullWidth={false}>
+                <FilterIcon /> Filters
+                {selectedFilters.length > 0 && `· ${selectedFilters.length}`}
+              </Button>
+            </div>
             <DialogOverlay isOpen={showDialog} onDismiss={close}>
               <DialogContent>
                 <div className={styles.dialogHeader}>
@@ -325,9 +325,9 @@ const App = ({ data }) => {
                 </div>
                 <div>Hello there. I am a dialog</div>
                 <div className={styles.dialogFooter}>
-                  <button type="button" onClick={close}>
+                  <Button type="button" onClick={close}>
                     View {filteredDesigners.length} designers
-                  </button>
+                  </Button>
                 </div>
               </DialogContent>
             </DialogOverlay>
