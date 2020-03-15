@@ -12,7 +12,8 @@ const categories = [
   {
     title: "CEOs",
     id: "ceo",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Content strategists",
@@ -33,7 +34,8 @@ const categories = [
   {
     title: "Directors",
     id: "director",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Developers",
@@ -49,7 +51,8 @@ const categories = [
   {
     title: "Founders",
     id: "founder",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Freelancers",
@@ -65,7 +68,8 @@ const categories = [
   {
     title: "Heads of",
     id: "head",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Illustrators",
@@ -76,7 +80,8 @@ const categories = [
   {
     title: "Leads",
     id: "lead",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Letterers",
@@ -85,7 +90,8 @@ const categories = [
   },
   {
     title: "Managers",
-    id: "manager"
+    id: "manager",
+    position: true
   },
   {
     title: "Product designers",
@@ -112,7 +118,8 @@ const categories = [
   {
     title: "VPs",
     id: "vp",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Web designers",
