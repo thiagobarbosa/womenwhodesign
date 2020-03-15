@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { shuffle } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";
+import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
@@ -9,7 +10,9 @@ import FilterPill from "../components/filterPill";
 import Nav from "../components/nav";
 import Loader from "../components/loader";
 import paginate from "../paginate";
+import "@reach/dialog/styles.css";
 import styles from "./index.module.scss";
+import CloseIcon from "../components/icons/close";
 
 const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -22,6 +25,10 @@ const App = ({ data }) => {
   const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFilterListVisible, setIsFilterListVisible] = useState(false);
+
+  const [showDialog, setShowDialog] = React.useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => setShowDialog(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -295,6 +302,39 @@ const App = ({ data }) => {
               </div>
             </>
           )}
+          <div>
+            <button
+              type="button"
+              onClick={open}
+              className={styles.filterButton}
+            >
+              Filters{" "}
+              {selectedFilters.length > 0 && `· ${selectedFilters.length}`}
+            </button>
+            <DialogOverlay isOpen={showDialog} onDismiss={close}>
+              <DialogContent>
+                <div className={styles.dialogHeader}>
+                  <button
+                    className={styles.closeButton}
+                    onClick={close}
+                    type="button"
+                  >
+                    <span aria-hidden>
+                      <CloseIcon />
+                    </span>
+                  </button>
+                  <h2>Filters</h2>
+                  <button type="button">Clear</button>
+                </div>
+                <div>Hello there. I am a dialog</div>
+                <div className={styles.dialogFooter}>
+                  <button type="button" onClick={close}>
+                    View {filteredDesigners.length} designers
+                  </button>
+                </div>
+              </DialogContent>
+            </DialogOverlay>
+          </div>
         </div>
       </div>
     </Layout>

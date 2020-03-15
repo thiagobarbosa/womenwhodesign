@@ -16,16 +16,6 @@ const Nav = props => {
         <Logo className={styles.logo} />
       </Link>
       <nav className={styles.links}>
-        {props.filter && (
-          <button
-            className={`${styles.link} ${styles.filterButton}`}
-            onClick={props.toggleFilterList}
-            disabled={props.isLoading}
-            type="button"
-          >
-            Filter
-          </button>
-        )}
         <Link to="/about" className={styles.link}>
           About
         </Link>
