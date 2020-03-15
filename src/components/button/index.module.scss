@@ -21,6 +21,8 @@
   border: 1px solid var(--background);
   height: 52px;
   border-radius: 2px;
+  z-index: 1;
+  transition: all ease 0.2s;
   &:focus {
     outline: none;
     box-shadow: inset var(--background) 0px 0px 0px 2px,
@@ -30,4 +32,31 @@
 
 .fullWidth {
   width: 100%;
+}
+
+.arrow {
+  position: absolute;
+  color: var(--color);
+  opacity: 0;
+  transition: all ease 0.3s;
+  font-family: $sans-serif;
+}
+
+.children {
+  transition: all ease 0.3s;
+  z-index: 10;
+  position: relative;
+  color: white;
+  display: inline-flex;
+}
+
+.main:hover .arrow {
+  opacity: 1;
+  transform: translateX(16px);
+  transition: all ease 0.3s;
+}
+
+.main:hover .children {
+  transform: translateX(-12px);
+  transition: all ease 0.3s;
 }

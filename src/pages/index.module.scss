@@ -289,6 +289,12 @@
   display: flex;
   flex-direction: column;
   font-family: $graphik;
+  font-size: 16px;
+
+  h3 {
+    font-weight: 500;
+    padding-bottom: 16px;
+  }
 }
 
 .dialogHeader {
@@ -297,6 +303,10 @@
   grid-gap: 8px;
   align-items: center;
   border-bottom: 1px solid var(--border-gray);
+  h2 {
+    text-align: center;
+    font-weight: 500;
+  }
 }
 
 .closeButton {
@@ -306,6 +316,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 2px;
+}
+
+.dialogBody {
+  padding: 24px;
 }
 
 .closeButton:focus {
@@ -319,4 +333,22 @@
   border-top: 1px solid var(--border-gray);
   padding: 16px;
   margin-top: auto;
+}
+
+.dialogFilterItemLabel {
+  font-size: 13px;
+  font-family: $pitch;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 0 8px 8px 0;
+  padding: 8px 16px;
+  background-color: var(--border-gray);
+  border-radius: 999px;
+}
+
+.dialogFilterItem input[type="checkbox"]:checked ~ label {
+  background-color: var(--text);
+  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  color: white;
 }

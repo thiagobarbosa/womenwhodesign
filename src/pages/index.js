@@ -308,7 +308,7 @@ const App = ({ data }) => {
           <div>
             <div className={styles.filterButtonContainer}>
               <Button type="button" onClick={open} fullWidth={false}>
-                <FilterIcon /> Filters
+                <FilterIcon /> Filter
                 {selectedFilters.length > 0 && `· ${selectedFilters.length}`}
               </Button>
             </div>
@@ -320,10 +320,66 @@ const App = ({ data }) => {
                       <CloseIcon />
                     </span>
                   </ClickableBox>
-                  <h2>Filters</h2>
-                  <button type="button">Clear</button>
+                  <h2>Filter</h2>
+                  <button
+                    onClick={() => {
+                      setSelectedFilters([]);
+                      setCurrentPage(1);
+                    }}
+                    className={styles.filterClear}
+                    type="button"
+                  >
+                    Clear
+                  </button>
                 </div>
-                <div>Hello there. I am a dialog</div>
+                <div className={styles.dialogBody}>
+                  <h3>Expertise</h3>
+
+                  {categories
+                    .filter(category => {
+                      return category.expertise;
+                    })
+                    .map(category => {
+                      return (
+                        <span
+                          key={category.id}
+                          className={styles.dialogFilterItem}
+                        >
+                          <input
+                            id={category.id}
+                            type="checkbox"
+                            value={category.id}
+                            onChange={e => {
+                              const categoryId = e.target.value;
+                              const isChecked = e.target.checked;
+
+                              const newSelectedFilters = [...selectedFilters];
+
+                              if (isChecked) {
+                                newSelectedFilters.push(categoryId);
+                              } else {
+                                const i = newSelectedFilters.indexOf(
+                                  categoryId
+                                );
+                                newSelectedFilters.splice(i, 1);
+                              }
+
+                              setSelectedFilters(newSelectedFilters);
+                              setCurrentPage(1);
+                            }}
+                            checked={selectedFilters.includes(category.id)}
+                            className={styles.filterItemInput}
+                          />
+                          <label
+                            htmlFor={category.id}
+                            className={styles.dialogFilterItemLabel}
+                          >
+                            {category.title}
+                          </label>
+                        </span>
+                      );
+                    })}
+                </div>
                 <div className={styles.dialogFooter}>
                   <Button type="button" onClick={close}>
                     View {filteredDesigners.length} designers

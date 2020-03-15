@@ -2,7 +2,8 @@ const categories = [
   {
     title: "Art directors",
     id: "art",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Authors",
@@ -15,16 +16,19 @@ const categories = [
   },
   {
     title: "Content strategists",
-    id: "content"
+    id: "content",
+    expertise: true
   },
   {
     title: "Creative directors",
-    id: "creative"
+    id: "creative",
+    expertise: true
   },
   {
     title: "Design system-ers",
     id: "systems",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Directors",
@@ -34,11 +38,13 @@ const categories = [
   {
     title: "Developers",
     id: "developer",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Engineers",
-    id: "engineer"
+    id: "engineer",
+    expertise: true
   },
   {
     title: "Founders",
@@ -53,7 +59,8 @@ const categories = [
   {
     title: "Graphic designers",
     id: "graphic",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Heads of",
@@ -63,7 +70,8 @@ const categories = [
   {
     title: "Illustrators",
     id: "illustrator",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Leads",
@@ -72,7 +80,8 @@ const categories = [
   },
   {
     title: "Letterers",
-    id: "letter"
+    id: "letter",
+    expertise: true
   },
   {
     title: "Managers",
@@ -81,12 +90,14 @@ const categories = [
   {
     title: "Product designers",
     id: "product",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Researchers",
     id: "research",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Speakers",
@@ -95,7 +106,8 @@ const categories = [
   {
     title: "UX designers",
     id: "ux",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "VPs",
@@ -104,11 +116,13 @@ const categories = [
   },
   {
     title: "Web designers",
-    id: "web"
+    id: "web",
+    expertise: true
   },
   {
     title: "Writers",
-    id: "writer"
+    id: "writer",
+    expertise: true
   }
 ];
 
