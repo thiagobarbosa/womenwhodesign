@@ -137,8 +137,28 @@ const categories = [
     location: true
   },
   {
-    title: "San Francisco",
-    id: "sf",
+    title: "Bay Area",
+    id: "ba",
+    location: true
+  },
+  {
+    title: "Los Angeles",
+    id: "la",
+    location: true
+  },
+  {
+    title: "Seattle",
+    id: "seattle",
+    location: true
+  },
+  {
+    title: "London",
+    id: "london",
+    location: true
+  },
+  {
+    title: "Austin",
+    id: "austin",
     location: true
   }
 ];

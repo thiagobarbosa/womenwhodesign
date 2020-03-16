@@ -230,10 +230,14 @@
 
 .paginationContainer {
   margin-top: var(--page-shell-padding);
-  padding: calc(var(--page-shell-padding) / 2);
+  padding: var(--page-shell-padding) calc(var(--page-shell-padding) / 2)
+    calc(var(--page-shell-padding) * 4);
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (min-width: $desktop) {
+    padding: calc(var(--page-shell-padding) / 2);
+  }
 }
 
 .pageNumberButton {
@@ -278,6 +282,9 @@
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
+  @media (min-width: $desktop) {
+    display: none;
+  }
 }
 
 [data-reach-dialog-content] {

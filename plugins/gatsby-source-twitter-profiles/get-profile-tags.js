@@ -63,15 +63,34 @@ module.exports = profile => {
 
   if (
     location.toUpperCase().includes("NYC") ||
-    location.toUpperCase().includes("NEW YORK CITY")
+    location.toUpperCase().includes("NEW YORK")
   ) {
     designerTagsObject.nyc = true;
   }
   if (
     location.toUpperCase().includes("SF") ||
-    location.toUpperCase().includes("SAN FRANCISCO")
+    location.toUpperCase().includes("SAN FRANCISCO") ||
+    location.toUpperCase().includes("BAY AREA") ||
+    location.toUpperCase().includes("BERKELEY") ||
+    location.toUpperCase().includes("PALO ALTO") ||
+    location.toUpperCase().includes("OAKLAND")
   ) {
-    designerTagsObject.sf = true;
+    designerTagsObject.ba = true;
+  }
+  if (
+    location.toUpperCase().includes("LA") ||
+    location.toUpperCase().includes("LOS ANGELES")
+  ) {
+    designerTagsObject.la = true;
+  }
+  if (location.toUpperCase().includes("LONDON")) {
+    designerTagsObject.london = true;
+  }
+  if (location.toUpperCase().includes("SEATTLE")) {
+    designerTagsObject.seattle = true;
+  }
+  if (location.toUpperCase().includes("AUSTIN")) {
+    designerTagsObject.austin = true;
   }
 
   return designerTagsObject;

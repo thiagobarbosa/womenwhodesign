@@ -309,7 +309,11 @@ const App = ({ data }) => {
             <div className={styles.filterButtonContainer}>
               <Button type="button" onClick={open} fullWidth={false}>
                 <FilterIcon /> Filter
-                {selectedFilters.length > 0 && `· ${selectedFilters.length}`}
+                {selectedFilters.length > 0 && (
+                  <>
+                    <span>·</span> <span>{selectedFilters.length}</span>
+                  </>
+                )}
               </Button>
             </div>
             <DialogOverlay isOpen={showDialog} onDismiss={close}>
@@ -511,7 +515,9 @@ export const pageQuery = graphql`
             profile_link_color
             tags {
               art
+              austin
               author
+              ba
               ceo
               content
               creative
@@ -523,13 +529,15 @@ export const pageQuery = graphql`
               graphic
               head
               illustrator
+              la
               lead
               letter
+              london
               manager
               nyc
               product
               research
-              sf
+              seattle
               speaker
               systems
               ux

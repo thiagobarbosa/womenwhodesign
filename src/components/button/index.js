@@ -3,9 +3,8 @@ import classnames from "classnames";
 import { Link } from "gatsby";
 import styles from "./index.module.scss";
 
-const Button = ({ children, type, href, to, onClick, fullWidth, arrow }) => {
+const Button = ({ children, type, href, to, onClick, fullWidth }) => {
   const buttonStyles = classnames(styles.main, styles.fullWidth && fullWidth);
-  const childStyles = classnames(styles.children && arrow);
   const El = href ? "a" : to ? Link : "button";
   return (
     <El
@@ -16,8 +15,7 @@ const Button = ({ children, type, href, to, onClick, fullWidth, arrow }) => {
       onClick={onClick}
       fullWidth={fullWidth || true}
     >
-      <span className={childStyles}>{children}</span>
-      {arrow && <span className={styles.arrow}>→</span>}
+      <span className={styles.children}>{children}</span>
     </El>
   );
 };

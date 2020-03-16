@@ -43,11 +43,10 @@
 }
 
 .children {
-  transition: all ease 0.3s;
-  z-index: 10;
-  position: relative;
-  color: white;
-  display: inline-flex;
+  display: inline-grid;
+  grid-gap: 12px;
+  grid-auto-flow: column;
+  align-items: center;
 }
 
 .main:hover .arrow {
