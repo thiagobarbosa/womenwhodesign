@@ -303,19 +303,19 @@ const App = ({ data }) => {
                   →
                 </button>
               </div>
+              <div className={styles.filterButtonContainer}>
+                <Button type="button" onClick={open} fullWidth={false}>
+                  <FilterIcon /> Filter
+                  {selectedFilters.length > 0 && (
+                    <>
+                      <span>·</span> <span>{selectedFilters.length}</span>
+                    </>
+                  )}
+                </Button>
+              </div>
             </>
           )}
           <div>
-            <div className={styles.filterButtonContainer}>
-              <Button type="button" onClick={open} fullWidth={false}>
-                <FilterIcon /> Filter
-                {selectedFilters.length > 0 && (
-                  <>
-                    <span>·</span> <span>{selectedFilters.length}</span>
-                  </>
-                )}
-              </Button>
-            </div>
             <DialogOverlay isOpen={showDialog} onDismiss={close}>
               <DialogContent>
                 <div className={styles.dialogHeader}>
@@ -332,6 +332,7 @@ const App = ({ data }) => {
                     }}
                     className={styles.filterClear}
                     type="button"
+                    style={{ marginRight: "16px" }}
                   >
                     Clear
                   </button>
@@ -429,7 +430,7 @@ const App = ({ data }) => {
                         </span>
                       );
                     })}
-                  <h3>Position</h3>
+                  <h3>Locations</h3>
                   {categories
                     .filter(category => {
                       return category.location;
@@ -698,6 +699,36 @@ export const pageQuery = graphql`
 
     tagCountWriter: allTwitterProfile(
       filter: { profile: { tags: { writer: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountBa: allTwitterProfile(
+      filter: { profile: { tags: { ba: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountLa: allTwitterProfile(
+      filter: { profile: { tags: { la: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountNyc: allTwitterProfile(
+      filter: { profile: { tags: { nyc: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountLondon: allTwitterProfile(
+      filter: { profile: { tags: { london: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountSeattle: allTwitterProfile(
+      filter: { profile: { tags: { seattle: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountAustin: allTwitterProfile(
+      filter: { profile: { tags: { austin: { eq: true } } } }
     ) {
       totalCount
     }
