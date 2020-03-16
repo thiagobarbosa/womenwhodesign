@@ -23,6 +23,7 @@
   border-radius: 2px;
   z-index: 1;
   transition: all ease 0.2s;
+  user-select: none;
   &:focus {
     outline: none;
     box-shadow: inset var(--background) 0px 0px 0px 2px,
