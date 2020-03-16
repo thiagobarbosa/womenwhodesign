@@ -1,6 +1,7 @@
 module.exports = profile => {
   const designerTagsObject = {};
-  const {description} = profile;
+  const { description } = profile;
+  const { location } = profile;
   function addDesignerTags(searchTerm, objectTag) {
     if (description.toUpperCase().includes(searchTerm) === true) {
       designerTagsObject[objectTag] = true;
@@ -58,6 +59,19 @@ module.exports = profile => {
   }
   if (description.includes("CEO") === true) {
     designerTagsObject.ceo = true;
+  }
+
+  if (
+    location.toUpperCase().includes("NYC") ||
+    location.toUpperCase().includes("NEW YORK CITY")
+  ) {
+    designerTagsObject.nyc = true;
+  }
+  if (
+    location.toUpperCase().includes("SF") ||
+    location.toUpperCase().includes("SAN FRANCISCO")
+  ) {
+    designerTagsObject.sf = true;
   }
 
   return designerTagsObject;

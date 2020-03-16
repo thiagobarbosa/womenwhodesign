@@ -130,6 +130,16 @@ const categories = [
     title: "Writers",
     id: "writer",
     expertise: true
+  },
+  {
+    title: "New York",
+    id: "nyc",
+    location: true
+  },
+  {
+    title: "San Francisco",
+    id: "sf",
+    location: true
   }
 ];
 
