@@ -353,6 +353,7 @@
   padding: 8px 16px;
   background-color: var(--border-gray);
   border-radius: 999px;
+  user-select: none;
 }
 
 .dialogFilterItem input[type="checkbox"]:checked ~ label {
