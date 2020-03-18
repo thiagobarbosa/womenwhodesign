@@ -12,7 +12,10 @@ const Button = ({
   onClick,
   width,
   size,
-  disabled
+  disabled,
+  style,
+  target,
+  rel
 }) => {
   const buttonStyles = classnames({
     [styles.main]: true,
@@ -32,6 +35,9 @@ const Button = ({
       to={to}
       onClick={onClick}
       disabled={disabled}
+      style={style}
+      target={target}
+      rel={rel}
     >
       <span className={childStyles}>{children}</span>
     </El>
