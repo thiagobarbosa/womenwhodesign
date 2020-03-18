@@ -231,7 +231,7 @@
 .paginationContainer {
   margin-top: var(--page-shell-padding);
   padding: var(--page-shell-padding) calc(var(--page-shell-padding) / 2)
-    calc(var(--page-shell-padding) * 4);
+    calc(var(--page-shell-padding) * 5.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -246,7 +246,7 @@
   border: none;
   padding: calc(var(--page-shell-padding) / 4);
   margin: calc(var(--page-shell-padding) / 8);
-
+  font-family: $pitch;
   color: var(--text);
   line-height: 1;
   border-radius: 2px;
