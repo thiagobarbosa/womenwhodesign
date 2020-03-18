@@ -129,25 +129,6 @@
   font-weight: 500;
 }
 
-.linkContainer {
-  border-radius: 2px;
-  text-decoration: none;
-  text-align: center;
-  margin-top: auto;
-  grid-column: 1 / 5;
-  transition: all ease 0.2s;
-  background-color: var(--profile-theme-color);
-  position: relative;
-  &:hover {
-    text-decoration: none !important;
-  }
-  &:focus {
-    box-shadow: inset var(--profile-theme-color) 0px 0px 0px 2px,
-      inset white 0px 0px 0px 3px !important;
-    border-radius: 4px;
-  }
-}
-
 .linkArrow {
   opacity: 0;
   transition: all ease 0.3s;

@@ -59,13 +59,16 @@ const Profile = props => {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: props.description }}
       />
+
       <Button
         href={`https://twitter.com/${props.handle}`}
         target="_blank"
         rel="noopener noreferrer"
         style={{
           "--background": "var(--profile-theme-color)",
-          gridColumn: "1 / -1"
+          gridColumn: "1 / -1",
+          marginTop: "auto",
+          marginBottom: 0
         }}
       >
         <span className={styles.linkText}>
