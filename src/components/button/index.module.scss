@@ -16,13 +16,21 @@
   overflow: visible;
   background-color: var(--background);
   color: var(--text);
+  border-radius: 2px;
   --background: var(--gray);
   --text: white;
+
   &WidthFull {
     width: 100%;
   }
   &WidthAuto {
     width: auto;
+  }
+
+  &:focus {
+    box-shadow: inset var(--background) 0px 0px 0px 2px,
+      inset var(--text) 0px 0px 0px 3px !important;
+    outline: none;
   }
 }
 
