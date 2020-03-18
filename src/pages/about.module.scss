@@ -144,6 +144,9 @@
 
 .postAJob {
   margin-top: var(--page-shell-padding);
+  p:last-of-type {
+    margin-bottom: var(--page-shell-padding);
+  }
 }
 
 .jobLink {

@@ -8,6 +8,7 @@ import Nav from "../components/nav";
 import styles from "../pages/about.module.scss";
 import LocationIcon from "../components/location";
 import BriefcaseIcon from "../components/briefcase";
+import Button from "../components/button";
 import "reset-css";
 
 export default ({ data, location }) => {
@@ -78,15 +79,9 @@ export default ({ data, location }) => {
           className="job-description"
         />
 
-        <a
-          href={job.job.job_application_link}
-          className={styles.jobButtonContainer}
-        >
-          <span className={styles.jobButton}>
-            Apply
-            <span className={styles.arrow}>→</span>
-          </span>
-        </a>
+        <Button href={job.job.job_application_link} width="auto">
+          Apply to {job.job.company.name}
+        </Button>
         <div className={styles.backContainer}>
           <Link to="/jobs" className={styles.backLink}>
             Back to jobs

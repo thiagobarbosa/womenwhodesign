@@ -126,7 +126,7 @@ class App extends React.Component {
 
               <Button
                 type="submit"
-                disabled={this.state.nameValidationMessage}
+                disabled={!!this.state.nameValidationMessage}
                 arrow
                 fullWidth={false}
               >

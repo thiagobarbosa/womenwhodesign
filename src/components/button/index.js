@@ -4,12 +4,20 @@ import { Link } from "gatsby";
 import PropTypes from "prop-types";
 import styles from "./index.module.scss";
 
-const Button = ({ children, type, href, to, onClick, width, size }) => {
+const Button = ({
+  children,
+  type,
+  href,
+  to,
+  onClick,
+  width,
+  size,
+  disabled
+}) => {
   const buttonStyles = classnames({
     [styles.main]: true,
     [styles.mainWidthFull]: width === "full",
-    [styles.mainWidthAuto]: width === "auto",
-    [styles.mainSizeRegular]: size === "regular"
+    [styles.mainWidthAuto]: width === "auto"
   });
   const childStyles = classnames({
     [styles.children]: true,
@@ -23,6 +31,7 @@ const Button = ({ children, type, href, to, onClick, width, size }) => {
       href={href}
       to={to}
       onClick={onClick}
+      disabled={disabled}
     >
       <span className={childStyles}>{children}</span>
     </El>
