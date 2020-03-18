@@ -31,32 +31,11 @@
   }
 }
 
+.disabled {
+  opacity: 0.5;
+}
+
 .fullWidth {
   width: 100%;
-}
-
-.arrow {
-  position: absolute;
-  color: var(--color);
-  opacity: 0;
-  transition: all ease 0.3s;
-  font-family: $sans-serif;
-}
-
-.children {
-  display: inline-grid;
-  grid-gap: 12px;
-  grid-auto-flow: column;
-  align-items: center;
-}
-
-.main:hover .arrow {
-  opacity: 1;
-  transform: translateX(16px);
-  transition: all ease 0.3s;
-}
-
-.main:hover .children {
-  transform: translateX(-12px);
-  transition: all ease 0.3s;
+  display: flex;
 }

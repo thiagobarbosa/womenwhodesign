@@ -1,4 +1,5 @@
 import React from "react";
+import "reset-css";
 import Link from "gatsby-link";
 import { Helmet } from "react-helmet";
 import Nav from "../components/nav";

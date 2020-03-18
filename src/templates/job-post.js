@@ -8,13 +8,12 @@ import Nav from "../components/nav";
 import styles from "../pages/about.module.scss";
 import LocationIcon from "../components/location";
 import BriefcaseIcon from "../components/briefcase";
+import "reset-css";
 
 export default ({ data, location }) => {
   const job = data.seeker;
   const date = ta.ago(job.job.creation_date);
-  const helmetContent = `${job.job.company.name} is hiring a ${
-    job.job.job_title
-  } in ${job.job.job_location} on the Women Who Design job board.`;
+  const helmetContent = `${job.job.company.name} is hiring a ${job.job.job_title} in ${job.job.job_location} on the Women Who Design job board.`;
   const helmetTitle = `${job.job.company.name} is hiring!`;
   const helmetLink = `https://womenwho.design${location.pathname}`;
   return (

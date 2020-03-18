@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
 import Button from "../components/button";
+import "reset-css";
 
 const encode = data => {
   return Object.keys(data)

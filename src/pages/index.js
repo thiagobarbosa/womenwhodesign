@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "reset-css";
 import { shuffle } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";

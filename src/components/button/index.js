@@ -3,8 +3,12 @@ import classnames from "classnames";
 import { Link } from "gatsby";
 import styles from "./index.module.scss";
 
-const Button = ({ children, type, href, to, onClick, fullWidth }) => {
-  const buttonStyles = classnames(styles.main, styles.fullWidth && fullWidth);
+const Button = ({ children, type, href, to, onClick, fullWidth, disabled }) => {
+  const buttonStyles = classnames(
+    styles.main,
+    styles.fullWidth && fullWidth,
+    styles.disabled && disabled
+  );
   const El = href ? "a" : to ? Link : "button";
   return (
     <El
