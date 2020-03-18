@@ -7,6 +7,7 @@ import Nav from "../components/nav";
 import styles from "./about.module.scss";
 import Layout from "../components/layout";
 import LocationIcon from "../components/location";
+import Button from "../components/button";
 
 const Jobs = props => {
   const emptyState =
@@ -57,6 +58,14 @@ const Jobs = props => {
         {!emptyState && (
           <>
             <p className={styles.p}>Jobs for talented women who design.</p>
+            <div style={{ margin: "24px 0" }}>
+              <Button
+                href="https://womenwhodesign.seeker.company/submit/job"
+                width="auto"
+              >
+                Post a job
+              </Button>
+            </div>
             <ul>
               {props.data.allSeeker.edges.map((job, index) => {
                 const date = ta.ago(job.node.job.creation_date);
@@ -99,13 +108,16 @@ const Jobs = props => {
           <p className={styles.h2}>Post a job</p>
           <p>
             This job board is powered by{" "}
-            <a href="https://seeker.company">Seeker</a>. If you're interested in
-            supporting this project and posting a job, you can get started{" "}
-            <a href="https://womenwhodesign.seeker.company/submit/job">
-              right here
-            </a>
-            .
+            <a href="https://seeker.company">Seeker</a>. If you&apos;re
+            interested in supporting this project, please consider posting a
+            job.
           </p>
+          <Button
+            href="https://womenwhodesign.seeker.company/submit/job"
+            width="auto"
+          >
+            Post a job
+          </Button>
         </div>
         <div className={styles.backContainer}>
           <Link to="/" className={styles.backLink}>

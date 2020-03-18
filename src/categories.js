@@ -2,7 +2,8 @@ const categories = [
   {
     title: "Art directors",
     id: "art",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Authors",
@@ -11,39 +12,47 @@ const categories = [
   {
     title: "CEOs",
     id: "ceo",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Content strategists",
-    id: "content"
+    id: "content",
+    expertise: true
   },
   {
     title: "Creative directors",
-    id: "creative"
+    id: "creative",
+    expertise: true
   },
   {
     title: "Design system-ers",
     id: "systems",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Directors",
     id: "director",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Developers",
     id: "developer",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Engineers",
-    id: "engineer"
+    id: "engineer",
+    expertise: true
   },
   {
     title: "Founders",
     id: "founder",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Freelancers",
@@ -53,40 +62,48 @@ const categories = [
   {
     title: "Graphic designers",
     id: "graphic",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Heads of",
     id: "head",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Illustrators",
     id: "illustrator",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Leads",
     id: "lead",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Letterers",
-    id: "letter"
+    id: "letter",
+    expertise: true
   },
   {
     title: "Managers",
-    id: "manager"
+    id: "manager",
+    position: true
   },
   {
     title: "Product designers",
     id: "product",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Researchers",
     id: "research",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "Speakers",
@@ -95,20 +112,54 @@ const categories = [
   {
     title: "UX designers",
     id: "ux",
-    primaryFilter: true
+    primaryFilter: true,
+    expertise: true
   },
   {
     title: "VPs",
     id: "vp",
-    primaryFilter: true
+    primaryFilter: true,
+    position: true
   },
   {
     title: "Web designers",
-    id: "web"
+    id: "web",
+    expertise: true
   },
   {
     title: "Writers",
-    id: "writer"
+    id: "writer",
+    expertise: true
+  },
+  {
+    title: "New York",
+    id: "nyc",
+    location: true
+  },
+  {
+    title: "Bay Area",
+    id: "ba",
+    location: true
+  },
+  {
+    title: "Los Angeles",
+    id: "la",
+    location: true
+  },
+  {
+    title: "Seattle",
+    id: "seattle",
+    location: true
+  },
+  {
+    title: "London",
+    id: "london",
+    location: true
+  },
+  {
+    title: "Austin",
+    id: "austin",
+    location: true
   }
 ];
 

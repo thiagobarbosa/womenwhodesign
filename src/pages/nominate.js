@@ -6,6 +6,8 @@ import _ from "lodash";
 import { Helmet } from "react-helmet";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
+import Button from "../components/button";
+import "reset-css";
 
 const encode = data => {
   return Object.keys(data)
@@ -121,20 +123,15 @@ class App extends React.Component {
                 onChange={this.handleChange}
                 disabled={!!this.state.nameValidationMessage}
               />
-              <button
+
+              <Button
                 type="submit"
-                className={
-                  this.state.nameValidationMessage
-                    ? styles.submitDisabled
-                    : styles.jobButtonContainer
-                }
-                disabled={this.state.nameValidationMessage}
+                disabled={!!this.state.nameValidationMessage}
+                arrow
+                fullWidth={false}
               >
-                <span className={styles.jobButton}>
-                  Submit
-                  <span className={styles.arrow}>→</span>
-                </span>
-              </button>
+                Submit
+              </Button>
             </form>
           )}
           {this.state.formSubmitted && (

@@ -111,10 +111,12 @@
   padding: 12px;
   border-radius: 2px;
   border: 1px solid var(--input-gray);
-  display: block;
+  display: flex;
   width: 100%;
   font-size: inherit;
   margin-bottom: var(--page-shell-padding);
+  height: 52px;
+  align-items: center;
 }
 
 .input:focus {
@@ -142,6 +144,9 @@
 
 .postAJob {
   margin-top: var(--page-shell-padding);
+  p:last-of-type {
+    margin-bottom: var(--page-shell-padding);
+  }
 }
 
 .jobLink {

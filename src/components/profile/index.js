@@ -4,6 +4,7 @@ import twitter from "../../twitter.svg";
 import LocationIcon from "../location";
 import LinkIcon from "../linkIcon";
 import styles from "./profile.module.scss";
+import Button from "../button";
 
 const Profile = props => {
   return (
@@ -58,11 +59,14 @@ const Profile = props => {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: props.description }}
       />
-      <a
+      <Button
         href={`https://twitter.com/${props.handle}`}
         target="_blank"
         rel="noopener noreferrer"
-        className={styles.linkContainer}
+        style={{
+          "--background": "var(--profile-theme-color)",
+          gridColumn: "1 / -1"
+        }}
       >
         <span className={styles.linkText}>
           <img
@@ -77,7 +81,7 @@ const Profile = props => {
           Twitter
           <span className={styles.linkArrow}>→</span>
         </span>
-      </a>
+      </Button>
     </div>
   );
 };

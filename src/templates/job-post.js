@@ -8,13 +8,13 @@ import Nav from "../components/nav";
 import styles from "../pages/about.module.scss";
 import LocationIcon from "../components/location";
 import BriefcaseIcon from "../components/briefcase";
+import Button from "../components/button";
+import "reset-css";
 
 export default ({ data, location }) => {
   const job = data.seeker;
   const date = ta.ago(job.job.creation_date);
-  const helmetContent = `${job.job.company.name} is hiring a ${
-    job.job.job_title
-  } in ${job.job.job_location} on the Women Who Design job board.`;
+  const helmetContent = `${job.job.company.name} is hiring a ${job.job.job_title} in ${job.job.job_location} on the Women Who Design job board.`;
   const helmetTitle = `${job.job.company.name} is hiring!`;
   const helmetLink = `https://womenwho.design${location.pathname}`;
   return (
@@ -79,15 +79,9 @@ export default ({ data, location }) => {
           className="job-description"
         />
 
-        <a
-          href={job.job.job_application_link}
-          className={styles.jobButtonContainer}
-        >
-          <span className={styles.jobButton}>
-            Apply
-            <span className={styles.arrow}>→</span>
-          </span>
-        </a>
+        <Button href={job.job.job_application_link} width="auto">
+          Apply to {job.job.company.name}
+        </Button>
         <div className={styles.backContainer}>
           <Link to="/jobs" className={styles.backLink}>
             Back to jobs

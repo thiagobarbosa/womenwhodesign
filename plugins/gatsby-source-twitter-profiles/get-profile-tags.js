@@ -1,6 +1,7 @@
 module.exports = profile => {
   const designerTagsObject = {};
-  const {description} = profile;
+  const { description } = profile;
+  const { location } = profile;
   function addDesignerTags(searchTerm, objectTag) {
     if (description.toUpperCase().includes(searchTerm) === true) {
       designerTagsObject[objectTag] = true;
@@ -58,6 +59,39 @@ module.exports = profile => {
   }
   if (description.includes("CEO") === true) {
     designerTagsObject.ceo = true;
+  }
+
+  if (
+    location.toUpperCase().includes("NYC") ||
+    location.toUpperCase().includes("BROOKLYN") ||
+    location.toUpperCase().includes("NEW YORK")
+  ) {
+    designerTagsObject.nyc = true;
+  }
+  if (
+    location.toUpperCase().includes("SF") ||
+    location.toUpperCase().includes("SAN FRANCISCO") ||
+    location.toUpperCase().includes("BAY AREA") ||
+    location.toUpperCase().includes("BERKELEY") ||
+    location.toUpperCase().includes("PALO ALTO") ||
+    location.toUpperCase().includes("OAKLAND")
+  ) {
+    designerTagsObject.ba = true;
+  }
+  if (
+    location.toUpperCase().includes("LA") ||
+    location.toUpperCase().includes("LOS ANGELES")
+  ) {
+    designerTagsObject.la = true;
+  }
+  if (location.toUpperCase().includes("LONDON")) {
+    designerTagsObject.london = true;
+  }
+  if (location.toUpperCase().includes("SEATTLE")) {
+    designerTagsObject.seattle = true;
+  }
+  if (location.toUpperCase().includes("AUSTIN")) {
+    designerTagsObject.austin = true;
   }
 
   return designerTagsObject;

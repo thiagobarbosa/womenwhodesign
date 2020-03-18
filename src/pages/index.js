@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import "reset-css";
 import { shuffle } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";
+import { DialogOverlay, DialogContent } from "@reach/dialog";
+import ClickableBox from "clickable-box";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
@@ -9,7 +12,11 @@ import FilterPill from "../components/filterPill";
 import Nav from "../components/nav";
 import Loader from "../components/loader";
 import paginate from "../paginate";
+import "@reach/dialog/styles.css";
 import styles from "./index.module.scss";
+import CloseIcon from "../components/icons/close";
+import FilterIcon from "../components/icons/close/filter";
+import Button from "../components/button";
 
 const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -22,6 +29,10 @@ const App = ({ data }) => {
   const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFilterListVisible, setIsFilterListVisible] = useState(false);
+
+  const [showDialog, setShowDialog] = React.useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => setShowDialog(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -293,8 +304,187 @@ const App = ({ data }) => {
                   →
                 </button>
               </div>
+              <div className={styles.filterButtonContainer}>
+                <Button type="button" onClick={open} fullWidth={false}>
+                  <FilterIcon /> Filter
+                  {selectedFilters.length > 0 && (
+                    <>
+                      <span>·</span> <span>{selectedFilters.length}</span>
+                    </>
+                  )}
+                </Button>
+              </div>
             </>
           )}
+          <div>
+            <DialogOverlay isOpen={showDialog} onDismiss={close}>
+              <DialogContent>
+                <div className={styles.dialogHeader}>
+                  <ClickableBox className={styles.closeButton} onClick={close}>
+                    <span aria-hidden>
+                      <CloseIcon />
+                    </span>
+                  </ClickableBox>
+                  <h2>Filter</h2>
+                  <button
+                    onClick={() => {
+                      setSelectedFilters([]);
+                      setCurrentPage(1);
+                    }}
+                    className={styles.filterClear}
+                    type="button"
+                    style={{ marginRight: "16px" }}
+                  >
+                    Clear
+                  </button>
+                </div>
+                <div className={styles.dialogBody}>
+                  <h3>Expertise</h3>
+
+                  {categories
+                    .filter(category => {
+                      return category.expertise;
+                    })
+                    .map(category => {
+                      return (
+                        <span
+                          key={category.id}
+                          className={styles.dialogFilterItem}
+                        >
+                          <input
+                            id={category.id}
+                            type="checkbox"
+                            value={category.id}
+                            onChange={e => {
+                              const categoryId = e.target.value;
+                              const isChecked = e.target.checked;
+
+                              const newSelectedFilters = [...selectedFilters];
+
+                              if (isChecked) {
+                                newSelectedFilters.push(categoryId);
+                              } else {
+                                const i = newSelectedFilters.indexOf(
+                                  categoryId
+                                );
+                                newSelectedFilters.splice(i, 1);
+                              }
+
+                              setSelectedFilters(newSelectedFilters);
+                              setCurrentPage(1);
+                            }}
+                            checked={selectedFilters.includes(category.id)}
+                            className={styles.filterItemInput}
+                          />
+                          <label
+                            htmlFor={category.id}
+                            className={styles.dialogFilterItemLabel}
+                          >
+                            {category.title}
+                          </label>
+                        </span>
+                      );
+                    })}
+
+                  <h3>Position</h3>
+                  {categories
+                    .filter(category => {
+                      return category.position;
+                    })
+                    .map(category => {
+                      return (
+                        <span
+                          key={category.id}
+                          className={styles.dialogFilterItem}
+                        >
+                          <input
+                            id={category.id}
+                            type="checkbox"
+                            value={category.id}
+                            onChange={e => {
+                              const categoryId = e.target.value;
+                              const isChecked = e.target.checked;
+
+                              const newSelectedFilters = [...selectedFilters];
+
+                              if (isChecked) {
+                                newSelectedFilters.push(categoryId);
+                              } else {
+                                const i = newSelectedFilters.indexOf(
+                                  categoryId
+                                );
+                                newSelectedFilters.splice(i, 1);
+                              }
+
+                              setSelectedFilters(newSelectedFilters);
+                              setCurrentPage(1);
+                            }}
+                            checked={selectedFilters.includes(category.id)}
+                            className={styles.filterItemInput}
+                          />
+                          <label
+                            htmlFor={category.id}
+                            className={styles.dialogFilterItemLabel}
+                          >
+                            {category.title}
+                          </label>
+                        </span>
+                      );
+                    })}
+                  <h3>Locations</h3>
+                  {categories
+                    .filter(category => {
+                      return category.location;
+                    })
+                    .map(category => {
+                      return (
+                        <span
+                          key={category.id}
+                          className={styles.dialogFilterItem}
+                        >
+                          <input
+                            id={category.id}
+                            type="checkbox"
+                            value={category.id}
+                            onChange={e => {
+                              const categoryId = e.target.value;
+                              const isChecked = e.target.checked;
+
+                              const newSelectedFilters = [...selectedFilters];
+
+                              if (isChecked) {
+                                newSelectedFilters.push(categoryId);
+                              } else {
+                                const i = newSelectedFilters.indexOf(
+                                  categoryId
+                                );
+                                newSelectedFilters.splice(i, 1);
+                              }
+
+                              setSelectedFilters(newSelectedFilters);
+                              setCurrentPage(1);
+                            }}
+                            checked={selectedFilters.includes(category.id)}
+                            className={styles.filterItemInput}
+                          />
+                          <label
+                            htmlFor={category.id}
+                            className={styles.dialogFilterItemLabel}
+                          >
+                            {category.title}
+                          </label>
+                        </span>
+                      );
+                    })}
+                </div>
+                <div className={styles.dialogFooter}>
+                  <Button type="button" onClick={close}>
+                    View {filteredDesigners.length} designers
+                  </Button>
+                </div>
+              </DialogContent>
+            </DialogOverlay>
+          </div>
         </div>
       </div>
     </Layout>
@@ -327,7 +517,9 @@ export const pageQuery = graphql`
             profile_link_color
             tags {
               art
+              austin
               author
+              ba
               ceo
               content
               creative
@@ -339,11 +531,15 @@ export const pageQuery = graphql`
               graphic
               head
               illustrator
+              la
               lead
               letter
+              london
               manager
+              nyc
               product
               research
+              seattle
               speaker
               systems
               ux
@@ -504,6 +700,36 @@ export const pageQuery = graphql`
 
     tagCountWriter: allTwitterProfile(
       filter: { profile: { tags: { writer: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountBa: allTwitterProfile(
+      filter: { profile: { tags: { ba: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountLa: allTwitterProfile(
+      filter: { profile: { tags: { la: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountNyc: allTwitterProfile(
+      filter: { profile: { tags: { nyc: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountLondon: allTwitterProfile(
+      filter: { profile: { tags: { london: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountSeattle: allTwitterProfile(
+      filter: { profile: { tags: { seattle: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountAustin: allTwitterProfile(
+      filter: { profile: { tags: { austin: { eq: true } } } }
     ) {
       totalCount
     }
