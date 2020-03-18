@@ -1,41 +1,39 @@
 @import "../../styles/variables.scss";
 
 .main {
-  background-color: var(--background);
-  color: var(--color);
-  --background: var(--gray);
-  --color: white;
-  display: inline-flex;
-  height: 52px;
-  padding: 0 32px;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
   font-family: $pitch;
-  font-weight: 600;
   text-transform: uppercase;
-  text-decoration: none;
-  transition: all ease 0.3s;
-  position: relative;
-  width: 100%;
-  border: 1px solid var(--background);
-  height: 52px;
-  border-radius: 2px;
-  z-index: 1;
-  transition: all ease 0.2s;
+  margin: 0;
+  border: none;
+  font-weight: 500;
   user-select: none;
-  &:focus {
-    outline: none;
-    box-shadow: inset var(--background) 0px 0px 0px 2px,
-      inset var(--color) 0px 0px 0px 3px !important;
+  padding: 0 32px;
+  position: relative;
+  overflow: visible;
+  background-color: var(--background);
+  color: var(--text);
+  --background: var(--gray);
+  --text: white;
+  &WidthFull {
+    width: 100%;
+  }
+  &WidthAuto {
+    width: auto;
   }
 }
 
-.disabled {
-  opacity: 0.5;
-}
-
-.fullWidth {
-  width: 100%;
-  display: flex;
+.children {
+  display: inline-grid;
+  align-items: center;
+  grid-gap: 12px;
+  grid-auto-flow: column;
+  line-height: 1;
+  &SizeRegular {
+    height: 52px;
+    font-size: 15px;
+  }
 }
