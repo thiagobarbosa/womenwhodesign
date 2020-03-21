@@ -53,7 +53,6 @@
     height: var(--element-height);
     font-size: 15px;
     @media (min-width: $desktop) {
-      height: 40px;
       align-self: unset;
     }
   }
