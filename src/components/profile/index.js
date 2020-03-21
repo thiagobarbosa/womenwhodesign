@@ -1,8 +1,9 @@
 import React from "react";
 import Img from "gatsby-image";
 import twitter from "../../twitter.svg";
-import LocationIcon from "../location";
-import LinkIcon from "../linkIcon";
+import MapIcon from "../../icons/map";
+import LinkIcon from "../../icons/link";
+import TwitterIcon from "../../icons/twitter";
 import styles from "./profile.module.scss";
 import Button from "../button";
 
@@ -29,28 +30,22 @@ const Profile = props => {
         />
       )}
       <h2 className={styles.name}>{props.name}</h2>
-      <p className={styles.handle}>@{props.handle}</p>
       <p className={styles.location}>
-        <LocationIcon
+        <MapIcon
           style={{ marginBottom: "-2px", marginRight: "2px" }}
           size={15}
-        />{" "}
+        />
         {props.location}
       </p>
       <div className={styles.url}>
         <LinkIcon style={{ marginBottom: "-2px", marginRight: "4px" }} />
 
         {props.expandedUrl ? (
-          <a
-            href={props.expandedUrl}
-            className={styles.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={props.expandedUrl} target="_blank" rel="noopener noreferrer">
             {props.displayUrl}
           </a>
         ) : (
-          "N/A"
+          <span>N/A</span>
         )}
       </div>
 
@@ -72,17 +67,7 @@ const Profile = props => {
         }}
       >
         <span className={styles.linkText}>
-          <img
-            src={twitter}
-            alt=""
-            style={{
-              height: "12px",
-              paddingRight: "8px",
-              marginBottom: "-2px"
-            }}
-          />
-          Twitter
-          <span className={styles.linkArrow}>→</span>
+          <TwitterIcon style={{ color: "white" }} /> Twitter
         </span>
       </Button>
     </div>

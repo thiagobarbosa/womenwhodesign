@@ -50,7 +50,11 @@
   grid-auto-flow: column;
   line-height: 1;
   &SizeRegular {
-    height: 52px;
+    height: 48px;
     font-size: 15px;
+    @media (min-width: $desktop) {
+      height: 40px;
+      align-self: unset;
+    }
   }
 }

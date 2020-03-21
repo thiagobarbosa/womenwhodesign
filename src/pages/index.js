@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "reset-css";
-import { shuffle } from "lodash";
+import { shuffle, sortBy } from "lodash";
 import { graphql } from "gatsby";
 import classnames from "classnames";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
@@ -8,14 +8,14 @@ import ClickableBox from "clickable-box";
 import categories from "../categories";
 import Profile from "../components/profile";
 import Layout from "../components/layout";
-import FilterPill from "../components/filterPill";
+import FilterItem from "../components/filter-item";
 import Nav from "../components/nav";
 import Loader from "../components/loader";
 import paginate from "../paginate";
 import "@reach/dialog/styles.css";
 import styles from "./index.module.scss";
-import CloseIcon from "../components/icons/close";
-import FilterIcon from "../components/icons/close/filter";
+import CloseIcon from "../icons/close";
+import FilterIcon from "../icons/filter";
 import Button from "../components/button";
 
 const capitalize = s => {
@@ -26,7 +26,6 @@ const capitalize = s => {
 const App = ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [visibleDesigners, setVisibleDesigners] = useState([]);
-  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFilterListVisible, setIsFilterListVisible] = useState(false);
 
@@ -37,6 +36,12 @@ const App = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const profileContainerRef = useRef();
+
+  const filterCategoryTypes = [
+    { name: "Expertise", id: "expertise" },
+    { name: "Position", id: "position" },
+    { name: "Location", id: "location" }
+  ];
 
   useEffect(() => {
     const shuffledDesigners = shuffle(data.allTwitterProfile.edges);
@@ -81,70 +86,47 @@ const App = ({ data }) => {
               [styles.filterListVisible]: isFilterListVisible
             })}
           >
-            <h2 className={styles.filterHeadline}>Filter by</h2>
-            <ul className={styles.filterUl}>
-              {categories
-                .filter(category => {
-                  if (isFiltersExpanded) {
-                    return true;
-                  }
+            {filterCategoryTypes.map(section => {
+              const categoriesInSection = categories.filter(c => c[section.id]);
+              const sortedCategoriesInSection = sortBy(
+                categoriesInSection,
+                category => category.title
+              );
+              return (
+                <div key={section.id}>
+                  <h3 className={styles.filterCategoryTitle}>{section.name}</h3>
+                  {sortedCategoriesInSection.map(category => (
+                    <FilterItem
+                      key={category.id}
+                      id={category.id}
+                      type="row"
+                      onChange={e => {
+                        const categoryId = e.target.value;
+                        const isChecked = e.target.checked;
 
-                  return category.primaryFilter;
-                })
-                .map(category => {
-                  return (
-                    <li className={styles.filterItem} key={category.id}>
-                      <input
-                        id={category.id}
-                        type="checkbox"
-                        value={category.id}
-                        onChange={e => {
-                          const categoryId = e.target.value;
-                          const isChecked = e.target.checked;
+                        const newSelectedFilters = [...selectedFilters];
 
-                          const newSelectedFilters = [...selectedFilters];
+                        if (isChecked) {
+                          newSelectedFilters.push(categoryId);
+                        } else {
+                          const i = newSelectedFilters.indexOf(categoryId);
+                          newSelectedFilters.splice(i, 1);
+                        }
 
-                          if (isChecked) {
-                            newSelectedFilters.push(categoryId);
-                          } else {
-                            const i = newSelectedFilters.indexOf(categoryId);
-                            newSelectedFilters.splice(i, 1);
-                          }
-
-                          setSelectedFilters(newSelectedFilters);
-                          setCurrentPage(1);
-                        }}
-                        checked={selectedFilters.includes(category.id)}
-                        className={styles.filterItemInput}
-                      />
-                      <label
-                        htmlFor={category.id}
-                        className={styles.filterItemLabel}
-                      >
-                        <span className={styles.filterItemLabelSpan}>
-                          {category.title}
-                        </span>
-                      </label>
-                      <span className={styles.filterItemCounter}>
-                        {data[`tagCount${capitalize(category.id)}`].totalCount}
-                      </span>
-                    </li>
-                  );
-                })}
-            </ul>
-            <button
-              onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
-              className={styles.showMoreFilters}
-              type="button"
-            >
-              <span className={styles.arrow}>
-                {isFiltersExpanded ? "↑" : "↓"}
-              </span>
-
-              <span className={styles.showMoreFiltersText}>
-                Show {isFiltersExpanded ? "fewer" : "more"} filters
-              </span>
-            </button>
+                        setSelectedFilters(newSelectedFilters);
+                        setCurrentPage(1);
+                      }}
+                      isChecked={selectedFilters.includes(category.id)}
+                      className={styles.filterItemInput}
+                      title={category.title}
+                      count={
+                        data[`tagCount${capitalize(category.id)}`].totalCount
+                      }
+                    />
+                  ))}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div
@@ -158,12 +140,12 @@ const App = ({ data }) => {
             <Loader />
           ) : (
             <>
-              {selectedFilters.length > 0 && (
+              {/* {selectedFilters.length > 0 && (
                 <div className={styles.filterBanner}>
                   <h2 className={styles.filterHeadline}>→ </h2>
                   <div className={styles.filterPillContainer}>
                     {selectedFilters.map(filterId => (
-                      <FilterPill
+                      <FilterFlag
                         title={categories.find(c => c.id === filterId).title}
                         key={filterId}
                         onCloseClick={() => {
@@ -188,11 +170,11 @@ const App = ({ data }) => {
                     Clear
                   </button>
                 </div>
-              )}
+              )} */}
               <div
                 className={classnames({
-                  [styles.profiles]: true,
-                  [styles.filterBannerBump]: selectedFilters.length > 0
+                  [styles.profiles]: true
+                  // [styles.filterBannerBump]: selectedFilters.length > 0
                 })}
               >
                 {filteredDesigners.map(({ node: designer }, i) => {
@@ -212,7 +194,6 @@ const App = ({ data }) => {
                       description={designer.profile.description}
                       location={designer.profile.location || "N/A"}
                       hex={`#${designer.profile.profile_link_color}`}
-                      handle={designer.profile.screen_name}
                       key={designer.profile.screen_name}
                       contrast={designer.profile.contrast}
                       displayUrl={
@@ -281,17 +262,19 @@ const App = ({ data }) => {
                   pagination.totalPages - (numPagesToShowInPagination + 1) && (
                   <>&hellip;</>
                 )}
-                <button
-                  className={styles.pageNumberButton}
-                  onClick={() => {
-                    setCurrentPage(pagination.totalPages);
-                    profileContainerRef.current.scrollTo(0, 0);
-                  }}
-                  type="button"
-                  disabled={pagination.currentPage === pagination.totalPages}
-                >
-                  {pagination.totalPages}
-                </button>
+                {pagination.totalPages !== 1 && (
+                  <button
+                    className={styles.pageNumberButton}
+                    onClick={() => {
+                      setCurrentPage(pagination.totalPages);
+                      profileContainerRef.current.scrollTo(0, 0);
+                    }}
+                    type="button"
+                    disabled={pagination.currentPage === pagination.totalPages}
+                  >
+                    {pagination.totalPages}
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     setCurrentPage(currentPage + 1);
@@ -339,22 +322,25 @@ const App = ({ data }) => {
                   </button>
                 </div>
                 <div className={styles.dialogBody}>
-                  <h3>Expertise</h3>
+                  {filterCategoryTypes.map(section => {
+                    const categoriesInSection = categories.filter(
+                      c => c[section.id]
+                    );
+                    const sortedCategoriesInSection = sortBy(
+                      categoriesInSection,
+                      category => category.title
+                    );
 
-                  {categories
-                    .filter(category => {
-                      return category.expertise;
-                    })
-                    .map(category => {
-                      return (
-                        <span
-                          key={category.id}
-                          className={styles.dialogFilterItem}
-                        >
-                          <input
+                    return (
+                      <div key={section.id}>
+                        <h3 className={styles.filterCategoryTitle}>
+                          {section.name}
+                        </h3>
+                        {sortedCategoriesInSection.map(category => (
+                          <FilterItem
+                            key={category.id}
                             id={category.id}
-                            type="checkbox"
-                            value={category.id}
+                            type="pill"
                             onChange={e => {
                               const categoryId = e.target.value;
                               const isChecked = e.target.checked;
@@ -373,109 +359,14 @@ const App = ({ data }) => {
                               setSelectedFilters(newSelectedFilters);
                               setCurrentPage(1);
                             }}
-                            checked={selectedFilters.includes(category.id)}
+                            isChecked={selectedFilters.includes(category.id)}
                             className={styles.filterItemInput}
+                            title={category.title}
                           />
-                          <label
-                            htmlFor={category.id}
-                            className={styles.dialogFilterItemLabel}
-                          >
-                            {category.title}
-                          </label>
-                        </span>
-                      );
-                    })}
-
-                  <h3>Position</h3>
-                  {categories
-                    .filter(category => {
-                      return category.position;
-                    })
-                    .map(category => {
-                      return (
-                        <span
-                          key={category.id}
-                          className={styles.dialogFilterItem}
-                        >
-                          <input
-                            id={category.id}
-                            type="checkbox"
-                            value={category.id}
-                            onChange={e => {
-                              const categoryId = e.target.value;
-                              const isChecked = e.target.checked;
-
-                              const newSelectedFilters = [...selectedFilters];
-
-                              if (isChecked) {
-                                newSelectedFilters.push(categoryId);
-                              } else {
-                                const i = newSelectedFilters.indexOf(
-                                  categoryId
-                                );
-                                newSelectedFilters.splice(i, 1);
-                              }
-
-                              setSelectedFilters(newSelectedFilters);
-                              setCurrentPage(1);
-                            }}
-                            checked={selectedFilters.includes(category.id)}
-                            className={styles.filterItemInput}
-                          />
-                          <label
-                            htmlFor={category.id}
-                            className={styles.dialogFilterItemLabel}
-                          >
-                            {category.title}
-                          </label>
-                        </span>
-                      );
-                    })}
-                  <h3>Locations</h3>
-                  {categories
-                    .filter(category => {
-                      return category.location;
-                    })
-                    .map(category => {
-                      return (
-                        <span
-                          key={category.id}
-                          className={styles.dialogFilterItem}
-                        >
-                          <input
-                            id={category.id}
-                            type="checkbox"
-                            value={category.id}
-                            onChange={e => {
-                              const categoryId = e.target.value;
-                              const isChecked = e.target.checked;
-
-                              const newSelectedFilters = [...selectedFilters];
-
-                              if (isChecked) {
-                                newSelectedFilters.push(categoryId);
-                              } else {
-                                const i = newSelectedFilters.indexOf(
-                                  categoryId
-                                );
-                                newSelectedFilters.splice(i, 1);
-                              }
-
-                              setSelectedFilters(newSelectedFilters);
-                              setCurrentPage(1);
-                            }}
-                            checked={selectedFilters.includes(category.id)}
-                            className={styles.filterItemInput}
-                          />
-                          <label
-                            htmlFor={category.id}
-                            className={styles.dialogFilterItemLabel}
-                          >
-                            {category.title}
-                          </label>
-                        </span>
-                      );
-                    })}
+                        ))}
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className={styles.dialogFooter}>
                   <Button type="button" onClick={close}>
@@ -511,7 +402,7 @@ export const pageQuery = graphql`
           profile {
             description
             name
-            screen_name
+
             location
             profile_image_url_https
             profile_link_color
@@ -539,6 +430,7 @@ export const pageQuery = graphql`
               nyc
               product
               research
+              typeface
               seattle
               speaker
               systems
@@ -730,6 +622,11 @@ export const pageQuery = graphql`
     }
     tagCountAustin: allTwitterProfile(
       filter: { profile: { tags: { austin: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountTypeface: allTwitterProfile(
+      filter: { profile: { tags: { typeface: { eq: true } } } }
     ) {
       totalCount
     }

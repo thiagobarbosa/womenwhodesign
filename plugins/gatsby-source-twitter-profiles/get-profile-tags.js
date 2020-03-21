@@ -53,6 +53,12 @@ module.exports = profile => {
   ) {
     designerTagsObject.letter = true;
   }
+  if (
+    description.toUpperCase().includes("TYPE DESIGN") === true ||
+    description.toUpperCase().includes("TYPEFACE DESIGN") === true
+  ) {
+    designerTagsObject.typeface = true;
+  }
 
   if (description.includes("VP") === true) {
     designerTagsObject.vp = true;

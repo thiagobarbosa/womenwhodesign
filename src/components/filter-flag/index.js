@@ -1,9 +1,9 @@
 import React from "react";
 import ClickableBox from "clickable-box";
 import close from "../../close.svg";
-import styles from "./filterPill.module.scss";
+import styles from "./index.module.scss";
 
-const FilterPill = props => {
+const FilterFlag = props => {
   return (
     <span className={styles.pill}>
       {props.title}
@@ -22,4 +22,4 @@ const FilterPill = props => {
   );
 };
 
-export default FilterPill;
+export default FilterFlag;
