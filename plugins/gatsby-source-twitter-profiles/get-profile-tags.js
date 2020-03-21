@@ -88,7 +88,7 @@ module.exports = profile => {
   if (
     location.toUpperCase().includes("LA") ||
     location.toUpperCase().includes("LOS ANGELES") ||
-    location.toUpperCase().includes("SANTA MONICA") ||
+    location.toUpperCase().includes("SANTA MONICA")
   ) {
     designerTagsObject.la = true;
   }
