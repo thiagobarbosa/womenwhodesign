@@ -33,12 +33,12 @@ const Profile = props => {
       <p className={styles.location}>
         <MapIcon
           style={{ marginBottom: "-2px", marginRight: "2px" }}
-          size={15}
+          size={14}
         />
         {props.location}
       </p>
       <div className={styles.url}>
-        <LinkIcon style={{ marginBottom: "-2px", marginRight: "4px" }} />
+        <LinkIcon size={14} />
 
         {props.expandedUrl ? (
           <a href={props.expandedUrl} target="_blank" rel="noopener noreferrer">

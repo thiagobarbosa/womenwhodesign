@@ -1,8 +1,7 @@
 @import "../../styles/variables.scss";
 
 .container {
-  padding: var(--page-shell-padding) var(--page-shell-padding) 0
-    var(--page-shell-padding);
+  padding: var(--page-shell-padding);
   font-family: $pitch;
   color: var(--text);
   background-color: var(--background);
@@ -28,10 +27,6 @@
 
 .links {
   padding-top: 24px;
-  padding-bottom: var(--page-shell-padding);
-  @media (min-width: $desktop) {
-    padding-bottom: 0;
-  }
 }
 
 .link {

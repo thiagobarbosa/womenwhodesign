@@ -50,7 +50,7 @@
   grid-auto-flow: column;
   line-height: 1;
   &SizeRegular {
-    height: 48px;
+    height: var(--element-height);
     font-size: 15px;
     @media (min-width: $desktop) {
       height: 40px;

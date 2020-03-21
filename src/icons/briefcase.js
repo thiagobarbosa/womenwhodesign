@@ -1,6 +1,6 @@
 import React from "react";
 
-function MapIcon({ size }) {
+function BriefcaseIcon({ size }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,13 +11,13 @@ function MapIcon({ size }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      className="feather feather-map-pin"
+      className="feather feather-briefcase"
       viewBox="0 0 24 24"
     >
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-      <circle cx="12" cy="10" r="3" />
+      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
     </svg>
   );
 }
 
-export default MapIcon;
+export default BriefcaseIcon;

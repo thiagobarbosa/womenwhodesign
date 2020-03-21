@@ -26,6 +26,7 @@ module.exports = profile => {
   addDesignerTags("CREATIVE DIRECT", "creative");
   addDesignerTags("ART DIRECT", "art");
   addDesignerTags("DEVELOPER", "developer");
+
   if (description.toUpperCase().includes("DIRECTOR") === true) {
     if (description.toUpperCase().includes("ART DIRECTOR") === true) {
     } else if (
@@ -86,12 +87,22 @@ module.exports = profile => {
   }
   if (
     location.toUpperCase().includes("LA") ||
-    location.toUpperCase().includes("LOS ANGELES")
+    location.toUpperCase().includes("LOS ANGELES") ||
+    location.toUpperCase().includes("SANTA MONICA") ||
   ) {
     designerTagsObject.la = true;
   }
   if (location.toUpperCase().includes("LONDON")) {
     designerTagsObject.london = true;
+  }
+  if (location.toUpperCase().includes("PORTLAND")) {
+    designerTagsObject.portland = true;
+  }
+  if (location.toUpperCase().includes("TORONTO")) {
+    designerTagsObject.toronto = true;
+  }
+  if (location.toUpperCase().includes("VANCOUVER")) {
+    designerTagsObject.vancouver = true;
   }
   if (location.toUpperCase().includes("SEATTLE")) {
     designerTagsObject.seattle = true;

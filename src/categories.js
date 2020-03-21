@@ -150,8 +150,23 @@ const categories = [
     location: true
   },
   {
+    title: "Toronto",
+    id: "toronto",
+    location: true
+  },
+  {
+    title: "Portland",
+    id: "portland",
+    location: true
+  },
+  {
     title: "Austin",
     id: "austin",
+    location: true
+  },
+  {
+    title: "Vancouver",
+    id: "vancouver",
     location: true
   }
 ];

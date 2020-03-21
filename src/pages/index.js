@@ -428,13 +428,16 @@ export const pageQuery = graphql`
               london
               manager
               nyc
+              portland
               product
               research
+              toronto
               typeface
               seattle
               speaker
               systems
               ux
+              vancouver
               vp
               web
               writer
@@ -625,8 +628,23 @@ export const pageQuery = graphql`
     ) {
       totalCount
     }
+    tagCountPortland: allTwitterProfile(
+      filter: { profile: { tags: { portland: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountToronto: allTwitterProfile(
+      filter: { profile: { tags: { toronto: { eq: true } } } }
+    ) {
+      totalCount
+    }
     tagCountTypeface: allTwitterProfile(
       filter: { profile: { tags: { typeface: { eq: true } } } }
+    ) {
+      totalCount
+    }
+    tagCountVancouver: allTwitterProfile(
+      filter: { profile: { tags: { vancouver: { eq: true } } } }
     ) {
       totalCount
     }

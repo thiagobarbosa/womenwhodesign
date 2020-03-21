@@ -33,11 +33,9 @@
 }
 
 .filterContainer {
-  padding: var(--page-shell-padding);
+  padding: 0 var(--page-shell-padding) var(--page-shell-padding);
   color: var(--text);
   background-color: var(--background);
-  margin-top: auto;
-  margin-bottom: auto;
   display: none;
   @media (min-width: $desktop) {
     display: block;
@@ -187,4 +185,25 @@
   border-top: 1px solid var(--border-gray);
   padding: 16px;
   margin-top: auto;
+}
+
+.filterClear {
+  margin-left: auto;
+  font-size: 13px;
+  font-family: "pitch sans web", monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0 6px;
+  border: 0;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: none;
+    border-radius: 1px;
+    box-shadow: var(--background) 0px 0px 0px 2px, var(--text) 0px 0px 0px 3px;
+    text-decoration: none;
+  }
 }

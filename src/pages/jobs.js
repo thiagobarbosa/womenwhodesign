@@ -6,7 +6,7 @@ import { graphql } from "gatsby";
 import Nav from "../components/nav";
 import styles from "./about.module.scss";
 import Layout from "../components/layout";
-import LocationIcon from "../components/location";
+import MapIcon from "../icons/map";
 import Button from "../components/button";
 
 const Jobs = props => {
@@ -82,15 +82,8 @@ const Jobs = props => {
                         </h2>
                         <div className={styles.listingMetadataContainer}>
                           <p className={styles.listingMetadata}>
-                            <span>
-                              <LocationIcon
-                                fill="rgba(30, 30, 30, 1)"
-                                style={{
-                                  marginBottom: "-2px",
-                                  marginRight: "4px"
-                                }}
-                                size={15}
-                              />{" "}
+                            <span className="icon-group">
+                              <MapIcon size={16} />
                               {job.node.job.job_location}
                             </span>
                           </p>

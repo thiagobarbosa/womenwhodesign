@@ -6,8 +6,8 @@ import ta from "time-ago";
 import Layout from "../components/layout";
 import Nav from "../components/nav";
 import styles from "../pages/about.module.scss";
-import LocationIcon from "../components/location";
-import BriefcaseIcon from "../components/briefcase";
+import MapIcon from "../icons/map";
+import BriefcaseIcon from "../icons/briefcase";
 import Button from "../components/button";
 import "reset-css";
 
@@ -52,23 +52,15 @@ export default ({ data, location }) => {
         <h1 className={styles.h1}>{job.job.job_title}</h1>
         <div className={styles.jobMetadata}>
           <p className={styles.p}>
-            <span>
-              <BriefcaseIcon
-                fill="rgba(30, 30, 30, 1)"
-                style={{ marginBottom: "-2px", marginRight: "9px" }}
-                size={14}
-              />
+            <span className="icon-group">
+              <BriefcaseIcon size={16} />
               <a href={job.job.company.company_url} className={styles.company}>
                 {job.job.company.name}
               </a>
             </span>{" "}
             <span className={styles.interpunct}>·</span>{" "}
-            <span>
-              <LocationIcon
-                fill="rgba(30, 30, 30, 1)"
-                style={{ marginBottom: "-2px", marginRight: "8px" }}
-                size={15}
-              />
+            <span className="icon-group">
+              <MapIcon size={16} />
               {job.job.job_location}
             </span>
           </p>
