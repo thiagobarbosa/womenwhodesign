@@ -34,10 +34,14 @@
   line-height: 1.25;
   font-weight: 500;
   margin-bottom: 12px;
+  margin-top: 48px;
   font-size: 24px;
   @media (min-width: $desktop) {
     font-size: 30px;
   }
+}
+.h1:not(:first-of-type) {
+  margin-top: 48px;
 }
 
 .h2 {
@@ -282,12 +286,48 @@
   transition: all ease 0.3s;
 }
 
-.jobButtonContainer:hover .jobButton {
-  transform: translateX(-12px);
-  transition: all ease 0.3s;
+.friendContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 16px;
+  padding-top: 8px;
 }
 
-.submitDisabled {
-  composes: jobButtonContainer;
-  opacity: 0.5;
+.friendItem {
+  background-color: var(--background);
+  --background: var(--gray);
+  --text: white;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-rows: 1fr auto;
+  grid-gap: 16px;
+  padding: 16px;
+  height: 180px;
+  flex-direction: column;
+}
+
+.friendTitle {
+  color: var(--text);
+  font-family: $pitch;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  margin-top: auto;
+  text-align: center;
+}
+
+.friendImage {
+  width: 100%;
+  height: 50%;
+  object-fit: contain;
+
+  filter: grayscale(1);
+}
+
+.friendImageInvert {
+  filter: invert(1) grayscale(1);
+}
+.friendImageContrast {
+  filter: invert(1) grayscale(1) contrast(10);
 }

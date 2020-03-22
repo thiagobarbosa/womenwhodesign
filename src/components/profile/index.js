@@ -1,6 +1,5 @@
 import React from "react";
 import Img from "gatsby-image";
-import twitter from "../../twitter.svg";
 import MapIcon from "../../icons/map";
 import LinkIcon from "../../icons/link";
 import TwitterIcon from "../../icons/twitter";

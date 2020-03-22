@@ -2,9 +2,57 @@ import React from "react";
 import "reset-css";
 import Link from "gatsby-link";
 import { Helmet } from "react-helmet";
+import { sortBy } from "lodash";
+import classnames from "classnames";
 import Nav from "../components/nav";
 import styles from "./about.module.scss";
 import Layout from "../components/layout";
+import BlacksWhoDesign from "../friends/blackswhodesign.svg";
+import LatinxsWhoDesign from "../friends/latinxswhodesign.png";
+import PeopleOfCraft from "../friends/peopleofcraft.png";
+import QueerDesignClub from "../friends/queerdesignclub.svg";
+import IndiansWhoDesign from "../friends/indianswhodesign.svg";
+import FilipinosWhoDesign from "../friends/filipinoswhodesign.png";
+import Button from "../components/button";
+
+const friends = [
+  {
+    title: "Blacks Who Design",
+    link: "https://blackswho.design/",
+    image: BlacksWhoDesign
+  },
+  {
+    title: "Latinxs Who Design",
+    link: "https://latinxswhodesign.com",
+    image: LatinxsWhoDesign,
+    invert: true
+  },
+  {
+    title: "People of Craft",
+    link: "https://peopleofcraft.com/",
+    image: PeopleOfCraft
+  },
+  {
+    title: "Queer Design Club",
+    link: "https://queerdesign.club/",
+    image: QueerDesignClub,
+    invert: true
+  },
+  {
+    title: "Filipinos Who Design",
+    link: "http://filipinoswhodesign.club/",
+    image: FilipinosWhoDesign,
+    invert: true,
+    contrast: true
+  },
+  {
+    title: "Indians Who Design",
+    link: "https://indianswhodesign.in/",
+    image: IndiansWhoDesign
+  }
+];
+
+const sortedFriends = sortBy(friends, friend => friend.title);
 
 const App = () => (
   <Layout>
@@ -17,7 +65,44 @@ const App = () => (
         design industry. It aims to help people find notable and relevant voices
         to follow on Twitter by parsing Twitter bios for popular keywords.
       </p>
+
+      <h2 className={styles.emphasis}>Source code</h2>
+      <p>
+        Women Who Design is happy to support new directories highlighting
+        underrepresented or marginalized groups. If you're looking to start a
+        similar effort, feel free to fork the project on{" "}
+        <a href="https://github.com/julesforrest/womenwhodesign">GitHub</a>.
+      </p>
+      <h2 className={styles.emphasis}>Similar directories</h2>
+      <p>
+        Examining diversity along the axis of gender is one small piece of the
+        puzzle. If you've found this site to be valuable, please take a look at
+        the work of friends in the industry building similar efforts.
+      </p>
+      <div className={styles.friendContainer}>
+        {sortedFriends.map((friend, index) => {
+          const friendImageStyles = classnames({
+            [styles.friendImage]: true,
+            [styles.friendImageInvert]: friend.invert === true,
+            [styles.friendImageContrast]: friend.contrast === true
+          });
+          return (
+            <a
+              href={friend.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={index}
+              className={styles.friendItem}
+            >
+              <img src={friend.image} className={friendImageStyles} />
+              <p className={styles.friendTitle}>{friend.title}</p>
+            </a>
+          );
+        })}
+      </div>
+      <h1 className={styles.h1}>How to use</h1>
       <p>Here are some things Women Who Design can help you with:</p>
+
       <h2 className={styles.emphasis}>
         Use{" "}
         <a
@@ -72,42 +157,13 @@ const App = () => (
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://latinxswhodesign.com"
-          >
-            Latinxs Who Design
-          </a>{" "}
-          by Pablo Stanley
-        </li>
-        <li className={styles.liLinks}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://blackswho.design"
-          >
-            Blacks Who Design
-          </a>{" "}
-          by Wes O'Haire
-        </li>
-        <li className={styles.liLinks}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
             href="http://www.guidetoallyship.com/"
           >
             Guide to Allyship
           </a>{" "}
           by Amélie Lamont
         </li>
-        <li className={styles.liLinks}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://peopleofcraft.com/"
-          >
-            People of Craft
-          </a>{" "}
-          by Amélie Lamont & Timothy Goodman
-        </li>
+
         <li className={styles.liLinks}>
           <a
             target="_blank"
@@ -149,7 +205,18 @@ const App = () => (
           by Johnathan Nightingale
         </li>
       </ul>
-
+      <h1 className={styles.h1}>Other notes</h1>
+      <h2 className={styles.emphasis}>Support</h2>
+      <p>
+        Women Who Design is an independent project. If you're interested in
+        supporting it, please consider posting a job.
+      </p>
+      <Button
+        href="https://womenwhodesign.seeker.company/submit/job"
+        width="auto"
+      >
+        Post a job
+      </Button>
       <h2 className={styles.emphasis}>Opt out</h2>
       <p>
         If you've been featured in the directory and you'd rather not be, please
@@ -162,11 +229,6 @@ const App = () => (
           @womenwhodesign
         </a>{" "}
         on Twitter and you will be removed.
-      </p>
-      <h2 className={styles.emphasis}>Note</h2>
-      <p>
-        This project is in a work-in-progress. If you have a suggestion or find
-        a bug, please let me know.
       </p>
 
       <p>
