@@ -204,6 +204,7 @@ const App = ({ data }) => {
                         designer.profile.entities.url &&
                         designer.profile.entities.url.urls[0].expanded_url
                       }
+                      handle={designer.profile.screen_name}
                     />
                   );
                 })}
@@ -402,7 +403,7 @@ export const pageQuery = graphql`
           profile {
             description
             name
-
+            screen_name
             location
             profile_image_url_https
             profile_link_color
