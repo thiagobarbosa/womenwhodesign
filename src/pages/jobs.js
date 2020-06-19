@@ -1,17 +1,17 @@
 import React from "react";
-import Link from "gatsby-link";
 import { Helmet } from "react-helmet";
 import ta from "time-ago";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import Nav from "../components/nav";
 import styles from "./about.module.scss";
 import Layout from "../components/layout";
 import MapIcon from "../icons/map";
 import Button from "../components/button";
 
-const Jobs = props => {
+const Jobs = (props) => {
   const emptyState =
     props.data.allSeeker.edges[0].node.job.job_title === "Empty";
+  console.log(props.data);
   return (
     <Layout>
       <Helmet
@@ -19,16 +19,16 @@ const Jobs = props => {
         meta={[
           {
             property: "description",
-            content: "Jobs for talented women designers."
+            content: "Jobs for talented women designers.",
           },
           { property: "og:title", content: "Women Who Design Jobs" },
           {
             property: "og:description",
-            content: "Jobs for talented women designers."
+            content: "Jobs for talented women designers.",
           },
           {
             property: "og:image",
-            content: "https://womenwho.design/opengraph.png"
+            content: "https://womenwho.design/opengraph.png",
           },
           { property: "og:url", content: "https://womenwho.design/jobs" },
           { property: "og:type", content: "website" },
@@ -38,8 +38,8 @@ const Jobs = props => {
           { property: "twitter:card", content: "summary_large_image" },
           {
             property: "twitter:image",
-            content: "https://womenwho.design/opengraph.png"
-          }
+            content: "https://womenwho.design/opengraph.png",
+          },
         ]}
       />
       <Nav theme="light" />
@@ -71,7 +71,10 @@ const Jobs = props => {
                 const date = ta.ago(job.node.job.creation_date);
                 return (
                   <li key={index}>
-                    <Link to={job.node.fields.slug} className={styles.jobLink}>
+                    <Link
+                      to={`/${job.node.fields.slug}`}
+                      className={styles.jobLink}
+                    >
                       <div className={styles.jobLinkInner}>
                         <h2 className={styles.h2}>
                           {job.node.job.company.name},{" "}
