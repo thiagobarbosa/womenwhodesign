@@ -13,46 +13,53 @@ import PeopleOfCraft from "../friends/peopleofcraft.png";
 import QueerDesignClub from "../friends/queerdesignclub.svg";
 import IndiansWhoDesign from "../friends/indianswhodesign.svg";
 import FilipinosWhoDesign from "../friends/filipinoswhodesign.png";
+import APIWhoDesign from "../friends/apiwhodesign.svg";
 import Button from "../components/button";
 
 const friends = [
   {
+    title: "API Who Design",
+    link: "https://apiwho.design/",
+    image: APIWhoDesign,
+    invert: true,
+  },
+  {
     title: "Blacks Who Design",
     link: "https://blackswho.design/",
-    image: BlacksWhoDesign
+    image: BlacksWhoDesign,
   },
   {
     title: "Latinxs Who Design",
     link: "https://latinxswhodesign.com",
     image: LatinxsWhoDesign,
-    invert: true
+    invert: true,
   },
   {
     title: "People of Craft",
     link: "https://peopleofcraft.com/",
-    image: PeopleOfCraft
+    image: PeopleOfCraft,
   },
   {
     title: "Queer Design Club",
     link: "https://queerdesign.club/",
     image: QueerDesignClub,
-    invert: true
+    invert: true,
   },
   {
     title: "Filipinos Who Design",
     link: "http://filipinoswhodesign.club/",
     image: FilipinosWhoDesign,
     invert: true,
-    contrast: true
+    contrast: true,
   },
   {
     title: "Indians Who Design",
     link: "https://indianswhodesign.in/",
-    image: IndiansWhoDesign
-  }
+    image: IndiansWhoDesign,
+  },
 ];
 
-const sortedFriends = sortBy(friends, friend => friend.title);
+const sortedFriends = sortBy(friends, (friend) => friend.title);
 
 const App = () => (
   <Layout>
@@ -84,7 +91,7 @@ const App = () => (
           const friendImageStyles = classnames({
             [styles.friendImage]: true,
             [styles.friendImageInvert]: friend.invert === true,
-            [styles.friendImageContrast]: friend.contrast === true
+            [styles.friendImageContrast]: friend.contrast === true,
           });
           return (
             <a
