@@ -1,6 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
-import Link from "gatsby-link";
+import { graphql, Link } from "gatsby";
 import { Helmet } from "react-helmet";
 import ta from "time-ago";
 import Layout from "../components/layout";
@@ -24,16 +23,16 @@ export default ({ data, location }) => {
         meta={[
           {
             property: "description",
-            content: helmetContent
+            content: helmetContent,
           },
           { property: "og:title", content: helmetTitle },
           {
             property: "og:description",
-            content: helmetContent
+            content: helmetContent,
           },
           {
             property: "og:image",
-            content: "https://womenwho.design/opengraph.png"
+            content: "https://womenwho.design/opengraph.png",
           },
           { property: "og:url", content: helmetLink },
           { property: "og:type", content: "website" },
@@ -43,8 +42,8 @@ export default ({ data, location }) => {
           { property: "twitter:card", content: "summary_large_image" },
           {
             property: "twitter:image",
-            content: "https://womenwho.design/opengraph.png"
-          }
+            content: "https://womenwho.design/opengraph.png",
+          },
         ]}
       />
       <Nav theme="light" />
@@ -67,6 +66,7 @@ export default ({ data, location }) => {
           <p className={styles.jobDate}>{date}</p>
         </div>
         <div
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: job.job.job_description }}
           className="job-description"
         />

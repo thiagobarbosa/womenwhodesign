@@ -14,6 +14,7 @@ import QueerDesignClub from "../friends/queerdesignclub.svg";
 import IndiansWhoDesign from "../friends/indianswhodesign.svg";
 import FilipinosWhoDesign from "../friends/filipinoswhodesign.png";
 import APIWhoDesign from "../friends/apiwhodesign.svg";
+import BraziliansWhoDesign from "../friends/brazilianswhodesign.svg";
 import Button from "../components/button";
 
 const friends = [
@@ -56,6 +57,11 @@ const friends = [
     title: "Indians Who Design",
     link: "https://indianswhodesign.in/",
     image: IndiansWhoDesign,
+  },
+  {
+    title: "Brazilians Who Design",
+    link: "https://brazilianswho.design/",
+    image: BraziliansWhoDesign,
   },
 ];
 

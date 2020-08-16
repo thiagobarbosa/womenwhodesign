@@ -1,6 +1,11 @@
 require("dotenv").config();
 
 module.exports = {
+  siteMetadata: {
+    title: "Women Who Design",
+    description: `Product design, design systems and web development.`,
+    siteUrl: `https://womenwho.design`,
+  },
   plugins: [
     {
       resolve: "gatsby-source-twitter-profiles",
@@ -8,22 +13,22 @@ module.exports = {
         consumerKey: process.env.WWD_TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.WWD_TWITTER_CONSUMER_KEY,
         bearerToken: process.env.WWD_TWITTER_BEARER_TOKEN,
-        twitterIdForFollowingList: "855501234924429312"
-      }
+        twitterIdForFollowingList: "855501234924429312",
+      },
     },
     {
       resolve: "gatsby-source-seeker",
       options: {
-        key: process.env.WWD_SEEKER_KEY
-      }
+        key: process.env.WWD_SEEKER_KEY,
+      },
     },
     {
       resolve: `gatsby-plugin-sass`,
       options: {
         cssLoaderOptions: {
-          camelCase: false
-        }
-      }
+          camelCase: false,
+        },
+      },
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
@@ -31,8 +36,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: process.env.WWD_GOOGLE_ANALYTICS_ID
-      }
+        trackingId: process.env.WWD_GOOGLE_ANALYTICS_ID,
+      },
     },
     {
       resolve: `gatsby-plugin-favicon`,
@@ -48,9 +53,54 @@ module.exports = {
           firefox: false,
           twitter: false,
           yandex: false,
-          windows: false
-        }
-      }
-    }
-  ]
+          windows: false,
+        },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [
+          {
+            serialize: ({ query: { allSeeker } }) => {
+              return allSeeker.edges.map((edge) => {
+                return {
+                  ...edge.node.job,
+                  title: `${edge.node.job.company.name}, ${edge.node.job.job_title}`,
+                  description: `${edge.node.job.company.name} is hiring a ${edge.node.job.job_title} in ${edge.node.job.job_location}.`,
+                  date: edge.node.job.creation_date,
+                  url: `https://womenwho.design/${edge.node.fields.slug}`,
+                  guid: `https://womenwho.design/${edge.node.fields.slug}`,
+                };
+              });
+            },
+            query: `
+              {
+                allSeeker(sort: { fields: job___creation_date, order: DESC }) {
+                  edges {
+                    node {
+                      id
+                      fields {
+                        slug
+                      }
+                      job {
+                        job_title
+                        job_location
+                        creation_date
+                        company {
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Women Who Design Job Board",
+          },
+        ],
+      },
+    },
+  ],
 };
