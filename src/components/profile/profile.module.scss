@@ -8,6 +8,8 @@
   font-family: $graphik;
   --profile-theme-color: var(--gray);
   font-size: 16px;
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
 
   svg {
     color: var(--profile-theme-color);
