@@ -189,9 +189,10 @@
 
 .listingMetadataContainer {
   @media (min-width: $non-mobile) {
-    display: flex;
+    display: grid;
     justify-content: space-between;
-    align-items: flex-end;
+    grid-gap: 16px;
+    grid-template-columns: auto max-content;
   }
 }
 

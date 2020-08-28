@@ -72,7 +72,7 @@ export default ({ data, location }) => {
         />
 
         <Button href={job.job.job_application_link} width="auto">
-          Apply to {job.job.company.name}
+          Apply now
         </Button>
         <div className={styles.backContainer}>
           <Link to="/jobs" className={styles.backLink}>
