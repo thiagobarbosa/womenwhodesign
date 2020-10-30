@@ -18,7 +18,7 @@ import CloseIcon from "../icons/close";
 import FilterIcon from "../icons/filter";
 import Button from "../components/button";
 
-const capitalize = s => {
+const capitalize = (s) => {
   if (typeof s !== "string") return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
@@ -40,7 +40,7 @@ const App = ({ data }) => {
   const filterCategoryTypes = [
     { name: "Expertise", id: "expertise" },
     { name: "Position", id: "position" },
-    { name: "Location", id: "location" }
+    { name: "Location", id: "location" },
   ];
 
   useEffect(() => {
@@ -52,12 +52,12 @@ const App = ({ data }) => {
   const numDesignersPerPage = 52;
   const numPagesToShowInPagination = 5;
 
-  const filteredDesigners = visibleDesigners.filter(designer => {
+  const filteredDesigners = visibleDesigners.filter((designer) => {
     if (selectedFilters.length === 0) {
       return true;
     }
 
-    return selectedFilters.some(filter => designer.node.profile.tags[filter]);
+    return selectedFilters.some((filter) => designer.node.profile.tags[filter]);
   });
 
   const pagination = paginate(
@@ -83,24 +83,26 @@ const App = ({ data }) => {
           <div
             className={classnames({
               [styles.filterContainer]: true,
-              [styles.filterListVisible]: isFilterListVisible
+              [styles.filterListVisible]: isFilterListVisible,
             })}
           >
-            {filterCategoryTypes.map(section => {
-              const categoriesInSection = categories.filter(c => c[section.id]);
+            {filterCategoryTypes.map((section) => {
+              const categoriesInSection = categories.filter(
+                (c) => c[section.id]
+              );
               const sortedCategoriesInSection = sortBy(
                 categoriesInSection,
-                category => category.title
+                (category) => category.title
               );
               return (
                 <div key={section.id}>
                   <h3 className={styles.filterCategoryTitle}>{section.name}</h3>
-                  {sortedCategoriesInSection.map(category => (
+                  {sortedCategoriesInSection.map((category) => (
                     <FilterItem
                       key={category.id}
                       id={category.id}
                       type="row"
-                      onChange={e => {
+                      onChange={(e) => {
                         const categoryId = e.target.value;
                         const isChecked = e.target.checked;
 
@@ -132,7 +134,7 @@ const App = ({ data }) => {
         <div
           className={classnames({
             [styles.main]: true,
-            [styles.slide]: isFilterListVisible
+            [styles.slide]: isFilterListVisible,
           })}
           ref={profileContainerRef}
         >
@@ -173,7 +175,7 @@ const App = ({ data }) => {
               )} */}
               <div
                 className={classnames({
-                  [styles.profiles]: true
+                  [styles.profiles]: true,
                   // [styles.filterBannerBump]: selectedFilters.length > 0
                 })}
               >
@@ -234,7 +236,7 @@ const App = ({ data }) => {
                   1
                 </button>
                 {currentPage >= numPagesToShowInPagination && <>&hellip;</>}
-                {pagination.pages.map(pageNumber => {
+                {pagination.pages.map((pageNumber) => {
                   // Skip over these page numbers because they'll always appear
                   // in the pagination.
                   if (
@@ -323,13 +325,13 @@ const App = ({ data }) => {
                   </button>
                 </div>
                 <div className={styles.dialogBody}>
-                  {filterCategoryTypes.map(section => {
+                  {filterCategoryTypes.map((section) => {
                     const categoriesInSection = categories.filter(
-                      c => c[section.id]
+                      (c) => c[section.id]
                     );
                     const sortedCategoriesInSection = sortBy(
                       categoriesInSection,
-                      category => category.title
+                      (category) => category.title
                     );
 
                     return (
@@ -337,12 +339,12 @@ const App = ({ data }) => {
                         <h3 className={styles.filterCategoryTitle}>
                           {section.name}
                         </h3>
-                        {sortedCategoriesInSection.map(category => (
+                        {sortedCategoriesInSection.map((category) => (
                           <FilterItem
                             key={category.id}
                             id={category.id}
                             type="pill"
-                            onChange={e => {
+                            onChange={(e) => {
                               const categoryId = e.target.value;
                               const isChecked = e.target.checked;
 
@@ -407,42 +409,6 @@ export const pageQuery = graphql`
             location
             profile_image_url_https
             profile_link_color
-            tags {
-              art
-              austin
-              author
-              ba
-              ceo
-              content
-              creative
-              developer
-              director
-              engineer
-              founder
-              freelance
-              graphic
-              head
-              illustrator
-              la
-              lead
-              letter
-              london
-              manager
-              nyc
-              portland
-              product
-              research
-              toronto
-              typeface
-              seattle
-              speaker
-              systems
-              ux
-              vancouver
-              vp
-              web
-              writer
-            }
             entities {
               url {
                 urls {
