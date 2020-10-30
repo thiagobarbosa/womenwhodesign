@@ -17,12 +17,6 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-source-seeker",
-      options: {
-        key: process.env.WWD_SEEKER_KEY,
-      },
-    },
-    {
       resolve: `gatsby-plugin-sass`,
       options: {
         cssLoaderOptions: {
@@ -55,51 +49,6 @@ module.exports = {
           yandex: false,
           windows: false,
         },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        feeds: [
-          {
-            serialize: ({ query: { allSeeker } }) => {
-              return allSeeker.edges.map((edge) => {
-                return {
-                  ...edge.node.job,
-                  title: `${edge.node.job.company.name}, ${edge.node.job.job_title}`,
-                  description: `${edge.node.job.company.name} is hiring a ${edge.node.job.job_title} in ${edge.node.job.job_location}.`,
-                  date: edge.node.job.creation_date,
-                  url: `https://womenwho.design/${edge.node.fields.slug}`,
-                  guid: `https://womenwho.design/${edge.node.fields.slug}`,
-                };
-              });
-            },
-            query: `
-              {
-                allSeeker(sort: { fields: job___creation_date, order: DESC }) {
-                  edges {
-                    node {
-                      id
-                      fields {
-                        slug
-                      }
-                      job {
-                        job_title
-                        job_location
-                        creation_date
-                        company {
-                          name
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `,
-            output: "/rss.xml",
-            title: "Women Who Design Job Board",
-          },
-        ],
       },
     },
   ],

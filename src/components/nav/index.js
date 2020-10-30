@@ -3,13 +3,13 @@ import { Link } from "gatsby";
 import Logo from "../logo";
 import styles from "./nav.module.scss";
 
-const Nav = props => {
+const Nav = (props) => {
   return (
     <div
       className={styles.container}
       style={{
         "--background": props.theme === "dark" && "var(--gray)",
-        "--text": props.theme === "dark" && "#fff"
+        "--text": props.theme === "dark" && "#fff",
       }}
     >
       <Link to="/">
@@ -21,9 +21,6 @@ const Nav = props => {
         </Link>
         <Link to="/nominate" className={styles.link}>
           Nominate
-        </Link>
-        <Link to="/jobs" className={styles.link}>
-          Jobs
         </Link>
       </nav>
     </div>
