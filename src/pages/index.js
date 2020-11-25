@@ -187,10 +187,10 @@ const App = ({ data }) => {
                   return (
                     <Profile
                       image={designer.profile.profile_image_url_https}
-                      sizes={
+                      fluid={
                         designer.localFile &&
                         designer.localFile.childImageSharp &&
-                        designer.localFile.childImageSharp.sizes
+                        designer.localFile.childImageSharp.fluid
                       }
                       name={designer.profile.name}
                       description={designer.profile.description}
@@ -394,11 +394,8 @@ export const pageQuery = graphql`
         node {
           localFile {
             childImageSharp {
-              sizes(grayscale: true, maxWidth: 200) {
-                sizes
-                aspectRatio
-                src
-                srcSet
+              fluid(grayscale: true, maxWidth: 200) {
+                ...GatsbyImageSharpFluid_withWebp_noBase64
               }
             }
           }

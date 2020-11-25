@@ -15,10 +15,10 @@ const Profile = (props) => {
           props.hex === "#FFFFFF" ? "#1da1f2" : props.hex,
       }}
     >
-      {props.sizes ? (
+      {props.fluid ? (
         <Img
           alt={`${props.name}'s avatar on Twitter.'`}
-          sizes={props.sizes}
+          fluid={props.fluid}
           backgroundColor
           className={styles.image}
         />
@@ -27,6 +27,7 @@ const Profile = (props) => {
           className={styles.grayImage}
           alt={`${props.name}'s avatar on Twitter.'`}
           src={props.image.replace("_normal", "_400x400")}
+          loading="lazy"
         />
       )}
       <h2 className={styles.name}>{props.name}</h2>
