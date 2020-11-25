@@ -11,7 +11,6 @@ import Button from "../components/button";
 const Jobs = (props) => {
   const emptyState =
     props.data.allSeeker.edges[0].node.job.job_title === "Empty";
-  console.log(props.data);
   return (
     <Layout>
       <Helmet
