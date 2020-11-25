@@ -21,19 +21,19 @@ exports.sourceNodes = async (
   const client = new Twitter({
     consumer_key: consumerKey,
     consumer_secret: consumerSecret,
-    bearer_token: bearerToken
+    bearer_token: bearerToken,
   });
 
   const counter = 0;
   const followingList = await client.get("friends/ids", {
     user_id: twitterIdForFollowingList,
-    stringify_ids: true
+    stringify_ids: true,
   });
 
   const chunkedDesigners = await Promise.all(
-    _.chunk(followingList.ids, 100).map(async chunk => {
+    _.chunk(followingList.ids, 100).map(async (chunk) => {
       const results = await client.get("users/lookup", {
-        user_id: chunk.join(",")
+        user_id: chunk.join(","),
       });
 
       return results;
@@ -43,7 +43,7 @@ exports.sourceNodes = async (
   const profiles = _.flatten(chunkedDesigners);
 
   const profileNodes = await Promise.all(
-    profiles.map(async profile => {
+    profiles.map(async (profile) => {
       delete profile.id;
       const jsonString = JSON.stringify(profile);
 
@@ -51,7 +51,7 @@ exports.sourceNodes = async (
         profile: {
           ...profile,
           tags: getProfileTags(profile),
-          description: addDescriptionLinks(profile)
+          description: addDescriptionLinks(profile),
         },
         id: createNodeId(`Twitter Profile: ${profile.id_str}`),
         parent: "__SOURCE__",
@@ -61,8 +61,8 @@ exports.sourceNodes = async (
           contentDigest: crypto
             .createHash("md5")
             .update(jsonString)
-            .digest("hex")
-        }
+            .digest("hex"),
+        },
       };
 
       const fileNode = await createRemoteFileNode({
@@ -70,7 +70,7 @@ exports.sourceNodes = async (
         store,
         cache,
         createNode,
-        createNodeId
+        createNodeId,
       });
 
       if (fileNode) {

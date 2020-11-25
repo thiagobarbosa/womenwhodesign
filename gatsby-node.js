@@ -11,14 +11,14 @@ exports.onCreateNode = ({ node, actions }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: slug
+      value: slug,
     });
   }
 };
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     graphql(`
       {
         allSeeker {
@@ -31,7 +31,7 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
-    `).then(result => {
+    `).then((result) => {
       if (result.data) {
         result.data.allSeeker.edges.forEach(({ node }) => {
           createPage({
@@ -40,8 +40,8 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               // Data passed to context is available
               // in page queries as GraphQL variables.
-              slug: node.fields.slug
-            }
+              slug: node.fields.slug,
+            },
           });
         });
       }

@@ -9,9 +9,9 @@ import { graphql } from "gatsby";
 import Button from "../components/button";
 import "reset-css";
 
-const encode = data => {
+const encode = (data) => {
   return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
     .join("&");
 };
 
@@ -23,13 +23,13 @@ class App extends React.Component {
       name: "",
       reason: "",
       formSubmitted: false,
-      nameValidationMessage: null
+      nameValidationMessage: null,
     };
   }
 
-  searchForName = name => {
+  searchForName = (name) => {
     const formattedName = name.replace("@", "").trim();
-    const found = _.find(this.designerArray, function(o) {
+    const found = _.find(this.designerArray, function (o) {
       return (
         o.node.profile.screen_name.toLowerCase() === formattedName.toLowerCase()
       );
@@ -41,18 +41,18 @@ class App extends React.Component {
     const name = this.state.name.replace("@", "");
     if (this.searchForName(name)) {
       this.setState({
-        nameValidationMessage: `🎉  Good news, ${name} is already in the directory.`
+        nameValidationMessage: `🎉  Good news, ${name} is already in the directory.`,
       });
       return true;
     } else {
       this.setState({
-        nameValidationMessage: null
+        nameValidationMessage: null,
       });
       return false;
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     const validation = this.validateName();
 
     if (validation) {
@@ -60,15 +60,15 @@ class App extends React.Component {
       fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "nominations", ...this.state })
+        body: encode({ "form-name": "nominations", ...this.state }),
       })
         .then(() => this.setState({ formSubmitted: true }))
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     }
     e.preventDefault();
   };
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     const { name, reason } = this.state;

@@ -3,6 +3,6 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
-    "react/destructuring-assignment": "off"
-  }
+    "react/destructuring-assignment": "off",
+  },
 };

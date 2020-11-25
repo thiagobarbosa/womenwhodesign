@@ -6,12 +6,13 @@ import TwitterIcon from "../../icons/twitter";
 import styles from "./profile.module.scss";
 import Button from "../button";
 
-const Profile = props => {
+const Profile = (props) => {
   return (
     <div
       className={styles.profile}
       style={{
-        "--profile-theme-color": props.hex === "#FFFFFF" ? "#1da1f2" : props.hex
+        "--profile-theme-color":
+          props.hex === "#FFFFFF" ? "#1da1f2" : props.hex,
       }}
     >
       {props.sizes ? (
@@ -62,7 +63,7 @@ const Profile = props => {
           "--background": "var(--profile-theme-color)",
           gridColumn: "1 / -1",
           marginTop: "auto",
-          marginBottom: 0
+          marginBottom: 0,
         }}
       >
         <span className={styles.linkText}>

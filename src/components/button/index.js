@@ -15,16 +15,16 @@ const Button = ({
   disabled,
   style,
   target,
-  rel
+  rel,
 }) => {
   const buttonStyles = classnames({
     [styles.main]: true,
     [styles.mainWidthFull]: width === "full",
-    [styles.mainWidthAuto]: width === "auto"
+    [styles.mainWidthAuto]: width === "auto",
   });
   const childStyles = classnames({
     [styles.children]: true,
-    [styles.childrenSizeRegular]: size === "regular"
+    [styles.childrenSizeRegular]: size === "regular",
   });
   const El = href ? "a" : to ? Link : "button";
   return (
@@ -46,7 +46,7 @@ const Button = ({
 
 Button.defaultProps = {
   width: "full",
-  size: "regular"
+  size: "regular",
 };
 
 export default Button;

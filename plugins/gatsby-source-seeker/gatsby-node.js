@@ -15,8 +15,8 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
 
   const res = await fetch(`https://api.seeker.company/v1/jobs?page_size=100`, {
     headers: {
-      Authorization: `Token ${apiOptions}`
-    }
+      Authorization: `Token ${apiOptions}`,
+    },
   });
 
   // eslint-disable-next-line no-await-in-loop
@@ -34,22 +34,22 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
       job_location: "Empty",
       company: {
         name: "Empty",
-        company_url: "Empty"
-      }
+        company_url: "Empty",
+      },
     };
     jobs.push(emptyJob);
   } else {
-    data.results.forEach(d => {
+    data.results.forEach((d) => {
       d.job_description = marked(d.job_description);
       jobs.push(d);
     });
   }
 
-  jobs.forEach(job => {
+  jobs.forEach((job) => {
     const jsonString = JSON.stringify(job);
 
     const gatsbyNode = {
-      job: { ...job},
+      job: { ...job },
       id: `Seeker: ${job.id}`,
       parent: "__SOURCE__",
       children: [],
@@ -58,8 +58,8 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
         contentDigest: crypto
           .createHash("md5")
           .update(jsonString)
-          .digest("hex")
-      }
+          .digest("hex"),
+      },
     };
 
     createNode(gatsbyNode);

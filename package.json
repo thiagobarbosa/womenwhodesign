@@ -6,7 +6,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "test": "eslint . --ext .js --ext .jsx"
+    "test": "eslint . --ext .js --ext .jsx",
+    "format": "prettier \"**/*.{js,jsx,ts,tsx,css,sass,scss,json,md,mdx,html}\" --write"
   },
   "dependencies": {
     "@reach/dialog": "^0.11.2",

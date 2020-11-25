@@ -3,7 +3,7 @@ import ClickableBox from "clickable-box";
 import close from "../../close.svg";
 import styles from "./index.module.scss";
 
-const FilterFlag = props => {
+const FilterFlag = (props) => {
   return (
     <span className={styles.pill}>
       {props.title}

@@ -47,7 +47,7 @@ export default function paginate(
 
   // create an array of pages to ng-repeat in the pager control
   const pages = Array.from(Array(endPage + 1 - startPage).keys()).map(
-    i => startPage + i
+    (i) => startPage + i
   );
 
   // return object with all pager properties required by the view
@@ -60,6 +60,6 @@ export default function paginate(
     endPage,
     startIndex,
     endIndex,
-    pages
+    pages,
   };
 }

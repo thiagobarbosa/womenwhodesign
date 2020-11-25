@@ -1,17 +1,15 @@
 const Autolinker = require("autolinker");
 
-module.exports = profile => {
+module.exports = (profile) => {
   // change t.co strings in  to descriptive urls in descriptions
-  let {description} = profile;
+  let { description } = profile;
   const descriptionUrls = profile.entities.description.urls;
   if (descriptionUrls.length === undefined) {
   } else {
     for (let i = 0; i < descriptionUrls.length; ++i) {
       description = description.replace(
         descriptionUrls[i].url,
-        `<a href="${descriptionUrls[i].url}" target="blank" >${
-          descriptionUrls[i].display_url
-        }</a>`
+        `<a href="${descriptionUrls[i].url}" target="blank" >${descriptionUrls[i].display_url}</a>`
       );
     }
   }
@@ -35,7 +33,7 @@ module.exports = profile => {
           var hashtag = match.getHashtag();
           return `<a href="https://twitter.com/hashtag/${hashtag}" target="blank" >#${hashtag}</a>`;
       }
-    }
+    },
   });
   return description;
 };

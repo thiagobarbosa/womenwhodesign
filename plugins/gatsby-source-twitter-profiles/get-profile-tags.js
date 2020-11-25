@@ -1,4 +1,4 @@
-module.exports = profile => {
+module.exports = (profile) => {
   const designerTagsObject = {};
   const { description } = profile;
   const { location } = profile;

@@ -10,22 +10,22 @@ const Layout = ({ children }) => (
         {
           property: "description",
           content:
-            "A Twitter directory of accomplished women in the design industry."
+            "A Twitter directory of accomplished women in the design industry.",
         },
         { property: "og:title", content: "Women Who Design" },
         {
           property: "og:description",
           content:
-            "A Twitter directory of accomplished women in the design industry."
+            "A Twitter directory of accomplished women in the design industry.",
         },
 
         {
           property: "og:image",
-          content: "https://womenwho.design/opengraph.png"
+          content: "https://womenwho.design/opengraph.png",
         },
         {
           property: "og:url",
-          content: "https://womenwho.design"
+          content: "https://womenwho.design",
         },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Women Who Design" },
@@ -34,8 +34,8 @@ const Layout = ({ children }) => (
         { property: "twitter:card", content: "summary_large_image" },
         {
           property: "twitter:image",
-          content: "https://womenwho.design/opengraph.png"
-        }
+          content: "https://womenwho.design/opengraph.png",
+        },
       ]}
     />
     {children}

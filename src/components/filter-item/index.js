@@ -8,13 +8,13 @@ const FilterItem = ({ isChecked, onChange, title, id, type, count }) => {
   const pillStyles = classnames({
     [styles.main]: true,
     [styles.mainPill]: type === "pill",
-    [styles.mainRow]: type === "row"
+    [styles.mainRow]: type === "row",
   });
 
   const labelStyles = classnames({
     [styles.label]: true,
     [styles.labelPill]: type === "pill",
-    [styles.labelRow]: type === "row"
+    [styles.labelRow]: type === "row",
   });
   return (
     <span key={id} className={pillStyles}>
