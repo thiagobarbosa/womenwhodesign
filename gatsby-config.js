@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+const sass = require("sass")
 require("dotenv").config();
 
 module.exports = {
@@ -28,6 +30,7 @@ module.exports = {
         cssLoaderOptions: {
           camelCase: false,
         },
+        implementation: sass,
       },
     },
     `gatsby-plugin-sharp`,
