@@ -270,7 +270,7 @@ const App = ({ data }) => {
           )}
           <div>
             <DialogOverlay isOpen={showDialog} onDismiss={close}>
-              <DialogContent>
+              <DialogContent aria-label="Filter designers">
                 <div className={styles.dialogHeader}>
                   <ClickableBox className={styles.closeButton} onClick={close}>
                     <span aria-hidden>
