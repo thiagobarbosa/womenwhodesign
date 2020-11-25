@@ -142,42 +142,8 @@ const App = ({ data }) => {
             <Loader />
           ) : (
             <>
-              {/* {selectedFilters.length > 0 && (
-                <div className={styles.filterBanner}>
-                  <h2 className={styles.filterHeadline}>→ </h2>
-                  <div className={styles.filterPillContainer}>
-                    {selectedFilters.map(filterId => (
-                      <FilterFlag
-                        title={categories.find(c => c.id === filterId).title}
-                        key={filterId}
-                        onCloseClick={() => {
-                          const newSelectedFilters = [...selectedFilters];
-                          const i = newSelectedFilters.indexOf(filterId);
-                          newSelectedFilters.splice(i, 1);
-
-                          setSelectedFilters(newSelectedFilters);
-                          setCurrentPage(1);
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => {
-                      setSelectedFilters([]);
-                      setCurrentPage(1);
-                    }}
-                    className={styles.filterClear}
-                    type="button"
-                  >
-                    Clear
-                  </button>
-                </div>
-              )} */}
               <div
-                className={classnames({
-                  [styles.profiles]: true,
-                  // [styles.filterBannerBump]: selectedFilters.length > 0
-                })}
+                className={styles.profiles}
               >
                 {filteredDesigners.map(({ node: designer }, i) => {
                   if (i < pagination.startIndex || i > pagination.endIndex) {
