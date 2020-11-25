@@ -9,11 +9,11 @@
     "test": "eslint . --ext .js --ext .jsx"
   },
   "dependencies": {
-    "@reach/dialog": "^0.9.0",
+    "@reach/dialog": "^0.11.2",
     "classnames": "^2.2.6",
     "clickable-box": "^1.1.0",
     "dotenv": "^8.2.0",
-    "feather-icons": "^4.26.0",
+    "feather-icons": "^4.28.0",
     "gatsby": "^2.27.3",
     "gatsby-cli": "^2.14.1",
     "gatsby-image": "^2.6.0",
@@ -27,13 +27,13 @@
     "gatsby-source-filesystem": "^2.6.1",
     "gatsby-transformer-sharp": "^2.7.0",
     "lodash": "^4.17.20",
-    "marked": "^0.8.0",
-    "node-sass": "^4.13.1",
+    "marked": "^1.2.5",
+    "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-helmet": "^5.2.0",
-    "reset-css": "^4.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "reset-css": "^5.0.1",
     "tachyons": "^4.12.0",
     "time-ago": "^0.2.1"
   },
@@ -42,13 +42,13 @@
     "plugins/*"
   ],
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.14.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^2.5.0",
-    "prettier": "^1.19.1"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.0"
   }
 }
