@@ -1,11 +1,10 @@
 import React from "react";
-import Link from "gatsby-link";
+import { Link, graphql } from "gatsby";
 import Nav from "../components/nav";
 import styles from "./about.module.scss";
 import _ from "lodash";
 import { Helmet } from "react-helmet";
 import Layout from "../components/layout";
-import { graphql } from "gatsby";
 import Button from "../components/button";
 import "reset-css";
 
