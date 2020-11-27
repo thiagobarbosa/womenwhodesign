@@ -26,7 +26,8 @@ const capitalize = (s) => {
 const App = ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [visibleDesigners, setVisibleDesigners] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
+
   const [isFilterListVisible, setIsFilterListVisible] = useState(false);
 
   const [showDialog, setShowDialog] = React.useState(false);
@@ -43,6 +44,27 @@ const App = ({ data }) => {
     { name: "Location", id: "location" },
   ];
 
+  function filterItemOnChange(e, section) {
+    const categoryId = e.target.value;
+    const isChecked = e.target.checked;
+
+    const newSelectedFilters = selectedFilters[section.id] || [];
+
+    if (isChecked) {
+      newSelectedFilters.push(categoryId);
+    } else {
+      const i = newSelectedFilters.indexOf(categoryId);
+
+      newSelectedFilters.splice(i, 1);
+    }
+
+    setSelectedFilters({
+      ...selectedFilters,
+      [section.id]: newSelectedFilters,
+    });
+    setCurrentPage(1);
+  }
+
   useEffect(() => {
     const shuffledDesigners = shuffle(data.allTwitterProfile.edges);
     setVisibleDesigners(shuffledDesigners);
@@ -52,13 +74,30 @@ const App = ({ data }) => {
   const numDesignersPerPage = 52;
   const numPagesToShowInPagination = 5;
 
-  const filteredDesigners = visibleDesigners.filter((designer) => {
-    if (selectedFilters.length === 0) {
-      return true;
+  const isNoFilterApplied = Object.entries(selectedFilters).every(
+    (category) => {
+      const [, value] = category;
+      return value.length === 0;
     }
+  );
 
-    return selectedFilters.some((filter) => designer.node.profile.tags[filter]);
-  });
+  const filteredDesigners = isNoFilterApplied
+    ? visibleDesigners
+    : visibleDesigners.filter((designer) => {
+        // A profile should appear if they have at least one tag within each
+        // section.
+        return Object.entries(selectedFilters).every((category) => {
+          const [categoryName, categoryValue] = category;
+
+          if (categoryValue.length === 0) {
+            return true;
+          }
+
+          return categoryValue.some(
+            (filter) => designer.node.profile.tags[categoryName][filter]
+          );
+        });
+      });
 
   const pagination = paginate(
     filteredDesigners.length,
@@ -103,22 +142,12 @@ const App = ({ data }) => {
                       id={category.id}
                       type="row"
                       onChange={(e) => {
-                        const categoryId = e.target.value;
-                        const isChecked = e.target.checked;
-
-                        const newSelectedFilters = [...selectedFilters];
-
-                        if (isChecked) {
-                          newSelectedFilters.push(categoryId);
-                        } else {
-                          const i = newSelectedFilters.indexOf(categoryId);
-                          newSelectedFilters.splice(i, 1);
-                        }
-
-                        setSelectedFilters(newSelectedFilters);
-                        setCurrentPage(1);
+                        filterItemOnChange(e, section);
                       }}
-                      isChecked={selectedFilters.includes(category.id)}
+                      isChecked={
+                        selectedFilters[section.id]?.includes(category.id) ||
+                        false
+                      }
                       className={styles.filterItemInput}
                       title={category.title}
                       count={
@@ -142,9 +171,7 @@ const App = ({ data }) => {
             <Loader />
           ) : (
             <>
-              <div
-                className={styles.profiles}
-              >
+              <div className={styles.profiles}>
                 {filteredDesigners.map(({ node: designer }, i) => {
                   if (i < pagination.startIndex || i > pagination.endIndex) {
                     return null;
@@ -153,11 +180,7 @@ const App = ({ data }) => {
                   return (
                     <Profile
                       image={designer.profile.profile_image_url_https}
-                      fluid={
-                        designer.localFile &&
-                        designer.localFile.childImageSharp &&
-                        designer.localFile.childImageSharp.fluid
-                      }
+                      fluid={designer.localFile.childImageSharp?.fluid}
                       name={designer.profile.name}
                       description={designer.profile.description}
                       location={designer.profile.location || "N/A"}
@@ -165,12 +188,10 @@ const App = ({ data }) => {
                       key={designer.profile.screen_name}
                       contrast={designer.profile.contrast}
                       displayUrl={
-                        designer.profile.entities.url &&
-                        designer.profile.entities.url.urls[0].display_url
+                        designer.profile.entities.url?.urls[0].display_url
                       }
                       expandedUrl={
-                        designer.profile.entities.url &&
-                        designer.profile.entities.url.urls[0].expanded_url
+                        designer.profile.entities.url?.urls[0].expanded_url
                       }
                       handle={designer.profile.screen_name}
                     />
@@ -178,94 +199,101 @@ const App = ({ data }) => {
                 })}
               </div>
 
-              <div className={styles.paginationContainer}>
-                <button
-                  onClick={() => {
-                    setCurrentPage(currentPage - 1);
-                    profileContainerRef.current.scrollTo(0, 0);
-                  }}
-                  disabled={pagination.currentPage === pagination.startPage}
-                  type="button"
-                  className={styles.paginationArrow}
-                >
-                  ←
-                </button>
-                <button
-                  className={styles.pageNumberButton}
-                  onClick={() => {
-                    setCurrentPage(1);
-                    profileContainerRef.current.scrollTo(0, 0);
-                  }}
-                  type="button"
-                  disabled={pagination.currentPage === 1}
-                >
-                  1
-                </button>
-                {currentPage >= numPagesToShowInPagination && <>&hellip;</>}
-                {pagination.pages.map((pageNumber) => {
-                  // Skip over these page numbers because they'll always appear
-                  // in the pagination.
-                  if (
-                    pageNumber === 1 ||
-                    pageNumber === pagination.totalPages
-                  ) {
-                    return null;
-                  }
-
-                  return (
+              {filteredDesigners.length > 0 ? (
+                <>
+                  <div className={styles.paginationContainer}>
                     <button
-                      key={pageNumber}
-                      className={styles.pageNumberButton}
                       onClick={() => {
-                        setCurrentPage(pageNumber);
+                        setCurrentPage(currentPage - 1);
                         profileContainerRef.current.scrollTo(0, 0);
                       }}
-                      disabled={pagination.currentPage === pageNumber}
+                      disabled={pagination.currentPage === pagination.startPage}
                       type="button"
+                      className={styles.paginationArrow}
                     >
-                      {pageNumber}
+                      ←
                     </button>
-                  );
-                })}
-                {currentPage <=
-                  pagination.totalPages - (numPagesToShowInPagination + 1) && (
-                  <>&hellip;</>
-                )}
-                {pagination.totalPages !== 1 && (
-                  <button
-                    className={styles.pageNumberButton}
-                    onClick={() => {
-                      setCurrentPage(pagination.totalPages);
-                      profileContainerRef.current.scrollTo(0, 0);
-                    }}
-                    type="button"
-                    disabled={pagination.currentPage === pagination.totalPages}
-                  >
-                    {pagination.totalPages}
-                  </button>
-                )}
-                <button
-                  onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                    profileContainerRef.current.scrollTo(0, 0);
-                  }}
-                  disabled={pagination.currentPage === pagination.endPage}
-                  type="button"
-                  className={styles.paginationArrow}
-                >
-                  →
-                </button>
-              </div>
-              <div className={styles.filterButtonContainer}>
-                <Button type="button" onClick={open} fullWidth={false}>
-                  <FilterIcon /> Filter
-                  {selectedFilters.length > 0 && (
-                    <>
-                      <span>·</span> <span>{selectedFilters.length}</span>
-                    </>
-                  )}
-                </Button>
-              </div>
+                    <button
+                      className={styles.pageNumberButton}
+                      onClick={() => {
+                        setCurrentPage(1);
+                        profileContainerRef.current.scrollTo(0, 0);
+                      }}
+                      type="button"
+                      disabled={pagination.currentPage === 1}
+                    >
+                      1
+                    </button>
+                    {currentPage >= numPagesToShowInPagination && <>&hellip;</>}
+                    {pagination.pages.map((pageNumber) => {
+                      // Skip over these page numbers because they'll always appear
+                      // in the pagination.
+                      if (
+                        pageNumber === 1 ||
+                        pageNumber === pagination.totalPages
+                      ) {
+                        return null;
+                      }
+
+                      return (
+                        <button
+                          key={pageNumber}
+                          className={styles.pageNumberButton}
+                          onClick={() => {
+                            setCurrentPage(pageNumber);
+                            profileContainerRef.current.scrollTo(0, 0);
+                          }}
+                          disabled={pagination.currentPage === pageNumber}
+                          type="button"
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    })}
+                    {currentPage <=
+                      pagination.totalPages -
+                        (numPagesToShowInPagination + 1) && <>&hellip;</>}
+                    {pagination.totalPages !== 1 && (
+                      <button
+                        className={styles.pageNumberButton}
+                        onClick={() => {
+                          setCurrentPage(pagination.totalPages);
+                          profileContainerRef.current.scrollTo(0, 0);
+                        }}
+                        type="button"
+                        disabled={
+                          pagination.currentPage === pagination.totalPages
+                        }
+                      >
+                        {pagination.totalPages}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                        profileContainerRef.current.scrollTo(0, 0);
+                      }}
+                      disabled={pagination.currentPage === pagination.endPage}
+                      type="button"
+                      className={styles.paginationArrow}
+                    >
+                      →
+                    </button>
+                  </div>
+                  <div className={styles.filterButtonContainer}>
+                    <Button type="button" onClick={open} fullWidth={false}>
+                      <FilterIcon /> Filter
+                      {selectedFilters.length > 0 && (
+                        <>
+                          <span>·</span> <span>{selectedFilters.length}</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div>There are no designers that match these filters.</div>
+              )}
             </>
           )}
           <div>
@@ -311,24 +339,13 @@ const App = ({ data }) => {
                             id={category.id}
                             type="pill"
                             onChange={(e) => {
-                              const categoryId = e.target.value;
-                              const isChecked = e.target.checked;
-
-                              const newSelectedFilters = [...selectedFilters];
-
-                              if (isChecked) {
-                                newSelectedFilters.push(categoryId);
-                              } else {
-                                const i = newSelectedFilters.indexOf(
-                                  categoryId
-                                );
-                                newSelectedFilters.splice(i, 1);
-                              }
-
-                              setSelectedFilters(newSelectedFilters);
-                              setCurrentPage(1);
+                              filterItemOnChange(e, section);
                             }}
-                            isChecked={selectedFilters.includes(category.id)}
+                            isChecked={
+                              selectedFilters[section.id]?.includes(
+                                category.id
+                              ) || false
+                            }
                             className={styles.filterItemInput}
                             title={category.title}
                           />
@@ -373,40 +390,45 @@ export const pageQuery = graphql`
             profile_image_url_https
             profile_link_color
             tags {
-              art
-              austin
-              author
-              ba
-              ceo
-              content
-              creative
-              developer
-              director
-              engineer
-              founder
-              freelance
-              graphic
-              head
-              illustrator
-              la
-              lead
-              letter
-              london
-              manager
-              nyc
-              portland
-              product
-              research
-              toronto
-              typeface
-              seattle
-              speaker
-              systems
-              ux
-              vancouver
-              vp
-              web
-              writer
+              location {
+                nyc
+                ba
+                la
+                london
+                portland
+                toronto
+                vancouver
+                seattle
+                austin
+              }
+              position {
+                ceo
+                author
+                director
+                founder
+                freelance
+                head
+                lead
+                manager
+                speaker
+                vp
+              }
+              expertise {
+                art
+                content
+                creative
+                systems
+                developer
+                engineer
+                illustrator
+                letter
+                product
+                research
+                typeface
+                ux
+                web
+                writer
+              }
             }
             entities {
               url {
@@ -422,195 +444,197 @@ export const pageQuery = graphql`
     }
 
     tagCountArt: allTwitterProfile(
-      filter: { profile: { tags: { art: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { art: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountAuthor: allTwitterProfile(
-      filter: { profile: { tags: { author: { eq: true } } } }
+      filter: { profile: { tags: { position: { author: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountCeo: allTwitterProfile(
-      filter: { profile: { tags: { ceo: { eq: true } } } }
+      filter: { profile: { tags: { position: { ceo: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountContent: allTwitterProfile(
-      filter: { profile: { tags: { content: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { content: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountCreative: allTwitterProfile(
-      filter: { profile: { tags: { creative: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { creative: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountDeveloper: allTwitterProfile(
-      filter: { profile: { tags: { developer: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { developer: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountDirector: allTwitterProfile(
-      filter: { profile: { tags: { director: { eq: true } } } }
+      filter: { profile: { tags: { position: { director: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountEngineer: allTwitterProfile(
-      filter: { profile: { tags: { engineer: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { engineer: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountFounder: allTwitterProfile(
-      filter: { profile: { tags: { founder: { eq: true } } } }
+      filter: { profile: { tags: { position: { founder: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountFreelance: allTwitterProfile(
-      filter: { profile: { tags: { freelance: { eq: true } } } }
+      filter: { profile: { tags: { position: { freelance: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountGraphic: allTwitterProfile(
-      filter: { profile: { tags: { graphic: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { graphic: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountHead: allTwitterProfile(
-      filter: { profile: { tags: { head: { eq: true } } } }
+      filter: { profile: { tags: { position: { head: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountIllustrator: allTwitterProfile(
-      filter: { profile: { tags: { illustrator: { eq: true } } } }
+      filter: {
+        profile: { tags: { expertise: { illustrator: { eq: true } } } }
+      }
     ) {
       totalCount
     }
 
     tagCountLead: allTwitterProfile(
-      filter: { profile: { tags: { lead: { eq: true } } } }
+      filter: { profile: { tags: { position: { lead: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountLetter: allTwitterProfile(
-      filter: { profile: { tags: { letter: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { letter: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountManager: allTwitterProfile(
-      filter: { profile: { tags: { manager: { eq: true } } } }
+      filter: { profile: { tags: { position: { manager: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountProduct: allTwitterProfile(
-      filter: { profile: { tags: { product: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { product: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountResearch: allTwitterProfile(
-      filter: { profile: { tags: { research: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { research: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountSpeaker: allTwitterProfile(
-      filter: { profile: { tags: { speaker: { eq: true } } } }
+      filter: { profile: { tags: { position: { speaker: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountSystems: allTwitterProfile(
-      filter: { profile: { tags: { systems: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { systems: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountUx: allTwitterProfile(
-      filter: { profile: { tags: { ux: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { ux: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountVp: allTwitterProfile(
-      filter: { profile: { tags: { vp: { eq: true } } } }
+      filter: { profile: { tags: { position: { vp: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountWeb: allTwitterProfile(
-      filter: { profile: { tags: { web: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { web: { eq: true } } } } }
     ) {
       totalCount
     }
 
     tagCountWriter: allTwitterProfile(
-      filter: { profile: { tags: { writer: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { writer: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountBa: allTwitterProfile(
-      filter: { profile: { tags: { ba: { eq: true } } } }
+      filter: { profile: { tags: { location: { ba: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountLa: allTwitterProfile(
-      filter: { profile: { tags: { la: { eq: true } } } }
+      filter: { profile: { tags: { location: { la: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountNyc: allTwitterProfile(
-      filter: { profile: { tags: { nyc: { eq: true } } } }
+      filter: { profile: { tags: { location: { nyc: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountLondon: allTwitterProfile(
-      filter: { profile: { tags: { london: { eq: true } } } }
+      filter: { profile: { tags: { location: { london: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountSeattle: allTwitterProfile(
-      filter: { profile: { tags: { seattle: { eq: true } } } }
+      filter: { profile: { tags: { location: { seattle: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountAustin: allTwitterProfile(
-      filter: { profile: { tags: { austin: { eq: true } } } }
+      filter: { profile: { tags: { location: { austin: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountPortland: allTwitterProfile(
-      filter: { profile: { tags: { portland: { eq: true } } } }
+      filter: { profile: { tags: { location: { portland: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountToronto: allTwitterProfile(
-      filter: { profile: { tags: { toronto: { eq: true } } } }
+      filter: { profile: { tags: { location: { toronto: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountTypeface: allTwitterProfile(
-      filter: { profile: { tags: { typeface: { eq: true } } } }
+      filter: { profile: { tags: { expertise: { typeface: { eq: true } } } } }
     ) {
       totalCount
     }
     tagCountVancouver: allTwitterProfile(
-      filter: { profile: { tags: { vancouver: { eq: true } } } }
+      filter: { profile: { tags: { location: { vancouver: { eq: true } } } } }
     ) {
       totalCount
     }
