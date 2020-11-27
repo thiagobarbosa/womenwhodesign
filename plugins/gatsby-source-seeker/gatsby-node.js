@@ -40,8 +40,10 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
     jobs.push(emptyJob);
   } else {
     data.results.forEach((d) => {
-      d.job_description = marked(d.job_description);
-      jobs.push(d);
+      jobs.push({
+        ...d,
+        job_description: marked(d.job_description),
+      });
     });
   }
 

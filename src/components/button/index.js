@@ -1,7 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import { Link } from "gatsby";
-import PropTypes from "prop-types";
 import styles from "./index.module.scss";
 
 const Button = ({
@@ -26,7 +25,17 @@ const Button = ({
     [styles.children]: true,
     [styles.childrenSizeRegular]: size === "regular",
   });
-  const El = href ? "a" : to ? Link : "button";
+
+  let El;
+
+  if (href) {
+    El = "a";
+  } else if (to) {
+    El = Link;
+  } else {
+    El = "button";
+  }
+
   return (
     <El
       className={buttonStyles}

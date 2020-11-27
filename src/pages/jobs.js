@@ -49,7 +49,7 @@ const Jobs = (props) => {
           <div>
             <p className={styles.p}>
               {" "}
-              Unfortunately, we don't have any jobs to share at the moment.
+              Unfortunately, we don’t have any jobs to share at the moment.
               Please check back soon!
             </p>
           </div>
@@ -66,10 +66,10 @@ const Jobs = (props) => {
               </Button>
             </div>
             <ul>
-              {props.data.allSeeker.edges.map((job, index) => {
+              {props.data.allSeeker.edges.map((job) => {
                 const date = ta.ago(job.node.job.creation_date);
                 return (
-                  <li key={index}>
+                  <li key={job.node.fields.slug}>
                     <Link
                       to={`/${job.node.fields.slug}`}
                       className={styles.jobLink}

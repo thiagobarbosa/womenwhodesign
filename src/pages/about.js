@@ -82,18 +82,18 @@ const App = () => (
       <h2 className={styles.emphasis}>Source code</h2>
       <p>
         Women Who Design is happy to support new directories highlighting
-        underrepresented or marginalized groups. If you're looking to start a
+        underrepresented or marginalized groups. If you’re looking to start a
         similar effort, feel free to fork the project on{" "}
         <a href="https://github.com/julesforrest/womenwhodesign">GitHub</a>.
       </p>
       <h2 className={styles.emphasis}>Similar directories</h2>
       <p>
         Examining diversity along the axis of gender is one small piece of the
-        puzzle. If you've found this site to be valuable, please take a look at
+        puzzle. If you’ve found this site to be valuable, please take a look at
         the work of friends in the industry building similar efforts.
       </p>
       <div className={styles.friendContainer}>
-        {sortedFriends.map((friend, index) => {
+        {sortedFriends.map((friend) => {
           const friendImageStyles = classnames({
             [styles.friendImage]: true,
             [styles.friendImageInvert]: friend.invert === true,
@@ -104,10 +104,14 @@ const App = () => (
               href={friend.link}
               target="_blank"
               rel="noopener noreferrer"
-              key={index}
+              key={friend.title}
               className={styles.friendItem}
             >
-              <img src={friend.image} className={friendImageStyles} />
+              <img
+                src={friend.image}
+                className={friendImageStyles}
+                alt={`${friend.title} logo`}
+              />
               <p className={styles.friendTitle}>{friend.title}</p>
             </a>
           );
@@ -128,12 +132,12 @@ const App = () => (
         to check the ratio of the people you follow on Twitter.
       </h2>
       <p>
-        If you're following more men than women, use this project to follow new
+        If you’re following more men than women, use this project to follow new
         women and diversify the voices in your feed. Be aware that a feed of
         white women is not diverse.
       </p>
       <h2 className={styles.emphasis}>
-        If you're a hiring manager, use this project to find candidates.{" "}
+        If you’re a hiring manager, use this project to find candidates.{" "}
       </h2>
       <p>
         Examine the ratio of senior men to senior women in your organization.
@@ -142,10 +146,10 @@ const App = () => (
       </p>
 
       <h2 className={styles.emphasis}>
-        If you're organizing a conference, use this project to find speakers.
+        If you’re organizing a conference, use this project to find speakers.
       </h2>
       <p>
-        Ensure that the women's speaking slots are as prominent as the men's.
+        Ensure that the women’s speaking slots are as prominent as the men’s.
         Are women of color equally represented? Consider reaching out to women
         who have never given a talk before.
       </p>
@@ -156,7 +160,7 @@ const App = () => (
       <p>
         Be mindful of interruptions and ensure that your women guests get equal
         speaking time. Are women of color equally represented? Consider inviting
-        women who don't already have an audience.
+        women who don’t already have an audience.
       </p>
 
       <h2 className={styles.emphasis}>Further reading</h2>
@@ -221,7 +225,7 @@ const App = () => (
       <h1 className={styles.h1}>Other notes</h1>
       <h2 className={styles.emphasis}>Support</h2>
       <p>
-        Women Who Design is an independent project. If you're interested in
+        Women Who Design is an independent project. If you’re interested in
         supporting it, please consider posting a job.
       </p>
       <Button
@@ -232,7 +236,7 @@ const App = () => (
       </Button>
       <h2 className={styles.emphasis}>Opt out</h2>
       <p>
-        If you've been featured in the directory and you'd rather not be, please
+        If you’ve been featured in the directory and you’d rather not be, please
         send a DM to{" "}
         <a
           href="https://twitter.com/womenwhodesign"
