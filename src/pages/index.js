@@ -356,7 +356,8 @@ const App = ({ data }) => {
                 </div>
                 <div className={styles.dialogFooter}>
                   <Button type="button" onClick={close}>
-                    View {filteredDesigners.length} designers
+                    View {filteredDesigners.length} designer
+                    {filteredDesigners.length !== 1 ? "s" : ""}
                   </Button>
                 </div>
               </DialogContent>
