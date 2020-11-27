@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const sass = require("sass")
+const sass = require("sass");
 require("dotenv").config();
 
 module.exports = {
@@ -33,6 +33,7 @@ module.exports = {
         implementation: sass,
       },
     },
+    `gatsby-plugin-lodash`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-react-helmet`,
