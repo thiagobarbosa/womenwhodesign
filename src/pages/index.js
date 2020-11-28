@@ -93,9 +93,9 @@ const App = ({ data }) => {
             return true;
           }
 
-          return categoryValue.some(
-            (filter) => designer.node.profile.tags[categoryName][filter]
-          );
+          return categoryValue.some((filter) => {
+            return designer.node.profile.tags[categoryName][filter];
+          });
         });
       });
 
@@ -421,6 +421,7 @@ export const pageQuery = graphql`
                 systems
                 developer
                 engineer
+                graphic
                 illustrator
                 letter
                 product
