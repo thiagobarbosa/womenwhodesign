@@ -32,6 +32,7 @@ exports.sourceNodes = async ({ actions }, configOptions) => {
       end_date: "Empty",
       job_link: "Empty",
       job_location: "Empty",
+      is_featured: "Empty",
       company: {
         name: "Empty",
         company_url: "Empty",

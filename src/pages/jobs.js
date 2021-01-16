@@ -75,7 +75,10 @@ const Jobs = (props) => {
                       className={styles.jobLink}
                     >
                       <div className={styles.jobLinkInner}>
-                        <h2 className={styles.h2}>
+                        <h2
+                          className={styles.h2}
+                          data-featured={job.node.job.is_featured}
+                        >
                           {job.node.job.company.name},{" "}
                           <span style={{ fontWeight: 400 }}>
                             {job.node.job.job_title}
@@ -142,6 +145,7 @@ export const pageQuery = graphql`
             job_description
             job_location
             creation_date
+            is_featured
             company {
               name
               company_url

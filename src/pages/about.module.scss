@@ -48,9 +48,15 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.25;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
   position: relative;
   --background: var(--gray);
+}
+
+.h2[data-featured="true"] {
+  display: inline-block;
+  background-color: yellow;
+  padding: 0 8px;
 }
 
 .jobTitle {
