@@ -15,6 +15,7 @@ import IndiansWhoDesign from "../friends/indianswhodesign.svg";
 import FilipinosWhoDesign from "../friends/filipinoswhodesign.png";
 import APIWhoDesign from "../friends/apiwhodesign.svg";
 import BraziliansWhoDesign from "../friends/brazilianswhodesign.svg";
+import Rememory from "../friends/rememory.svg";
 import Button from "../components/button";
 
 const friends = [
@@ -62,6 +63,11 @@ const friends = [
     title: "Brazilians Who Design",
     link: "https://brazilianswho.design/",
     image: BraziliansWhoDesign,
+  },
+  {
+    title: "Rememory",
+    link: "https://www.rememory.directory/",
+    image: Rememory,
   },
 ];
 
