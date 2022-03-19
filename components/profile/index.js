@@ -5,7 +5,7 @@ import MapIcon from "../../icons/map";
 import LinkIcon from "../../icons/link";
 import TwitterIcon from "../../icons/twitter";
 
-export default function Profile({ profile }) {
+export default function Profile({ profile, lazyRoot }) {
   const {
     description,
     displayUrl,
@@ -30,7 +30,7 @@ export default function Profile({ profile }) {
         alt={`${name}'s avatar on Twitter.'`}
         height={256}
         width={256}
-        lazyBoundary="400px"
+        lazyRoot={lazyRoot}
       />
 
       <h2 className={styles.name}>{name}</h2>

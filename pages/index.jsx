@@ -188,7 +188,13 @@ export default function Home({ profiles, categories }) {
                     return null;
                   }
 
-                  return <Profile profile={profile} key={profile.id} />;
+                  return (
+                    <Profile
+                      profile={profile}
+                      key={profile.id}
+                      lazyRoot={profileContainerRef}
+                    />
+                  );
                 })}
               </div>
 
