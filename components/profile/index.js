@@ -30,6 +30,7 @@ export default function Profile({ profile }) {
         alt={`${name}'s avatar on Twitter.'`}
         height={256}
         width={256}
+        lazyBoundary={400}
       />
 
       <h2 className={styles.name}>{name}</h2>
