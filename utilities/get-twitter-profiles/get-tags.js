@@ -15,6 +15,21 @@ function includes(description, terms) {
   });
 }
 
+/**
+ * Takes an object and removes and properties where the values are falsy. This
+ * makes the tags objects much smaller since we'll only store the ones where
+ * the tags are applicable.
+ */
+function deleteFalseFromObject(o) {
+  Object.entries(o).forEach(([key, value]) => {
+    if (!value) {
+      delete o[key];
+    }
+  });
+
+  return o;
+}
+
 function getProfileLocation({ location }) {
   return {
     nyc: includes(location, ["nyc", "brooklyn", "new york", "ny", "bronx"]),
@@ -98,8 +113,8 @@ function getProfileExpertise({ description }) {
 
 export default function getTags(profile) {
   return {
-    location: getProfileLocation(profile),
-    expertise: getProfileExpertise(profile),
-    position: getProfilePosition(profile),
+    location: deleteFalseFromObject(getProfileLocation(profile)),
+    expertise: deleteFalseFromObject(getProfileExpertise(profile)),
+    position: deleteFalseFromObject(getProfilePosition(profile)),
   };
 }

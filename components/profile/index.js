@@ -24,14 +24,16 @@ export default function Profile({ profile, lazyRoot }) {
         "--profile-theme-color": hex === "#FFFFFF" ? "#1da1f2" : hex,
       }}
     >
-      <Image
-        className={styles.grayImage}
-        src={image}
-        alt={`${name}'s avatar on Twitter.'`}
-        height={256}
-        width={256}
-        lazyRoot={lazyRoot}
-      />
+      <div style={{ backgroundColor: "lightgray" }}>
+        <Image
+          className={styles.grayImage}
+          src={image}
+          alt={`${name}'s avatar on Twitter.'`}
+          height={256}
+          width={256}
+          lazyRoot={lazyRoot}
+        />
+      </div>
 
       <h2 className={styles.name}>{name}</h2>
 
