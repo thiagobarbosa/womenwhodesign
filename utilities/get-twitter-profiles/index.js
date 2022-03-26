@@ -26,12 +26,6 @@ export default async function getTwitterProfiles(twitterAccountId) {
     // Cache hit. Read from the file instead of Twitter's API
     chunkedDesigners = JSON.parse(fs.readFileSync(localhostCachePath, "utf-8"));
   } else {
-    const client = new Twitter({
-      consumer_key: process.env.WWD_TWITTER_CONSUMER_KEY,
-      consumer_secret: process.env.WWD_TWITTER_CONSUMER_SECRET,
-      bearer_token: process.env.WWD_TWITTER_BEARER_TOKEN,
-    });
-
     const twitterAPIHeaders = {
       Authorization: `Bearer ${process.env.WWD_TWITTER_BEARER_TOKEN}`,
     };
