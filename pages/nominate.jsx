@@ -22,10 +22,10 @@ export default function Nominate() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            @womenwhodesign on Twitter
+            @womenwhodesign
           </a>{" "}
-          with her Twitter handle and a few words about why you’re nominating
-          her.
+          on Twitter with her Twitter handle and a few words about why you’re
+          nominating her.
         </p>
 
         <div className={styles.backContainer}>
