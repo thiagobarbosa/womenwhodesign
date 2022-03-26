@@ -1,4 +1,3 @@
-import Twitter from "twitter";
 import { chunk, flatten } from "lodash-es";
 import fs from "fs";
 import addDescriptionLinks from "./add-description-links";
@@ -33,18 +32,43 @@ export default async function getTwitterProfiles(twitterAccountId) {
       bearer_token: process.env.WWD_TWITTER_BEARER_TOKEN,
     });
 
-    const followingList = await client.get("friends/ids", {
-      user_id: twitterAccountId,
-      stringify_ids: true,
-    });
+    const twitterAPIHeaders = {
+      Authorization: `Bearer ${process.env.WWD_TWITTER_BEARER_TOKEN}`,
+    };
+
+    const followingListResponse = await fetch(
+      `https://api.twitter.com/1.1/friends/ids.json?user_id=${twitterAccountId}&stringify_ids=true`,
+      {
+        headers: twitterAPIHeaders,
+      }
+    );
+
+    if (!followingListResponse.ok) {
+      throw new Error(
+        `Call to Twitter's \`friends/ids\` endpoint failed with message: "${followingListResponse.statusText}"`
+      );
+    }
+
+    const followingList = await followingListResponse.json();
 
     chunkedDesigners = await Promise.all(
       chunk(followingList.ids, 100).map(async (chunk) => {
-        const results = await client.get("users/lookup", {
-          user_id: chunk.join(","),
-        });
+        const users = chunk.join(",");
 
-        return results;
+        const resultsResponse = await fetch(
+          `https://api.twitter.com/1.1/users/lookup.json?user_id=${users}`,
+          {
+            headers: twitterAPIHeaders,
+          }
+        );
+
+        if (!followingListResponse.ok) {
+          throw new Error(
+            `Call to Twitter's \`users/lookup\` endpoint failed with message: "${followingListResponse.statusText}"`
+          );
+        }
+
+        return resultsResponse.json();
       })
     );
 
