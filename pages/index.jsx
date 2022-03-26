@@ -158,7 +158,7 @@ export default function Home({ profiles, categories }) {
                         filterItemOnChange(e, section);
                         gtag("event", "click", {
                           event_category: "filter",
-                          event_label: category.name,
+                          event_label: category.title,
                           value: 1,
                         });
                       }}
