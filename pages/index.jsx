@@ -155,7 +155,13 @@ export default function Home({ profiles, categories }) {
                       id={category.id}
                       type="row"
                       onChange={(e) => {
+                        const isChecked = e.target.checked;
                         filterItemOnChange(e, section);
+                        gtag("event", isChecked ? "check" : "uncheck", {
+                          event_category: "filter",
+                          event_label: category.title,
+                          value: 1,
+                        });
                       }}
                       isChecked={
                         selectedFilters[section.id]?.includes(category.id) ||
