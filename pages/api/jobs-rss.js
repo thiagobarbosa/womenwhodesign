@@ -9,14 +9,10 @@ export default async function handler(req, res) {
   res.status(200).end(`
     <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
       <channel>
-        <title>
-          <![CDATA[ Women Who Design Job Board ]]>
-        </title>
+        <title><![CDATA[Women Who Design Job Board]]></title>
 
         <description>
-          <![CDATA[
-            Product design, design systems and web development.
-          ]]>
+          <![CDATA[Product design, design systems and web development.]]>
         </description>
 
         <link>https://womenwho.design</link>
@@ -29,17 +25,11 @@ export default async function handler(req, res) {
           .map(
             (job) => `
           <item>
-            <title>
-              <![CDATA[
-                ${job.company.name}, ${job.job_title}
-              ]]>
-            </title>
+            <title><![CDATA[${job.company.name}, ${job.job_title}]]></title>
             <description>
-              <![CDATA[
-                ${job.company.name} is hiring a ${job.job_title} in ${
+              <![CDATA[${job.company.name} is hiring a ${job.job_title} in ${
               job.job_location
-            }.
-              ]]>
+            }.]]>
             </description>
             <link>https://womenwho.design/jobs/${job.slug}</link>
             <guid isPermaLink="false">https://womenwho.design/jobs/${
