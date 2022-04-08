@@ -26,11 +26,9 @@ export default async function handler(req, res) {
             (job) => `
           <item>
             <title><![CDATA[${job.company.name}, ${job.job_title}]]></title>
-            <description>
-              <![CDATA[${job.company.name} is hiring a ${job.job_title} in ${
-              job.job_location
-            }.]]>
-            </description>
+            <description><![CDATA[${job.company.name} is hiring a ${
+              job.job_title
+            } in ${job.job_location}.]]></description>
             <link>https://womenwho.design/jobs/${job.slug}</link>
             <guid isPermaLink="false">https://womenwho.design/jobs/${
               job.slug
